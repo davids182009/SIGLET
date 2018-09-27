@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+    <meta charset="utf-8">
+    <head>
+        <title>SIG-LET</title>
+        <link href="css/icons/css/ionicons.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="lib/arcgis_3.24/dijit/themes/tundra/tundra.css" />
+        <link rel="stylesheet" href="lib/arcgis_3.24/dojox/layout/resources/FloatingPane.css" />
+        <link rel="stylesheet" href="lib/arcgis_3.24/dojox/layout/resources/ResizeHandle.css" />
+        <link rel="stylesheet" href="css/main.css" />
+
+        <link rel="stylesheet" href="lib/arcgis_3.24/esri/css/esri.css">
+
+    </head>
+
+    <body class="tundra">
+        <script>
+            dojoConfig= {
+                paths: { js: location.pathname.replace(/\/[^/]+$/, "") + "/js" },
+                has: {
+                    "dojo-firebug": true
+                },
+                parseOnLoad: true,
+                async: true,
+                packages:[
+                    {
+                        name: "widgets",
+                        location:location.pathname.replace(/\/[^/]+$/, "")+"widgets"
+                    },
+                    {
+                        name: "themes",
+                        location:location.pathname.replace(/\/[^/]+$/, "") +"theme"
+                    },
+                    {
+                        name: "xstyle",
+                        location: location.pathname.replace(/\/[^/]+$/, "") + "lib/arcgis_3.24/xstyle"
+                    },
+                    {
+                        name: "dojo",
+                        location: location.pathname.replace(/\/[^/]+$/, "")+"lib/arcgis_3.24/dojo"
+                    },
+                    {
+                        name: "dijit",
+                        location: location.pathname.replace(/\/[^/]+$/, "")+"lib/arcgis_3.24/dijit"
+                    },
+                    {
+                        name: "dojox",
+                        location: location.pathname.replace(/\/[^/]+$/, "")+"lib/arcgis_3.24/dojox"
+                    },
+                    {
+                        name: "esri",
+                        location: location.pathname.replace(/\/[^/]+$/, "")+"lib/arcgis_3.24/esri"
+                    }
+                    ,
+                    {
+                        name: "moment",
+                        location: location.pathname.replace(/\/[^/]+$/, "")+"lib/arcgis_3.24/moment"
+                    }
+
+                ]
+            };
+        </script>
+        <script src="lib/arcgis_3.24/init.js"> </script>
+        <script src="init.js"> </script>
+        <!-- <script src="https://js.arcgis.com/3.24/"></script> -->
+
+    </body>
+</html>

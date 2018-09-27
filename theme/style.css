@@ -1,0 +1,207 @@
+.menu{
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 28rem;
+    height: 0;
+
+    
+}
+.menuTop{
+    height:0;
+    width: 100%;
+}
+
+.logo{
+    float: left;
+    width: 10rem;
+}
+
+.widgetOnScreen{
+    float: left;
+    margin-bottom: 5rem;       
+}
+
+.MenuWidget__Btn--Single[data-tooltip] {
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.MenuWidget__Btn--Single[data-tooltip]:before,
+.MenuWidget__Btn--Single[data-tooltip]:after {
+  visibility: hidden;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.MenuWidget__Btn--Single[data-tooltip]:before {
+    position: absolute;
+    bottom: -4.5rem;
+    left: 50%;
+    margin-bottom: 5px;
+    margin-left: -80px;
+    padding: .5rem;
+    min-width: 160px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #000;
+    background-color: hsla(0, 0%, 20%, 0.9);
+    color: #fff;
+    content: attr(data-tooltip);
+    text-align: center;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    height: 2rem;
+}
+
+.MenuWidget__Btn--Single[data-tooltip]:after {
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    margin-left: -.5rem;
+    width: 0;
+    border-bottom: .5rem solid #000;
+    border-bottom: .5rem solid hsla(0, 0%, 20%, 0.9);
+    border-right: .5rem solid transparent;
+    border-left: .5rem solid transparent;
+    content: " ";
+    font-size: 0;
+    line-height: 0;
+}
+
+.MenuWidget__Btn--Single[data-tooltip]:hover:before,
+.MenuWidget__Btn--Single[data-tooltip]:hover:after {
+  visibility: visible;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+
+
+
+
+.MenuWidget__Btn--Group[data-tooltip] {
+    position: relative;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.MenuWidget__Btn--Group[data-tooltip]:before,
+.MenuWidget__Btn--Group[data-tooltip]:after {
+  visibility: hidden;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.MenuWidget__Btn--Group[data-tooltip]:before {
+    position: absolute;
+    top: 1rem;
+    left: 5rem;
+    margin-bottom: 5px;
+    margin-left: -5rem;
+    padding: .5rem;
+    min-width: 160px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #000;
+    background-color: hsla(0, 0%, 20%, 0.9);
+    color: #fff;
+    content: attr(data-tooltip);
+    text-align: center;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    height: 2rem;
+}
+
+
+.MenuWidget__Btn--Group[data-tooltip]:hover:before,
+.MenuWidget__Btn--Group[data-tooltip]:hover:after {
+  visibility: visible;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+
+
+
+#listWidget{
+    position: absolute;
+    background-color: aqua;
+    height: 150px;
+    width: 25rem;
+    top: 0;
+    left: -250px;
+    z-index:1;   
+    transition: all 1s ease-out; 
+
+}
+#listWidget .listWidget__btns{
+    margin-left: 5rem;
+    width: 19rem;
+    float: left;
+    height: 100%;
+    background-color: green;
+}
+
+#listWidget .MenuWidget__Btn--list{
+    height: 5rem;
+    width: 100%;
+    background-color: orange;
+}
+#listWidget .listWidget__btnClose{
+    float: left;
+    height: 100%;
+    background-color:blue;
+    width: 1rem;
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    flex-direction: column;
+    -ms-flex-direction: column ;
+    -webkit-flex-direction: column ;
+    -moz-flex-direction: column ;
+    cursor: pointer;
+}
+#listWidget .listWidget__btnClose div:nth-child(1){
+    flex: auto;
+    -webkit-flex: auto;
+    -moz-flex: auto;
+    -ms-flex: auto;
+    width: 100%;
+}
+#listWidget .listWidget__btnClose div:nth-child(2){
+    text-align: center;
+    height: 20px;
+    font-size: 1.8rem;
+}
+#listWidget .listWidget__btnClose div:nth-child(3){
+    flex: auto;
+    -webkit-flex: auto;
+    -moz-flex: auto;
+    -ms-flex: auto;
+}
+.menuBottom{
+    position: relative;
+    top: 10rem;
+    left: 0rem;
+    height: 0;
+    /* opacity: .5; */
+}
+.menuBottom>ul{
+    height: 0;
+}
+
+.listWidgetDeploy{
+    transform: translateX(250px);
+}
+

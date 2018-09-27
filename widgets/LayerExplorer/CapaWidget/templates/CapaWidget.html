@@ -1,0 +1,90 @@
+
+<div draggable="true" class="capa">
+    <div class="capaContent">
+        <div class="popupCapaWidget">            
+                <table>
+                    <tr>
+                        <td rowspan="2" style="width:70%;height:40px">
+                            <input style="margin-left:5px" type="range" min="0" max="100" value="0"
+                            data-dojo-attach-event="onchange:changeTransparencia">
+                        </td>
+                        <td style="text-align:right">
+                            <span>
+                                <i data-dojo-attach-event="onclick:closePopupTransparencia" class="icon ion-close"></i>
+                            </span>                                
+                        </td>                        
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;font-size: 0.9em">
+                            <label>0</label>%
+                        </td>
+                    </tr>
+                </table>  
+                <div class="arrow-down"></div>                
+            </div>
+            <div class="popupCapaWidgetLabel">
+                <table border="0">
+                    <tr>
+                        <td class="SelectAtributos">
+                            
+                        </td>
+                        <td style="text-align:right;width:20px">
+                            <span>
+                                <i data-dojo-attach-event="onclick:closePopupEtiqueta" class="icon ion-close"></i>
+                            </span>                                
+                        </td>                        
+                    </tr>    
+                </table>  
+                <div class="arrow-down" ></div>                
+            </div>
+            <ul>                                 
+                <li>               
+                    <img data-dojo-attach-point="imageIdWidgetCapa" src="" title="" >
+                </li>
+                <li title="${name}">
+                   <div><img src="images/loadingCapa.gif" style="height:100%;width:auto">${name}</div>
+                </li>        
+                <li data-dojo-attach-point="opcionVisibilidad" class="opciones" title="Apagar/Prender Capa"
+                    data-dojo-attach-event="onclick:cambiarVisibilidad">            
+                    <span>
+                        <i class="icon ion-eye"></i>
+                    </span>
+                </li>
+                <li data-dojo-attach-point="opcionSimbologia" class="opciones nodoOculto" title="Cambiar simbologia"
+                    data-dojo-attach-event="onclick:cambiarSimbologia">
+                    <span>
+                        <i class="icon ion-paintbrush"></i>
+                    </span>
+                </li>
+                <li data-dojo-attach-point="opcionTabla" class="opciones" title="Tabla de Atributos"
+                    data-dojo-attach-event="onclick:mostrarTablaAtributos">
+                    <span>
+                        <i class="icon ion-ios-grid-view"></i>
+                    </span>
+                </li>
+                <li data-dojo-attach-point="opcionTransparencia" class="opciones generarTransparencia" title="Generar Transparencia" >            
+                    <span data-dojo-attach-event="onclick:cambiarTransparencia">
+                        <i class="icon ion-ios-settings"></i>
+                    </span>
+                </li>
+                <li data-dojo-attach-point="opcionEtiquetar" class="opciones etiquetarAtributo" title="Etiquetar por Atributo"
+                    data-dojo-attach-event="onclick:etiquetarAtributo">            
+                    <span>
+                        <i class="icon ion-pricetag"></i>
+                    </span>
+                </li>                
+                <li data-dojo-attach-point="opcionMetadato" class="opciones" title="Consultar Metadato"
+                    data-dojo-attach-event="onclick:consultarMetadato">
+                    <span>
+                        <i class="icon ion-document-text"></i>
+                    </span>
+                </li>
+                <li class="opciones" title="Quitar Capa" 
+                    data-dojo-attach-event="onclick:quitarCapa">
+                    <span>
+                        <i class="icon ion-close"></i>
+                    </span>
+                </li>
+            </ul> 
+    </div>        
+</div>

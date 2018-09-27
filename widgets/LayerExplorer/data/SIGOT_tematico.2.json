@@ -1,0 +1,62 @@
+[
+	{
+		"id":"-1",
+		"name":"Root",
+		"children":true,
+		"visible":true,
+		"CAPADOMID":3001
+	},
+	{
+		"id":"0",
+		"name":"Necesidades Básicas Insatisfechas - NBI Urbano",
+		"children":true,
+		"visible":true,
+		"parent":"-1",
+		"CAPADOMID":3002
+	}	
+	,{
+		"id":"5000",
+		"name":"2005",
+		"father":"Necesidades Básicas Insatisfechas - NBI Urbano",
+		"visible":true,
+		"parent":"0",
+		"NOMBRECAPA": "0",
+		"URL": "http://172.17.3.180:6080/arcgis/rest/services/SIGOT_TEMATICO_PILOTO/MapServer",
+		"VISIBLE": "f",
+		"TIPO": "REST",
+		"CAPADOMID":3003
+	},
+	{
+		"id":"1",
+		"name":"Número afiliados al régimen subsidiado",
+		"children":true,
+		"visible":true,
+		"parent":"-1",
+		"CAPADOMID":3004
+	}	
+	,{
+		"id":"5001",
+		"name":"2004",
+		"father":"Número afiliados al régimen subsidiado",
+		"visible":true,
+		"parent":"1",
+		"NOMBRECAPA": "0",
+		"URL": "http://172.17.3.180:6080/arcgis/rest/services/SIGOT_TEMATICO_PILOTO/MapServer",
+		"VISIBLE": "f",
+		"TIPO": "REST",
+		"CAPADOMID":3005
+	},{
+		"id":"5002",
+		"name":"2005",
+		"father":"Número afiliados al régimen subsidiado",
+		"visible":true,
+		"parent":"1",
+		"NOMBRECAPA": "0",
+		"URL": "http://172.17.3.180:6080/arcgis/rest/services/SIGOT_TEMATICO_PILOTO/MapServer",
+		"VISIBLE": "f",
+		"TIPO": "REST",
+		"CAPADOMID":3006
+	}
+]
+
+	

@@ -1,0 +1,67 @@
+[
+    {
+        "name": "CAPAS",
+        "id":"root",
+        "children":true
+
+    },
+        {
+            "name": "BASICOS",
+            "id":"basic",
+            "parent":"root",
+            "children":true
+        },
+            {
+                "name": "CARPETA 2",
+                "id":"carpeta2",
+                "parent":"basic",
+                "children":true
+            },
+            {
+                "name":"hijo de carpeta2",
+                "id":"hic2",
+                "parent": "carpeta2",
+                "idCapa":"1"
+               
+            },
+            {
+                "name":"DEPARTAMENTOS",
+                "id":"depto",
+                "parent": "basic",
+                "idCapa":"1"
+               
+            },
+            {
+                "name":"MUNICIPIOS",
+                "id":"muni",
+                "parent": "basic",
+                "idCapa":"2"                
+            },
+            {
+                "name":"RIOS",
+                "id":"rio",
+                "parent": "basic",
+                "idCapa":"3"
+                
+            },
+        {
+            "name": "AMENAZAS",
+            "id":"mnzs",
+            "parent":"root",
+            "children":true
+        },
+            {
+                "name":"REMOCION EN MASA",
+                "id":"rm",
+                "parent":"mnzs",
+                "idCapa":"4"
+                
+            },
+            {
+                "name":"INUNDACION",
+                "id":"inunda",
+                "parent":"mnzs",
+                "idCapa":"5"
+                
+            }
+]

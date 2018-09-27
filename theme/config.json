@@ -1,0 +1,97 @@
+{
+  "widgetSingle": [{
+      "id": 1,
+      "name": "Explorador de Capas",
+      "version": "1.0",
+      "uri": "widgets/LayerExplorer",
+      "icon": "icon.png"
+    },
+    {
+      "id": 2,
+      "name": "Test B",
+      "version": "1.0",
+      "uri": "widgets/test",
+      "icon": "compass.svg"
+    },
+    {
+      "id": 3,
+      "name": "Test C",
+      "version": "1.0",
+      "uri": "widgets/test",
+      "icon": "compass.svg"
+    }
+  ],
+  "widgetGroup": [{
+      "name": "Test Grupo A",
+      "icon": "A.png",
+      "widgets": [{
+          "id": 4,
+          "name": "Dibujar",
+          "version": "1.0",
+          "uri": "widgets/Dibujo",
+          "icon": "compass.svg",
+          "top": "30px",
+          "left": "500px"
+        },
+        {
+          "id": 5,
+          "name": "Test GA-2",
+          "version": "1.0",
+          "uri": "widgets/test",
+          "icon": "compass.svg"
+        },
+        {
+          "id": 6,
+          "name": "Test GA-3",
+          "version": "1.0",
+          "uri": "widgets/test",
+          "icon": "compass.svg"
+        }
+      ]
+    },
+    {
+      "name": "Test Grupo B",
+      "icon": "D.png",
+      "widgets": [{
+          "id": 7,
+          "name": "Test GB-1",
+          "version": "1.0",
+          "uri": "widgets/test",
+          "icon": "compass.svg"
+        },
+        {
+          "id": 8,
+          "name": "Test GB-2",
+          "version": "1.0",
+          "uri": "widgets/test",
+          "icon": "compass.svg"
+        }
+      ]
+    },
+    {
+      "name": "Test Grupo C",
+      "icon": "C.png",
+      "widgets": [{
+          "id": 9,
+          "name": "Test GC-1",
+          "version": "1.0",
+          "uri": "widgets/test",
+          "icon": "compass.svg"
+        },
+        {
+          "id": 10,
+          "name": "Test GC-2",
+          "version": "1.0",
+          "uri": "widgets/test",
+          "icon": "compass.svg"
+        }
+      ]
+    }
+  ],
+  "map": {
+    "basemap": "streets",
+    "center": [-72.275, 4.573],
+    "zoom": 6,
+    "slider": false
+  }
+}

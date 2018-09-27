@@ -1,0 +1,450 @@
+
+/* MODULE ContentCapas */
+.layerexplorer{
+    width: 100%;
+    height: 100%;
+}
+.LayerExplorerMain{
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.LayerExplorerMain > div:nth-child(1){
+    height: 40px;
+}
+.LayerExplorerMain > div:nth-child(2){
+    flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+}
+.LayerExplorerFormulario{
+    padding: 0px;
+    border: 0px solid rgba(0,0,0,.15);
+    margin:0px;    
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    width: 100%;
+
+}  
+.LayerExplorerFormulario li{
+    margin: 0px;
+    padding: 0px;    
+    list-style: none;    
+}
+.LayerExplorerFormulario > li:nth-child(1){
+    flex: auto;
+    -webkit-flex: auto;
+    -moz-flex: auto;
+    -ms-flex: auto;
+}
+.LayerExplorerFormulario > li:nth-child(2){
+    width: 42px;
+}
+.LayerExplorerFormulario input{
+    width: 95%;
+    margin-left:5px;
+    padding-left: 1%;
+    padding-right: 1%;
+    height: 36px;
+    border: 1px solid rgba(0,0,0,0.3);    
+    font-size: 1.5em; 
+}
+.LayerExplorerFormulario button{
+    width: 36px;
+    height: 36px; 
+    font-size: 1.5em; 
+}
+.nodoOculto{
+    display: none;
+}
+
+.nodoResaltado{
+    background-color: rgba(5,63,106,.3);
+}
+
+.layerexplorer .mask{
+    padding-top:10px; 
+    width: 100%;
+    text-align: center;
+}
+
+.layerexplorer .mask img{
+    width: 100px;
+}
+
+#tree{
+    width: 100%;
+}
+
+#treeTematicas{
+    width: 100%;
+}
+
+
+
+#tituloAreadeTrabajo{
+    padding: 0px;
+    border: 0px solid rgba(0,0,0,.15);
+    margin:0px;    
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    width: 100%;
+}
+
+#tituloAreadeTrabajo li{
+    margin: 0px;
+    padding: 0px;    
+    list-style: none;       
+}
+
+#tituloAreadeTrabajo li:nth-child(1){
+    flex: auto;
+    -webkit-flex: auto;
+    -moz-flex: auto;
+    -ms-flex: auto;
+    font-size: 1.3em; 
+}
+
+#tituloAreadeTrabajo li.opciones{
+    width: 50px;
+}
+
+
+#tituloAreadeTrabajo .opciones{   
+    cursor: pointer;
+    font-size: 2em;
+    text-align: center;
+}
+
+#tituloAreadeTrabajo .opciones:hover{
+    opacity: 0.5;
+}
+
+
+/* MODULE CapaWidget */
+#capaSpot{
+    width: 98%;
+    height: 30px;
+    min-width: 353px;
+    border: 2px dashed grey;
+        
+}
+.capa{
+    width: 100%;
+    min-width: 353px;
+    margin-bottom: 2px;
+    border-bottom: 1px solid rgba(0,0,0,0.7);
+}
+
+.capaExterna{
+    background-color: #3b8fc4;    
+}
+.capaExterna li{
+    color: #FFFFFF;
+}
+.capaContent{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.capaDrag{
+    background-color: white;
+    box-shadow: 8px 8px 5px 5px rgba(0,0,0,.35);
+
+}
+
+#Lastcapa{
+    width: 100%;
+    min-width: 353px;
+    height: 28px;
+}
+.capa ul{
+    padding: 0px;
+    border: 0px solid rgba(0,0,0,.15);
+    margin:0px;    
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    width: 100%;
+
+}  
+.capa ul > li{
+    margin: 0px;
+    padding: 0px;    
+    list-style: none;    
+    min-width: 20px;
+    height: 25px;
+}
+
+.capa ul li:nth-child(1){
+    width: 23px;
+    min-width: 23px;    
+    text-align: left;
+}
+
+.capa ul li:nth-child(1) img{
+    height: 100%;
+    width: auto;
+}
+
+.capa ul li:nth-child(2){
+    flex: auto;
+    -webkit-flex: auto;
+    -moz-flex: auto;
+    -ms-flex: auto;
+    cursor: move;
+}
+
+.capa ul li:nth-child(3){
+    width: 20px;
+}
+
+.capa ul li:nth-child(4){
+    width: 20px;
+}
+
+.capa ul li:nth-child(5){
+    width: 20px;
+}
+
+.capa ul li:nth-child(6){
+    width: 20px;
+}
+
+.capa ul li:nth-child(7){
+    width: 20px;
+}
+.capa ul li:nth-child(8){
+    width: 20px;
+}
+.capa ul li:nth-child(9){
+    width: 20px;
+}
+
+.capa ul li:nth-child(2) > div{
+    width: 100%;
+    height: 20px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.capa .opciones{   
+    cursor: pointer;
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.capa .opciones i:hover{
+    opacity: 0.5;
+}
+
+.capa .nodoDeshabilitado{
+    opacity: .4;
+}
+
+/* POPUP PARA TRANSPARENCIA */
+
+.popupCapaWidget{
+    position: absolute;
+    top: -32px;
+    right: 0px;
+    width: 150px;
+    height: 50px;
+    z-index: 1000;
+    opacity: 0;    
+    display: none;
+}
+
+.popupCapaWidget input{
+    width: 80%;
+    margin-right: 0px;
+}
+.popupCapaWidget table{
+    background: #73bce9;
+    width: 100%;
+    height: 80%;
+    border: 0px;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 14px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: rgba(0,0,0,.15) 5px 5px;
+    line-height: 1em;    
+}
+.capaExterna .popupCapaWidget .arrow-down{
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;    
+    border-top: 10px solid #73bce9;
+    margin-left: 90px;
+}
+.capaTematica .popupCapaWidget .arrow-down{
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;    
+    border-top: 10px solid #73bce9;
+    margin-left: 90px;
+}
+.popupCapaWidget .arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;    
+    border-top: 10px solid #73bce9;
+    margin-left: 69px;
+  }
+.popupCapaWidget .icon{
+    margin-right: 4px;
+    font-size: 1em;
+    cursor: pointer;
+      
+  }
+.popupCapaWidget i:hover{
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+/* POPUP PARA ETIQUETA */
+
+.popupCapaWidgetLabel{
+    position: absolute;
+    top: -32px;
+    right: 0px;
+    width: 250px;
+    height: 50px;
+    z-index: 1001;    
+    opacity: 0;    
+    display: none;
+}
+
+.popupCapaWidgetLabel table{
+    background: #73bce9;
+    width: 100%;
+    height: 80%;
+    border: 0px;
+    border-spacing: 1px;
+    border-collapse: collapse;
+    font-size: 14px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: rgba(0,0,0,.15) 5px 5px;
+
+}
+.popupCapaWidgetLabel .arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;    
+    border-top: 10px solid #73bce9;
+    margin-left: 191px;
+  }
+.popupCapaWidgetLabel .arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;    
+    border-top: 10px solid #73bce9;
+    margin-left: 191px;
+}
+.capaExterna .popupCapaWidgetLabel .arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;    
+    border-top: 10px solid #73bce9;
+    margin-left: 211px;
+}
+.capaTematica .popupCapaWidgetLabel .arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;    
+    border-top: 10px solid #73bce9;
+    margin-left: 211px;
+}
+
+.popupCapaWidgetLabel .icon{
+    margin-right: 4px;
+    cursor: pointer;
+}
+.popupCapaWidgetLabel i:hover{
+    opacity: 0.5;
+    cursor: pointer;
+}
+.CapaOpcionActiva{
+    color: rgb(59, 143, 196);
+}
+.capaExterna .CapaOpcionActiva{
+    color:#000000;
+}
+
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+
+#graphicLayer{
+    width: 100%;    
+}
+#layerSplitter{
+    width: 100%;
+    height: 8px;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+    border-left: 1px solid rgba(0,0,0,0.4);
+    border-right: 1px solid rgba(0,0,0,0.4);
+    box-shadow: 0px 4px 4px rgba(0,0,0,.3);
+    margin-bottom: 7px
+}
+#imageLayer{
+    box-sizing: border-box;
+    width: 100%; 
+    padding: 5px;   
+    /* min-height: 52px;*/
+    background-color:#CDCDCD; 
+}
+
+/*  */
+text {
+    text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.9);
+}
+
+.sigotOpenFolder{
+    background-image: url(../images/open-folder.png);
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    background-size: 16px 16px;
+}
+
+.sigotClosedFolder{
+    background-image: url(../images/close-folder.png);
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    background-size: 16px 16px;
+}

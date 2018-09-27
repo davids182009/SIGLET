@@ -1,0 +1,55 @@
+.MenuWidget__Btn{
+    list-style: none;
+    height: 50px;
+    width: 50px;        
+}
+
+.MenuWidget__Btn--red{
+    background-color:#E74C3C;
+    border-bottom: .5rem solid #BD3E31;
+}
+
+.MenuWidget__Btn--Single{
+    display: inline-block;
+    margin-left: 10px;
+    border-radius: 1rem;        
+    transition: all 0.1s;
+    -webkit-transition: all 0.1s;
+    position: relative;
+}
+.MenuWidget__Btn--Single:active{
+    transform: translate(0px,5px);
+    -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}
+.MenuWidget__Btn--Group{
+    position: relative;
+
+}
+.MenuWidget__Btn--Group .MenuWidget__Btn__icon,
+.MenuWidget__Btn--Single .MenuWidget__Btn__icon{
+    position: absolute;
+    top:.8rem;
+    left: 1rem;
+    width: 3rem;
+    height: auto;
+    z-index: 1;
+}
+.MenuWidget__Btn--list{
+    list-style: none;
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.MenuWidget__Btn--list .MenuWidget__Btn__icon{
+    margin-left: 1rem;
+    width: 3rem;
+    height: 3rem;    
+    margin-right: 1rem;
+}
+
+
+
