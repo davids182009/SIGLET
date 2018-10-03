@@ -56,12 +56,27 @@ define([
       let configWidget_Btn = MenuWidget.storeWidgets.get(this.config.id);
       if (!configWidget_Btn.opened) {
         configWidget_Btn.opened = true;
+        if(!MenuWidget.visibilidadContent){
+          MenuWidget.visibilidadContent=true;
+          domClass.remove(MenuWidget.box_content_widget,'hide_left');
+        }        
         require([
                     configWidget_Btn.uri + '/widget',
                     'xstyle/css!./' + configWidget_Btn.uri + '/css/style.css'
                 ], function(customWidget) {
           console.log(configWidget_Btn);
-          let estilo = "";
+          //CREAR NODO EN DOM QUE CONTIENE WIDGET          
+          let nodeCustomWidget = domConstruct.toDom('<div id="widget_box_'+configWidget_Btn.id+'" class="widget_content"></div>');
+          domConstruct.place(nodeCustomWidget,MenuWidget.widget_deploy,'last');
+          //CREAR WIDGET E INSERTAR A NODO CONTENEDOR
+          let cw = new customWidget({
+            id:'customWidget_'+configWidget_Btn.id
+          });
+          cw.placeAt(nodeCustomWidget,'last');
+          cw.startup();
+          //CREAR ICONO LATERAL QUE INDICA QUE ESTA ABIERTO
+          MenuWidget.addIconWidget(configWidget_Btn);         
+          /* let estilo = "";
           if (configWidget_Btn.top != undefined &&
             configWidget_Btn.left != undefined) {
             estilo = 'position:absolute;top:' + configWidget_Btn.top +
@@ -70,9 +85,9 @@ define([
           } else {
             estilo =
               'position:absolute;top:80px;left:80px;width:400px;height:550px;';
-          }
+          } */
 
-          let panelFlotante = new FloatingPane({
+          /* let panelFlotante = new FloatingPane({
             title: configWidget_Btn.name,
             closable: false,
             resizable: true,
@@ -85,7 +100,7 @@ define([
             id: 'panelFlotante_' + configWidget_Btn.id
           }, nodo);
           //panelFlotante.placeAt(window.body(),'last');
-          panelFlotante.startup();
+          panelFlotante.startup(); */
           console.log('widget ' + configWidget_Btn.id +
             ' fue creado');
         });
@@ -93,6 +108,10 @@ define([
 
       } else {
         console.log('El Widget ya fue creado' + this.id);
+        if(!MenuWidget.visibilidadContent){
+          MenuWidget.visibilidadContent=true;
+          domClass.remove(MenuWidget.box_content_widget,'hide_left');
+        }
       }
 
 

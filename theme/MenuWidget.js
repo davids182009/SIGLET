@@ -31,13 +31,15 @@ define([
     'dojo/_base/window',
     'dojo/store/Memory',
     "dijit/registry",
+    "dojo/dom-style",
+    "dojo/on",
     'xstyle/css!./style.css'
 
 ], function(declare, _WidgetBase, _TemplatedMixin,
   _WidgetsInTemplateMixin, request, lang,
   domConstruct, array, domClass, dom, Topic,
   MenuWidget__Btn, template, Dock, win,
-  Memory, registry) {
+  Memory, registry,domStyle,on) {
   /**
    * Crea un nuevo MenuWidget (Constructor)
    * @class
@@ -52,6 +54,10 @@ define([
     config: null,
     dock: null,
     storeWidgets: null,
+    visibilidadBtn: false,
+    visibilidadContent:false,
+    widgetTarget:0,
+    openedWidgets:[],
     /**
      * Funcion del ciclo de vida del Widget en Dojo, se dispara cuando
      * todas las propiedades del widget son definidas y el fragmento
@@ -67,12 +73,12 @@ define([
       //SE CARGA JSON DE CONFIGURACIÓN Y CONSTRUYE MENU
       this._loadWidgetInventory();
       //SE CONSTRUYE DOCK PARA ALOJAR WIDGETS TIPO FLOATING
-      let nodo = domConstruct.create("div", {
+      /* let nodo = domConstruct.create("div", {
         id: 'dockWidgets'
-      }, win.body(), 'last');
-      this.dock = new Dock({
+      }, win.body(), 'last'); */
+      /* this.dock = new Dock({
         style: 'position:absolute;bottom:0px,left:0px;background: #E74C3C;height: 40px;width: 100%;'
-      }, nodo);
+      }, nodo); */
 
     },
     /**
@@ -90,23 +96,29 @@ define([
         function(widgetsData) {
           this.config = widgetsData;
           Topic.publish("configMapa", widgetsData.map);
+          //CALCULAR ANCHO BOX DE BOTONES
+          let listaWidgetSingle = this.config.widgetSingle;
+          let listaWidgetGroup = this.config.widgetGroup;          
+          let widthBox=41;
+          widthBox = widthBox*(1+listaWidgetSingle.length+ listaWidgetGroup.length);
+          domStyle.set(this.box_btns,'width',widthBox+'px');
           //RECORRIDO DE WIDGETS INDIVIDUALES
-          listaWidgetSingle = this.config.widgetSingle;
+          
           let listaWidgets = [];
           array.forEach(listaWidgetSingle, function(item) {
             new MenuWidget__Btn({
               id: 'MenuWidget_Btn_' + item.id,
               name: item.name,
-              typeClass: 'MenuWidget__Btn MenuWidget__Btn--Single MenuWidget__Btn--red',
+              typeClass: 'boxMenu_options_btn',
               icon: item.uri + '/images/' + item.icon,
               tipo: 'A',
               config: item
-            }).placeAt(this.singleWidgets, 'last');
+            }).placeAt(this.list_btn, 'last');
             item['opened'] = false;
             listaWidgets.push(item);
           }, this);
           //RECORRIDO DE WIDGETS GRUPALES
-          listaWidgetGroup = this.config.widgetGroup;
+          /* listaWidgetGroup = this.config.widgetGroup;
           array.forEach(listaWidgetGroup, function(item) {
             new MenuWidget__Btn({
               name: item.name,
@@ -120,11 +132,11 @@ define([
               widgetsOnGroup[i]['opened'] = false;
               listaWidgets.push(widgetsOnGroup[i]);
             }
-          }, this);
+          }, this); */
           //CONSTRUCCION DE STORE CON INFORMACIÓN DE LOS WIDGETS DISPONIBLES
           this.storeWidgets = new Memory({
             data: listaWidgets
-          });
+          }); 
         }));
     },
     /**
@@ -168,7 +180,66 @@ define([
           config: item
         }).placeAt(this.WidgetsOnGroupList, 'last');
       }, this);
+    },
+
+    cambiarVisibilidadBtn:function(event){        
+        if(this.visibilidadBtn){ //LOS BOTONES SON VISIBLES
+          this.visibilidadBtn = false;
+          domClass.add(this.list_btn,'hide_top');
+          setTimeout(function(nodo){
+              domClass.replace(nodo,'btn_options_open','btn_options_close');
+          }, 400,this.btn_menu);
+        }else{//LOS BOTONES NO ESTAN VISIBLES
+          this.visibilidadBtn = true;
+          domClass.remove(this.list_btn,'hide_top');
+          setTimeout(function(nodo){
+            domClass.replace(nodo,'btn_options_close','btn_options_open');
+        }, 400,this.btn_menu);
+        }        
+    },
+
+    closeContent:function(event){
+      domClass.add(this.box_content_widget,'hide_left');
+      this.visibilidadContent=false;
+    },
+
+    addIconWidget: function(item){
+      if(this.widgetTarget != 0){
+        let targetActual = dom.byId('widget_icon_'+this.widgetTarget);
+        domClass.remove(targetActual,'selected');
+      }else
+        this.widgetTarget = item.id;
+      let iconoLateral = domConstruct.toDom('<li class="selected" id="widget_icon_'+item.id+'" ><img src="'+ item.uri + '/images/' + item.icon +'"></li>');          
+      domConstruct.place(iconoLateral,this.dock_widgets,'last');
+      this.openedWidgets.push(item.id);
+      on(iconoLateral,'click',lang.hitch(this,this.changeWidget(item.id)));
+    },
+
+    changeWidget: function(id){
+      return function(event){
+        if(id != this.widgetTarget){
+          let pos = -1;
+          for(let i=0;i<this.openedWidgets.length;i++){
+            if(this.openedWidgets[i] == id){
+              pos = i;
+              break;
+            }
+          }
+          let targetActual = dom.byId('widget_icon_'+this.widgetTarget);
+          domClass.remove(targetActual,'selected');
+          pos=-100*pos;
+          domStyle.set(this.widget_louver,'margin-top',pos+'vh');
+          this.widgetTarget = id;
+          let targetNuevo = dom.byId('widget_icon_'+id);
+          domClass.add(targetNuevo,'selected');
+        }
+        console.log('Click:'+id);
+      }
     }
+
+
+    
+    
   });
 
 

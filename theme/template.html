@@ -1,32 +1,76 @@
-<nav class="menu">
-    <div class="menuTop">
-        <div class="logo">
-            <img src="theme/images/logo.png">
+<div class="menu">      
+    <div class="logo">
+        <img src="theme/images/logo.png">
+    </div>
+    <div class="boxMenu">
+        <div class="boxMenu_options" >
+            <ul data-dojo-attach-point="box_btns">
+                <li>
+                    <div class="boxMenu_options_btn btn_options_open" data-dojo-attach-point="btn_menu" data-dojo-attach-event="onclick:cambiarVisibilidadBtn"></div>
+                </li>
+                <li>      
+                    <nav class="hide_top" data-dojo-attach-point="list_btn">                        
+                    </nav>                                                    
+                </li>
+            </ul>            
         </div>
-        <ul class="widgetMenu" data-dojo-attach-point="singleWidgets">
-        </ul>
-    </div>   
-    <div class="menuBottom">
-        <ul class="widgetMenu widgetMenu--groupWidget" data-dojo-attach-point="WidgetsOnGroup">
-            
-        </ul>        
-        <div id="listWidget">
-            <div class="listWidget__btns">
-                <ul class="widgetMenu"  data-dojo-attach-point="WidgetsOnGroupList">
+        <div class="boxMenu_content">
+            <ul class="boxMenu_content_dock" data-dojo-attach-point="dock_widgets">
 
-                </ul>
-            </div>
-            <div class="listWidget__btnClose" data-dojo-attach-event="onclick:CloseListWidget">
-                <div>
+            </ul>
+            <div class="boxMenu_content_inner hide_left" data-dojo-attach-point="box_content_menu">
+                <div class="boxMenu_content_inner_canvas">
+                    <div class="BC_head BGcolorB">
+                        <div class="BC_head_left">            
+                        </div>
+                        <div class="BC_head_center">
+                            Menu
+                        </div>
+                        <div class="BC_head_right">
+                        </div>
+                    </div>
+                    <div class="BC_body">
+                        <div class="boxMenu_content_left_blank">
+
+                        </div>
+                        <div  class="boxMenu_content_left">
+                            <div id="widget_deploy" data-dojo-attach-point="Menu_deploy">
     
-                </div>
-                <div>
-                    <
-                </div>  
-                <div>
-                    
-                </div>
-            </div>
+                            </div>
+                        </div>
+                        <div class="boxMenu_content_right">
+                            <span id="boxMenu_content_right_close" data-dojo-attach-event="onclick:closeContent">&#10006;</span>
+                        </div>
+                    </div>
+                </div>                
+            </div>      
+            <div class="boxMenu_content_inner hide_left box_content_widget" data-dojo-attach-point="box_content_widget">
+                <div class="boxMenu_content_inner_canvas">
+                    <div class="BC_head BGcolorA">
+                        <div class="BC_head_left">            
+                        </div>
+                        <div class="BC_head_center BC_head_center_widget">
+                            Widget
+                        </div>
+                        <div class="BC_head_right">
+                        </div>
+                    </div>
+                    <div class="BC_body">
+                        <div class="boxMenu_content_left_blank">
+
+                        </div>
+                        <div  class="boxMenu_content_left" id="widget_deploy">
+                            <div class="widget_content"  data-dojo-attach-point="widget_deploy">
+                                <div class="boxMenu_content_left_louver" data-dojo-attach-point="widget_louver"></div>                                
+                            </div>
+                                
+                        </div>
+                        <div class="boxMenu_content_right">
+                            <span id="boxMenu_content_right_close" data-dojo-attach-event="onclick:closeContent">&#10006;</span>
+                        </div>
+                    </div>
+                </div>                
+            </div>      
         </div>
     </div>
-</nav>
+</div>

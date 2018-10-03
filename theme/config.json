@@ -11,41 +11,41 @@
       "name": "Test B",
       "version": "1.0",
       "uri": "widgets/test",
-      "icon": "compass.svg"
+      "icon": "consultas.png"
     },
     {
       "id": 3,
       "name": "Test C",
       "version": "1.0",
       "uri": "widgets/test",
-      "icon": "compass.svg"
+      "icon": "consultas.png"
+    },
+    {
+      "id": 4,
+      "name": "Dibujar",
+      "version": "1.0",
+      "uri": "widgets/Dibujo",
+      "icon": "compass.svg",
+      "top": "30px",
+      "left": "500px"
     }
   ],
   "widgetGroup": [{
       "name": "Test Grupo A",
       "icon": "A.png",
       "widgets": [{
-          "id": 4,
-          "name": "Dibujar",
-          "version": "1.0",
-          "uri": "widgets/Dibujo",
-          "icon": "compass.svg",
-          "top": "30px",
-          "left": "500px"
-        },
-        {
           "id": 5,
           "name": "Test GA-2",
           "version": "1.0",
           "uri": "widgets/test",
-          "icon": "compass.svg"
+          "icon": "consultas.png"
         },
         {
           "id": 6,
           "name": "Test GA-3",
           "version": "1.0",
           "uri": "widgets/test",
-          "icon": "compass.svg"
+          "icon": "consultas.png"
         }
       ]
     },
@@ -57,14 +57,14 @@
           "name": "Test GB-1",
           "version": "1.0",
           "uri": "widgets/test",
-          "icon": "compass.svg"
+          "icon": "consultas.png"
         },
         {
           "id": 8,
           "name": "Test GB-2",
           "version": "1.0",
           "uri": "widgets/test",
-          "icon": "compass.svg"
+          "icon": "consultas.png"
         }
       ]
     },
@@ -76,14 +76,14 @@
           "name": "Test GC-1",
           "version": "1.0",
           "uri": "widgets/test",
-          "icon": "compass.svg"
+          "icon": "consultas.png"
         },
         {
           "id": 10,
           "name": "Test GC-2",
           "version": "1.0",
           "uri": "widgets/test",
-          "icon": "compass.svg"
+          "icon": "consultas.png"
         }
       ]
     }

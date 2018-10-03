@@ -1,7 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@font-face{
+    font-family: 'Futura';
+    src:url('font/futura-webfont_0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face{
+    font-family: 'Futura';
+    src:url('font/Futura-Bold_0.ttf') format('truetype');
+    font-weight:bold ;
+    font-style:bold;
+}
 
 body{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Futura','Roboto',sans-serif;
     font-size: 14px;
     overflow: hidden;
 }
@@ -21,11 +33,17 @@ html{
     box-sizing: border-box;
 }
 
-#dockWidgets{
-    position: absolute;
-    height: 40px;
-    width: 100%;
-    bottom:0px;
-    left: 0px;
-    background: #E74C3C;    
+.nodoOculto{
+    display: none;
+}
+
+.BGcolorA{
+    background: #FFFFFF;
+}
+
+.BGcolorB{
+    background: #3090AC;
+    background:linear-gradient(to right,#3090AC,#00636B);
+    background:-webkit-linear-gradient(to right,#3090AC,#00636B);
+    background:-moz-linear-gradient(to right,#3090AC,#00636B);
 }
