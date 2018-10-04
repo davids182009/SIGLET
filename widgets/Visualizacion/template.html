@@ -1,13 +1,9 @@
 <div>
-
-<div id="zoomIn" data-dojo-attach-event="onClick:_zoomIn" class="icon ion-plus-circled" style="font-size: 32px; cursor: pointer; width:50%;"></div>
-<div id="zoomOut" data-dojo-attach-event="onClick:_zoomOut" class="icon ion-ios-minus" style="font-size: 32px; cursor: pointer; width:50%;"></div>
-
-  <div data-dojo-attach-point="btnVistaInicial"></div>
-
+  <div id="zoomIn" data-dojo-attach-event="onClick:_zoomIn" class="control zoomIn" ></div>
+  <div id="zoomOut" data-dojo-attach-event="onClick:_zoomOut" class="control zoomOut" ></div>
+  <div class="control homeBtn" data-dojo-attach-point="btnVistaInicial"></div>
   <div id="navToolbar" data-dojo-type="dijit/Toolbar" style="background: transparent; border-bottom: none; ">
-      <div id="zoomprev" data-dojo-attach-event="onClick:_zoomPrev" class ="icon ion-arrow-left-a" style="font-size: 32px; cursor: pointer; width:50%;"></div>
-      <div id="zoomnext" data-dojo-attach-event="onClick:_zoomPost" class ="icon ion-arrow-right-a" style="font-size: 32px; cursor: pointer; width:50%;"></div>
+      <div id="zoomprev" data-dojo-attach-event="onClick:_zoomPrev" class ="control zoomprev" ></div>
+      <div id="zoomnext" data-dojo-attach-event="onClick:_zoomPost" class ="control zoompost" ></div>
   </div>
-
 </div>

@@ -31,6 +31,7 @@ define([
     startup: function() {
       console.log('-- Startup single widget');
     },
+    //EVENTO QUE RESPONDE AL EVENTO CLICK EN EL BOTON
     activar: function() {
       console.log('Activar Boton');
       //MenuWidget__Btn  MenuWidget__Btn--red
@@ -56,14 +57,13 @@ define([
       let configWidget_Btn = MenuWidget.storeWidgets.get(this.config.id);
       if (!configWidget_Btn.opened) {
         configWidget_Btn.opened = true;
-        if(!MenuWidget.visibilidadContent){
-          MenuWidget.visibilidadContent=true;
-          domClass.remove(MenuWidget.box_content_widget,'hide_left');
-        }        
+        if(!MenuWidget.visibilidadContent)
+          MenuWidget.openContent();
+          
         require([
                     configWidget_Btn.uri + '/widget',
                     'xstyle/css!./' + configWidget_Btn.uri + '/css/style.css'
-                ], function(customWidget) {
+                ], function(customWidget){
           console.log(configWidget_Btn);
           //CREAR NODO EN DOM QUE CONTIENE WIDGET          
           let nodeCustomWidget = domConstruct.toDom('<div id="widget_box_'+configWidget_Btn.id+'" class="widget_content"></div>');
@@ -75,7 +75,7 @@ define([
           cw.placeAt(nodeCustomWidget,'last');
           cw.startup();
           //CREAR ICONO LATERAL QUE INDICA QUE ESTA ABIERTO
-          MenuWidget.addIconWidget(configWidget_Btn);         
+          MenuWidget.addIconWidget(configWidget_Btn);                   
           /* let estilo = "";
           if (configWidget_Btn.top != undefined &&
             configWidget_Btn.left != undefined) {
@@ -118,7 +118,7 @@ define([
     },
     _poblar: function() {
       let MenuWidget = registry.byId('MenuWidgetOficina205');
-      MenuWidget.poblarListWidget(this.childWidgets);
+      MenuWidget.poblarListWidget(this.childWidgets,this.name);
     }
   });
 

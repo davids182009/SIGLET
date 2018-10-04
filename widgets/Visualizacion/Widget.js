@@ -34,7 +34,8 @@ define([
       if (mapa != null) {
         this.map = mapa;
         let home = new HomeButton({
-          map: mapa
+          theme: 'control homeBtn',
+          map: mapa          
         }, this.btnVistaInicial);
         home.startup();
         this.navToolbar = new Navigation(mapa);

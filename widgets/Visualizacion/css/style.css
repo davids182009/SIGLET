@@ -4,7 +4,55 @@
   top: 50%;
   transform: translateY(-50%);
   right: 0;
-  width: 25px;
+  width: 26px;
   height: 185px;
-  background-color: red;
+  margin-right: 2px;
 }
+  .barNav .control{
+    cursor: pointer;
+    width: 100%;
+    height: 26px;
+    margin-bottom: 6px;
+    background-size: 26px 26px;
+    background-repeat: no-repeat;
+  }
+
+  .barNav .zoomIn{  
+    background-image: url(../images/zoom-in.png);    
+  }
+  .barNav .zoomIn:hover{  
+    background-image: url(../images/zoom-in-over.png);
+  }
+  .barNav .zoomOut{
+    background-image: url(../images/zoom-out.png);    
+  }
+  .barNav .zoomOut:hover{
+    background-image: url(../images/zoom-out-over.png);    
+  }
+  .barNav .homeBtn{
+    background-image: url(../images/vista-total.png);
+  }
+  .barNav .homeBtn:hover{
+    background-image: url(../images/vista-total-over.png);
+  }
+  .barNav .homeBtn .home{
+    width: 26px;
+    height: 26px;
+    opacity: 0;
+  }
+  .barNav .homeBtn .homeContainer{
+    border: none;
+  }
+  .barNav .zoomprev{
+    background-image: url(../images/Anterior.png);
+  }
+  .barNav .zoomprev:hover{
+    background-image: url(../images/Anterior-over.png);
+  }
+  .barNav .zoompost{
+    background-image: url(../images/siguiente.png);
+  }
+  .barNav .zoompost:hover{
+    background-image: url(../images/Siguiente-over.png);
+  }
+

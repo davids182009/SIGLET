@@ -79,11 +79,19 @@
                     background-image: url(images/Menu-cerrado.png);
                     background-size: cover;
                 }
+                .btn_options_open_animated{
+                    background-image: url(images/abrir.gif);
+                    background-size: cover;
+                }
                 .btn_options_open:hover{
                     background-image: url(images/menu-cerrado-over.png);
                 }
                 .btn_options_close{
                     background-image: url(images/menu-abierto.png);
+                    background-size: cover;
+                }
+                .btn_options_close_animated{
+                    background-image: url(images/cerrar.gif);
                     background-size: cover;
                 }
                 .btn_options_close:hover{
@@ -212,6 +220,7 @@
                     text-align: center;
                     color: #FFFFFF;
                     font-weight: bold;
+                    overflow: hidden;
                     
                 }
                 .BC_head_center_widget{
@@ -260,21 +269,51 @@
                     -webkit-flex: auto;
                     -moz-flex: auto;
                     -ms-flex: auto;
-                }      
-                    #widget_deploy{
-                        width: 100%;
-                        height: 100%;
-                        margin-top: 20px;
-                        box-sizing: border-box;
-                        background: url('images/Patron-fondo-ventanas.png');
-                        background-repeat:repeat;
-                        background-size: 46px 27px;
-                    }       
+                    height: 100%;
+                    margin-top: 20px;
+                    box-sizing: border-box;
+                    background: url('images/Patron-fondo-ventanas.png');
+                    background-repeat:repeat;
+                    background-size: 46px 27px;
+                }   
+                    .boxMenu_options_btn--list{
+                        width: 100%;      
+                        height: 46px;          
+                        display: flex;
+                        display: -webkit-flex;
+                        display: -moz-flex;
+                        display: -ms-flex;
+                        cursor: pointer;
+                        color: #9C9B9B;
+                        font-size: 11pt;
+                        font-weight: bold;
+                        transition: all .2s ease-in;
+                    }   
+                    .boxMenu_options_btn--list:hover{
+                        color: #000000;
+                    }
+
+                    .boxMenu_options_btn--list img{
+                        width: 26px;
+                        height: auto;
+                        margin: 10px;
+                        float: left;                        
+                    }   
+                    .boxMenu_options_btn--list span{
+                        float: left;
+                        flex: auto;
+                        -webkit-flex: auto;
+                        -moz-flex: auto;
+                        -ms-flex: auto;
+                        line-height: 46px;                        
+                    }
                     .widget_content{
                         width: 100%;
                         height: 100vh;
                         overflow: hidden;
-                    }       
+                    }  
+
+                         
                 .boxMenu_content_right{
                     flex: 0 0 20px;
                     -webkit-flex: 0 0 20px;

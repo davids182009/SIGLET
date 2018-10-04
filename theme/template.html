@@ -23,7 +23,7 @@
                     <div class="BC_head BGcolorB">
                         <div class="BC_head_left">            
                         </div>
-                        <div class="BC_head_center">
+                        <div class="BC_head_center" data-dojo-attach-point="box_content_menu_title">
                             Menu
                         </div>
                         <div class="BC_head_right">
@@ -34,12 +34,12 @@
 
                         </div>
                         <div  class="boxMenu_content_left">
-                            <div id="widget_deploy" data-dojo-attach-point="Menu_deploy">
-    
+                            <div data-dojo-attach-point="Menu_deploy">
+                                
                             </div>
                         </div>
                         <div class="boxMenu_content_right">
-                            <span id="boxMenu_content_right_close" data-dojo-attach-event="onclick:closeContent">&#10006;</span>
+                            <span id="boxMenu_content_right_close" data-dojo-attach-event="onclick:CloseListWidget">&#10006;</span>
                         </div>
                     </div>
                 </div>                
@@ -49,7 +49,7 @@
                     <div class="BC_head BGcolorA">
                         <div class="BC_head_left">            
                         </div>
-                        <div class="BC_head_center BC_head_center_widget">
+                        <div class="BC_head_center BC_head_center_widget" data-dojo-attach-point="widget_title">
                             Widget
                         </div>
                         <div class="BC_head_right">

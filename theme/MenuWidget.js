@@ -54,8 +54,9 @@ define([
     config: null,
     dock: null,
     storeWidgets: null,
-    visibilidadBtn: false,
+    visibilidadBtn:false,
     visibilidadContent:false,
+    visibilidadListWidget:false,
     widgetTarget:0,
     openedWidgets:[],
     /**
@@ -109,7 +110,7 @@ define([
             new MenuWidget__Btn({
               id: 'MenuWidget_Btn_' + item.id,
               name: item.name,
-              typeClass: 'boxMenu_options_btn',
+              typeClass: 'boxMenu_options_btn boxMenu_options_btn_A',
               icon: item.uri + '/images/' + item.icon,
               tipo: 'A',
               config: item
@@ -118,21 +119,21 @@ define([
             listaWidgets.push(item);
           }, this);
           //RECORRIDO DE WIDGETS GRUPALES
-          /* listaWidgetGroup = this.config.widgetGroup;
+          listaWidgetGroup = this.config.widgetGroup;
           array.forEach(listaWidgetGroup, function(item) {
             new MenuWidget__Btn({
               name: item.name,
-              typeClass: 'MenuWidget__Btn MenuWidget__Btn--Group MenuWidget__Btn--red',
+              typeClass: 'boxMenu_options_btn boxMenu_options_btn_A',
               icon: 'theme/images/' + item.icon,
               childWidgets: item.widgets,
               tipo: 'B'
-            }).placeAt(this.WidgetsOnGroup, 'last');
+            }).placeAt(this.list_btn, 'last');
             let widgetsOnGroup = item.widgets;
             for (let i = 0; i < widgetsOnGroup.length; i++) {
               widgetsOnGroup[i]['opened'] = false;
               listaWidgets.push(widgetsOnGroup[i]);
             }
-          }, this); */
+          }, this);
           //CONSTRUCCION DE STORE CON INFORMACIÓN DE LOS WIDGETS DISPONIBLES
           this.storeWidgets = new Memory({
             data: listaWidgets
@@ -147,9 +148,15 @@ define([
      * @param {Object} - Objeto de evento click
      *
      */
-    CloseListWidget: function(event) {
-      nodoChildrenWidget = dom.byId('listWidget');
-      domClass.remove(nodoChildrenWidget, 'listWidgetDeploy');
+    CloseListWidget: function(event) {      
+      domClass.add(this.box_content_menu,'hide_left');
+      this.visibilidadListWidget = false;
+    },
+    openListWidget: function(){
+      domClass.remove(this.box_content_menu,'hide_left');
+      this.visibilidadListWidget = true;
+      if(this.visibilidadContent)
+        this.closeContent(null);
     },
     /**
      * Construye lista de widgets de un boton agrupador
@@ -158,27 +165,32 @@ define([
      * @param {array} list -Arreglo de objetos con información de widgets
      *
      */
-    poblarListWidget: function(list) {
+    poblarListWidget: function(list,name) {
       console.log('Poblando lista');
-      nodoChildrenWidget = dom.byId('listWidget');
-      domClass.add(nodoChildrenWidget, 'listWidgetDeploy');
+      //nodoChildrenWidget = dom.byId('listWidget');
+      //domClass.add(nodoChildrenWidget, 'listWidgetDeploy');
       //Destruir Widgets previos
-      //WidgetsOnGroupList es un attach point en el HTML template
-      let widgetPrevios = registry.findWidgets(this.WidgetsOnGroupList);
+      //Menu_deploy es un attach point en el HTML template
+      let widgetPrevios = registry.findWidgets(this.Menu_deploy);
       for (let i = 0; i < widgetPrevios.length; i++) {
         widgetPrevios[i].destroy();
       }
-      this.WidgetsOnGroupList.innerHTML = '';
+      this.Menu_deploy.innerHTML = '';
+      //VALIDAR QUE AREA DE VISUALIZACION ESTE DISPONIBLE     
+      if(!this.visibilidadListWidget)
+        this.openListWidget();
+      this.box_content_menu_title.innerHTML = name;  
+      //CREAR LOS BOTONES HIJO
       array.forEach(list, function(item) {
         new MenuWidget__Btn({
           id: 'MenuWidget_Btn_' + item.id,
           name: item.name,
-          typeClass: 'MenuWidget__Btn--list',
+          typeClass: 'boxMenu_options_btn--list',
           icon: item.uri + '/images/' + item.icon,
           childWidgets: item.widgets,
           tipo: 'C',
           config: item
-        }).placeAt(this.WidgetsOnGroupList, 'last');
+        }).placeAt(this.Menu_deploy, 'last');
       }, this);
     },
 
@@ -186,14 +198,16 @@ define([
         if(this.visibilidadBtn){ //LOS BOTONES SON VISIBLES
           this.visibilidadBtn = false;
           domClass.add(this.list_btn,'hide_top');
+          domClass.replace(this.btn_menu,'btn_options_close_animated','btn_options_close');
           setTimeout(function(nodo){
-              domClass.replace(nodo,'btn_options_open','btn_options_close');
+              domClass.replace(nodo,'btn_options_open','btn_options_close_animated');
           }, 400,this.btn_menu);
         }else{//LOS BOTONES NO ESTAN VISIBLES
           this.visibilidadBtn = true;
           domClass.remove(this.list_btn,'hide_top');
+          domClass.replace(this.btn_menu,'btn_options_open_animated','btn_options_open');
           setTimeout(function(nodo){
-            domClass.replace(nodo,'btn_options_close','btn_options_open');
+            domClass.replace(nodo,'btn_options_close','btn_options_open_animated');
         }, 400,this.btn_menu);
         }        
     },
@@ -203,7 +217,15 @@ define([
       this.visibilidadContent=false;
     },
 
-    addIconWidget: function(item){
+    openContent:function(){
+      if(!this.visibilidadContent){
+        domClass.remove(this.box_content_widget,'hide_left');
+        this.visibilidadContent = true;
+        if(this.visibilidadListWidget)  
+          this.CloseListWidget(null);
+      }
+    },    
+    addIconWidget:function(item){
       if(this.widgetTarget != 0){
         let targetActual = dom.byId('widget_icon_'+this.widgetTarget);
         domClass.remove(targetActual,'selected');
@@ -212,28 +234,35 @@ define([
       let iconoLateral = domConstruct.toDom('<li class="selected" id="widget_icon_'+item.id+'" ><img src="'+ item.uri + '/images/' + item.icon +'"></li>');          
       domConstruct.place(iconoLateral,this.dock_widgets,'last');
       this.openedWidgets.push(item.id);
-      on(iconoLateral,'click',lang.hitch(this,this.changeWidget(item.id)));
+      on(iconoLateral,'click',lang.hitch(this,this.handleChangeWidget(item)));
+      this.changeWidget(item);
     },
 
-    changeWidget: function(id){
+    handleChangeWidget:function(item){
       return function(event){
-        if(id != this.widgetTarget){
-          let pos = -1;
-          for(let i=0;i<this.openedWidgets.length;i++){
-            if(this.openedWidgets[i] == id){
-              pos = i;
-              break;
-            }
+        this.openContent();
+        this.changeWidget(item);            
+      }
+    },
+
+    changeWidget: function(item){
+      let id = item.id;
+      if(id != this.widgetTarget){
+        let pos = -1;
+        for(let i=0;i<this.openedWidgets.length;i++){
+          if(this.openedWidgets[i] == id){
+            pos = i;
+            break;
           }
-          let targetActual = dom.byId('widget_icon_'+this.widgetTarget);
-          domClass.remove(targetActual,'selected');
-          pos=-100*pos;
-          domStyle.set(this.widget_louver,'margin-top',pos+'vh');
-          this.widgetTarget = id;
-          let targetNuevo = dom.byId('widget_icon_'+id);
-          domClass.add(targetNuevo,'selected');
-        }
-        console.log('Click:'+id);
+        }          
+        let targetActual = dom.byId('widget_icon_'+this.widgetTarget);
+        domClass.remove(targetActual,'selected');
+        pos=-100*pos;
+        domStyle.set(this.widget_louver,'margin-top',pos+'vh');
+        this.widgetTarget = id;          
+        let targetNuevo = dom.byId('widget_icon_'+id);
+        domClass.add(targetNuevo,'selected');
+        this.widget_title.innerHTML = item.name;        
       }
     }
 
