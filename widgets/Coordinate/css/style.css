@@ -1,0 +1,133 @@
+.Widget-Coordinate{
+  position: absolute;
+  width: 500px;
+  height: 51px;  
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  transition: all .3s ease-in;
+}
+
+.Widget-Coordinate.hide{
+  bottom: -40px;
+}
+
+.Widget-Coordinate .tab{
+  width: 100%;
+  height: 11px;
+
+}
+  .Widget-Coordinate .tab>ul{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    width: 100%;
+    height: 100%;
+  }
+    .Widget-Coordinate .tab>ul li{
+      list-style: none;
+      height: 100%;
+    }
+    .Widget-Coordinate .tab>ul li:nth-child(1),
+    .Widget-Coordinate .tab>ul li:nth-child(3){
+      flex: 1;
+      -webkit-flex: 1;
+      -moz-flex: 1;
+      -ms-flex: 1;
+    }
+
+    .Widget-Coordinate .tab>ul li:nth-child(2){
+      flex: 0 0 115px;
+      -webkit-flex: 0 0 115px;
+      -moz-flex: 0 0 115px;
+      -ms-flex: 0 0 115px;
+      cursor: pointer;
+    }
+
+    .Widget-Coordinate .tab_open{
+      background-image: url(../images/visor-abierto.png);
+      background-size: cover;
+    }
+
+    .Widget-Coordinate .tab_close{
+      background-image: url(../images/visor-replegado.png);
+      background-size: cover;
+    }
+
+
+.Widget-Coordinate .content{
+  width: 100%;
+  height: 40px;
+  background:rgba(0,0,0,.6);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  color: #FFFFFF;
+  font-size: 12px;
+}
+
+.Widget-Coordinate .content >div{
+  width: 50%;
+  float: left;
+  height: 100%;
+} 
+  .content_escala{
+    margin-top: 3px;
+    margin-left: 8px;
+    margin-right: 2px;
+    height: 34px;    
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+  }
+    .content_escala >li{
+      height: 100%;
+      list-style: none;      
+    }
+
+    .content_escala >li:nth-child(1){
+    }
+      .content_escala >li:nth-child(3) div{
+        height: 50%;     
+      }
+  .content_coordenada{
+    margin-top: 3px;
+    margin-left: 2px;
+    margin-right: 8px;
+    padding: 0px;
+    height: 16px;
+    width: 240px;
+    background-color: #3090AC;
+    border-radius: 2px;
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+  }
+  .content_coordenada > li{
+    list-style: none;    
+    line-height: 18px;
+    align-items: center;
+    
+  }
+  .content_coordenada > li:nth-child(1),
+  .content_coordenada > li:nth-child(3){
+    flex: 0 0 20px;
+    -webkit-flex: 0 0 20px;
+    -moz-flex: 0 0 20px;
+    -ms-flex: 0 0 20px;    
+    text-align: right;
+  }
+  .content_coordenada > li:nth-child(2),
+  .content_coordenada > li:nth-child(4){
+    padding-left: 2px;
+    flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;    
+    text-align: left;
+  }

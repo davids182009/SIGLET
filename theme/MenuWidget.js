@@ -231,7 +231,7 @@ define([
         domClass.remove(targetActual,'selected');
       }else
         this.widgetTarget = item.id;
-      let iconoLateral = domConstruct.toDom('<li class="selected" id="widget_icon_'+item.id+'" ><img src="'+ item.uri + '/images/' + item.icon +'"></li>');          
+      let iconoLateral = domConstruct.toDom('<li class="selected" id="widget_icon_'+item.id+'" title="'+item.name+'" ><img src="'+ item.uri + '/images/' + item.icon +'"></li>');          
       domConstruct.place(iconoLateral,this.dock_widgets,'last');
       this.openedWidgets.push(item.id);
       on(iconoLateral,'click',lang.hitch(this,this.handleChangeWidget(item)));

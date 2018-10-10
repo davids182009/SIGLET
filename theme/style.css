@@ -269,7 +269,7 @@
                     -webkit-flex: auto;
                     -moz-flex: auto;
                     -ms-flex: auto;
-                    height: 100%;
+                    height: 100vh;
                     margin-top: 20px;
                     box-sizing: border-box;
                     background: url('images/Patron-fondo-ventanas.png');

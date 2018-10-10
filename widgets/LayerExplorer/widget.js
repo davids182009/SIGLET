@@ -109,8 +109,6 @@ define([
         startup: function () {  
             this.__setupPanelLayout();  
             this._setupTreeLayers();  
-            //this._setupTreeLayersTematico();
-            //this.obtener_geometrias();
             on(dom.byId('Lastcapa'),'dragover',function(event){
                 nodoId = dom.byId('Lastcapa');
                 setTimeout(function(){
@@ -136,12 +134,12 @@ define([
                             +'<img src="images/loading-1.gif"><br>'
                             +'Cargando listado de capas espaciales …'
                         +'</div>',
-                minSize:100                
+                minSize:200                
             });    
             panel = new ContentPane({  
                 region: 'bottom',  
                 content: '<ul id="tituloAreadeTrabajo">'
-                            +'<li><b>CAPAS ÁREA DE TRABAJO</b></li>'
+                            +'<li><b>ÁREA DE TRABAJO</b></li>'
                             +'<li class="opciones prenderCapas">'
                                 +'<span>'
                                     +'<i class="icon ion-eye"></i>'
@@ -162,9 +160,9 @@ define([
                             +'<div id="imageLayer">'
                             +'</div>'
                         +'</div>',  
-                style: 'height: 200px;',  
+                style: 'height: 300px;',  
                 splitter: true,
-                minSize:100
+                minSize:300
             });    
             this.bc.addChild(explorador);  
             this.bc.addChild(panel);  

@@ -42,7 +42,11 @@
                     <img data-dojo-attach-point="imageIdWidgetCapa" src="" title="" >
                 </li>
                 <li title="${name}">
-                   <div><img src="images/loadingCapa.gif" style="height:100%;width:auto">${name}</div>
+                    <div>
+                        <div>
+                            <img src="images/loadingCapa.gif" class="nodoOculto" data-dojo-attach-point="imgLoadingLayer"  style="height:100%;width:auto;vertical-align: middle;margin-right:3px">${name}
+                        </div>   
+                    </div>
                 </li>        
                 <li data-dojo-attach-point="opcionVisibilidad" class="opciones" title="Apagar/Prender Capa"
                     data-dojo-attach-event="onclick:cambiarVisibilidad">            
@@ -56,7 +60,7 @@
                         <i class="icon ion-paintbrush"></i>
                     </span>
                 </li>
-                <li data-dojo-attach-point="opcionTabla" class="opciones" title="Tabla de Atributos"
+                <li data-dojo-attach-point="opcionTabla" class="opciones nodoOculto" title="Tabla de Atributos"
                     data-dojo-attach-event="onclick:mostrarTablaAtributos">
                     <span>
                         <i class="icon ion-ios-grid-view"></i>
@@ -67,7 +71,7 @@
                         <i class="icon ion-ios-settings"></i>
                     </span>
                 </li>
-                <li data-dojo-attach-point="opcionEtiquetar" class="opciones etiquetarAtributo" title="Etiquetar por Atributo"
+                <li data-dojo-attach-point="opcionEtiquetar" class="opciones etiquetarAtributo nodoOculto" title="Etiquetar por Atributo"
                     data-dojo-attach-event="onclick:etiquetarAtributo">            
                     <span>
                         <i class="icon ion-pricetag"></i>

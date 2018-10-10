@@ -33,6 +33,14 @@ html{
     box-sizing: border-box;
 }
 
+#mensajeDesarrollo{
+    z-index: 9000;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    color: red;
+}
+
 .nodoOculto{
     display: none;
 }

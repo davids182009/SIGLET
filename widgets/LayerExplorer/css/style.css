@@ -57,7 +57,7 @@
     padding-right: 1%;
     height: 36px;
     border: 1px solid rgba(0,0,0,0.3);    
-    font-size: 1.5em; 
+    font-size: 1em; 
 }
 .LayerExplorerFormulario button{
     width: 36px;
@@ -84,6 +84,7 @@
 
 #tree{
     width: 100%;
+    height: 100%;
 }
 
 #treeTematicas{
@@ -105,6 +106,7 @@
     -moz-flex-direction: row;
     -ms-flex-direction: row;
     width: 100%;
+    height: 35px;
 }
 
 #tituloAreadeTrabajo li{
@@ -118,11 +120,15 @@
     -webkit-flex: auto;
     -moz-flex: auto;
     -ms-flex: auto;
-    font-size: 1.3em; 
+    font-size: 1em; 
+    line-height: 35px;
 }
 
 #tituloAreadeTrabajo li.opciones{
-    width: 50px;
+    flex: 0 0 40px;
+    -webkit-flex: 0 0 40px;
+    -moz-flex: 0 0 40px;
+    -ms-flex: 0 0 40px;
 }
 
 
@@ -141,13 +147,11 @@
 #capaSpot{
     width: 98%;
     height: 30px;
-    min-width: 353px;
     border: 2px dashed grey;
         
 }
 .capa{
     width: 100%;
-    min-width: 353px;
     margin-bottom: 2px;
     border-bottom: 1px solid rgba(0,0,0,0.7);
 }
@@ -240,9 +244,15 @@
 
 .capa ul li:nth-child(2) > div{
     width: 100%;
-    height: 20px;
+    height: 100%;
     overflow-x: hidden;
     overflow-y: hidden;
+}
+
+.capa ul li:nth-child(2) > div > div{
+    width: 1500px;
+    height: 100%; 
+    line-height: 25px;
 }
 
 .capa .opciones{   

@@ -289,35 +289,13 @@ define([
               domClass.add(this.opcionTabla, 'nodoOculto');
               this.layer = new WMSLayer(this.infoCapa.URL, {
                 id: '' + this.infoCapa.id,
-                format: "png",
-                /* customLayerParameters: {
-                    "CRS": "EPSG:4326"
-                },  */
-                visibleLayers: [
-                                        this.infoCapa.NOMBRECAPA
-                                    ]
+                format: "png",       
+                visibleLayers: [this.infoCapa.NOMBRECAPA]
               });
               console.log(this.layer);
               this.map.addLayer(this.layer);
-              //console.log(this.layer.spatialReferences);
-              //this.layer.spatialReferences[0] = 3116;
               break;
-              /*  case "WFS":
-               this.layer = new WFSLayer();
-                   opts = {
-                       "id": "" + this.infoCapa.id,
-                       "url": "" + this.infoCapa.URL,
-                       "name": "" + this.infoCapa.NOMBRECAPA,
-                       "version": "2.0.0"
-                   };
-                   this.layer.fromJson(opts);
-                   break;
-               case "WCS":
-                   break;
-               case "WMTS":
-                   break; */
             case "REST":
-              //if(this.tipo === 'A'){
               url = this.infoCapa.URL + '/' + this.infoCapa.NOMBRECAPA;
               console.log(url);
               this.layer = new FeatureLayer(url, {
@@ -327,82 +305,6 @@ define([
                 mode: FeatureLayer.MODE_ONDEMAND
               });
               this.map.addLayer(this.layer);
-              this.layer.on("load", lang.hitch(this, function(event) {
-                this.checkSimbologia();
-                console.log(
-                  'Layer Cargado Construir combobox de atributos'
-                );
-                //console.log(event);
-                console.log(this.infoCapa);
-                //this.infoCapa = capasStore.get(event.target.id);
-                if (this.infoCapa.TIPO === 'REST') {
-                  callback = lang.hitch(this, function(response) {
-                    console.log();
-                    console.log(response);
-                    //this.infoCapa = capasStore.get(this.id);
-                    //widget=registry.byId('panel_capa_'+this.infoCapa.CAPADOMID);
-                    //widget.poblarAtributos(response.fields,true);
-                    this.poblarAtributos(response.fields,
-                      true);
-
-                  });
-                  esriRequest({
-                    url: this.infoCapa.URL + '/' + this.infoCapa
-                      .NOMBRECAPA,
-                    content: {
-                      f: "json"
-                    },
-                    handleAs: 'json'
-                  }).then(callback, lang.hitch(this, function() {
-                    //this.infoCapa = capasStore.get(this.id);
-                    //widget=registry.byId('panel_capa_'+this.infoCapa.CAPADOMID);
-                    //widget.poblarAtributos([],false);
-                    this.poblarAtributos([], false);
-                  }));
-                } else {
-                  //widget=registry.byId('panel_capa_'+this.infoCapa.CAPADOMID);
-                  campos = this.map.getLayer(event.layer.id).fields;
-                  //widget.poblarAtributos(campos,true);
-                  this.poblarAtributos(campos, true);
-                }
-                /*   nodoCapaWidget= dom.byId('panel_capa_'+this.infoCapa.CAPADOMID);
-                  nodo=query('.SelectAtributos',nodoCapaWidget)[0];
-                  if (typeof campos != 'undefined'){
-                      widget=registry.byId('panel_capa_'+this.infoCapa.CAPADOMID);
-                      opciones=[];
-                      opciones.push({label:'--Seleccione Atributo',value:''});
-                      for(var i=0;i<campos.length;i++){
-                          opciones.push({label:campos[i].alias,value:campos[i].name});
-                      }
-                      //console.log(opciones);
-                      select=new Select({
-                          name: 'AtributosCapa_'+this.infoCapa.CAPADOMID,
-                          style: { width: '94%',
-                                  margin: '2%',
-                                  height: '30px',
-                                  'box-shadow':'none'
-                              },
-                          options: opciones
-                      });
-                      select.placeAt(nodo);
-                      select.startup();
-                      select.on('change',function(event){
-                          console.log('Cambio Select');
-                          //console.log(event);
-                          idCapaWidget=this.name.split('_')[1];
-                          idCapaWidget='panel_capa_'+idCapaWidget;
-                          widget=registry.byId(idCapaWidget);
-                          widget.mostrarEtiqueta(event);
-                          //console.log(idCapaWidget);
-                      });
-                      //DEFINIR ESTILO DE ETIQUETA
-                      colorTexto = new Color("#000");
-                      this.estiloEtiqueta = new TextSymbol().setColor(colorTexto);
-                      this.estiloEtiqueta.font.setSize("12pt");
-                      this.estiloEtiqueta.font.setFamily("arial");
-                  }else
-                      nodo.innerHTML='<label style="margin-left:4px">Sin Atributos</label>';    */
-              }));
               this.layer.on("error", lang.hitch(this, function(event) {
                 console.log('On Error!');
                 console.log(event);
@@ -411,8 +313,7 @@ define([
                   console.log(event);
                   //this.infoCapa = capasStore.get(event.target.id);
                   console.log(this.infoCapa);
-                  widget = registry.byId('panel_capa_' + this.infoCapa
-                    .CAPADOMID);
+                  widget = registry.byId('panel_capa_' + this.infoCapa.CAPADOMID);
                   console.log(widget);
                   widget.mostrarMensaje({
                     title: '<i style="font-size:1.3em" class="icon ion-alert-circled"></i>' +
@@ -431,273 +332,12 @@ define([
                   });
                   widget.quitarCapa();
                 }
-              }));
-
-              /* }else{
-                  expresion='';
-                  symbol=new SimpleFillSymbol();
-                  symbol.setColor(new Color([150, 150, 150, 0.5]));
-                  renderer = new ClassBreaksRenderer(symbol, "VALOR_REGI");
-                  switch(this.infoCapa.id){
-                      case '5000':
-                          renderer.addBreak(0, 20, new SimpleFillSymbol().setColor(new Color([80,88,225,1])));
-                          renderer.addBreak(21, 40, new SimpleFillSymbol().setColor(new Color([72,122,232,1])));
-                          renderer.addBreak(41, 60, new SimpleFillSymbol().setColor(new Color([92,186,225,1])));
-                          renderer.addBreak(61, 80 , new SimpleFillSymbol().setColor(new Color([72,206,232,1])));
-                          renderer.addBreak(81, Infinity, new SimpleFillSymbol().setColor(new Color([80,255,236,1])));
-                          expresion="DESCRIPCIO='Necesidades Básicas Insatisfechas - NBI Urbano' AND ANO_REGIST='2005'";
-                          break;
-                      case '5001':
-                          renderer.addBreak(0, 1000, new SimpleFillSymbol().setColor(new Color([85,31,60,1])));
-                          renderer.addBreak(1001, 10000, new SimpleFillSymbol().setColor(new Color([192,63,83,1])));
-                          renderer.addBreak(10001, 100000, new SimpleFillSymbol().setColor(new Color([255,89,94,1])));
-                          renderer.addBreak(100001, 500000 , new SimpleFillSymbol().setColor(new Color([255,229,88,1])));
-                          renderer.addBreak(500001, Infinity, new SimpleFillSymbol().setColor(new Color([0,197,184,1])));
-                          expresion="DESCRIPCIO='Número afiliados al régimen subsidiado' AND ANO_REGIST='2004'";
-                          break;
-                      case '5002':
-                          renderer.addBreak(0, 1000, new SimpleFillSymbol().setColor(new Color([85,31,60,1])));
-                          renderer.addBreak(1001, 10000, new SimpleFillSymbol().setColor(new Color([192,63,83,1])));
-                          renderer.addBreak(10001, 100000, new SimpleFillSymbol().setColor(new Color([255,89,94,1])));
-                          renderer.addBreak(100001, 500000 , new SimpleFillSymbol().setColor(new Color([255,229,88,1])));
-                          renderer.addBreak(500001, Infinity, new SimpleFillSymbol().setColor(new Color([0,197,184,1])));
-                          expresion="DESCRIPCIO='Número afiliados al régimen subsidiado' AND ANO_REGIST='2005'";
-                          break;
-                  } */
-
-
-
-              /* url=this.infoCapa.URL+'/'+this.infoCapa.NOMBRECAPA;
-              console.log(url);
-              this.layer=new FeatureLayer(url, {
-                  id:''+ this.infoCapa.id,
-                  definitionExpression:expresion,
-                  outFields : ['*'],
-                  //infoTemplate : new (InfoTemplate),
-                  mode: FeatureLayer.MODE_ONDEMAND
-              });
-              this.layer.setRenderer(renderer);  */
-
-              //1. CONSULTAR DATOS ESPACIALES
-
-              //2. CONSULTAR DATOS ALFANUMERICOS
-
-
-              //3. COMBINAR CONSULTAS
-
-
-              //4.CONSTRUIR FEATURE LAYERS
-
-
+              }));     
           }
-
-
-          /*  this.layer = new ArcGISDynamicMapServiceLayer(this.infoCapa.URL, {
-                  id: ''+ this.infoCapa.id,
-                  "showAttribution": true,
-                  outFields:["*"]
-                  //mode: FeatureLayer.MODE_ONDEMAND
-              });
-              this.layer.setVisibleLayers([this.infoCapa.NOMBRECAPA]); */
-
           break;
         default:
           console.log('TIPO DE SERVICIO NO SOPORTADO');
           this.quitarCapa();
-          break;
-
-          break;
-        case 'B': //CAPAS TEMATICAS
-          if (this.infoCapa.URLMETADATO === 'null') {
-            domClass.add(this.opcionMetadato, 'nodoDeshabilitado');
-            this.opcionMetadato.title =
-              'Consultar Metadato (No disponible)';
-          }
-          domClass.add(dom.byId(this.id), 'capaTematica');
-          this.imageIdWidgetCapa.src = require.toUrl(
-            'widgets/LayerExplorer/CapaWidget/images/ot.png');
-          this.imageIdWidgetCapa.title = "CAPA TEMÁTICA - SIGOT";
-          console.log(this.infoCapa);
-          contenedorCapasWidget = registry.byId('ContenerCapas_1');
-          this.feature = {};
-          this.feature.dataSS = contenedorCapasWidget.dataSS;
-          this.feature.spatialReference = new SpatialReference({
-            wkid: 3857
-          });
-
-          symbol = new SimpleFillSymbol();
-          symbol.setColor(new Color([150, 150, 150, 1]));
-
-          this.feature.sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-              new Color([0, 0, 0]), 2), new Color([0, 197, 184, 0])
-          );
-          /*geomParams  = {
-              where: "1=1",
-              outFields: ["*"],
-              returnGeometry: true,
-              f: "json"
-          };
-          url=this.feature.dataSS.url;
-          if(this.infoCapa.IDUNIDADESPACIAL==1)
-              url+="/"+this.feature.dataSS.municipios+"/query/";
-          else
-              url+="/"+this.feature.dataSS.departamentos+"/query/";
-          Script.get(url,{
-              jsonp: "callback",
-              query: geomParams
-          }).then(lang.hitch(this,function(response){
-              console.log('Geometria Capturada!');
-              console.log(response);
-              this.feature.data1 = response;*/
-          //CAPTURA DE GEOMETRIA
-          if (this.infoCapa.IDUNIDADESPACIAL == 1)
-            this.feature.data1 = JSON.parse(JSON.stringify(
-              contenedorCapasWidget.geomMunicipios));
-          else
-            this.feature.data1 = JSON.parse(JSON.stringify(
-              contenedorCapasWidget.geomDepartamentos));
-          //TABLA DE ATRIBUTOS
-          tableParams = {
-            where: "ID_DATO=" + this.infoCapa.IDDATO + " AND ANO='" +
-              this.infoCapa.name + "' AND ID_UNIDAD_ESPACIAL=" +
-              this.infoCapa.IDUNIDADESPACIAL,
-            outFields: "*",
-            returnGeometry: false,
-            f: "json"
-          }
-          url = this.feature.dataSS.url;
-          url += "/" + this.feature.dataSS.alfanumerico + "/query/";
-          Script.get(url, {
-            jsonp: 'callback',
-            query: tableParams
-          }).then(lang.hitch(this, function(response) {
-            console.log('Atributos Capturados!');
-            console.log(response);
-            this.feature.data2 = response;
-            //COMBINAR OBJETO fieldAliases
-            Object.assign(this.feature.data1.fieldAliases, this
-              .feature.data2.fieldAliases);
-            //COMBINAR ARRAY DE OBJETOS fields Y ELIMINAR REPETIDO
-            this.feature.data1.fields = this.feature.data1.fields
-              .concat(this.feature.data2.fields)
-            for (var i = 0; i < this.feature.data1.fields.length; ++
-              i) {
-              for (var j = i + 1; j < this.feature.data1.fields
-                .length; ++j) {
-                if (this.feature.data1.fields[i].name === this.feature
-                  .data1.fields[j].name)
-                  this.feature.data1.fields.splice(j--, 1);
-              }
-            }
-            //COMBINAR features
-            let match = false;
-            for (var i = 0; i < this.feature.data1.features.length; i++) {
-              match = false;
-              for (var j = 0; j < this.feature.data2.features.length; j++) {
-                if (this.feature.data1.features[i].attributes.COD_DANE ==
-                  this.feature.data2.features[j].attributes.COD_DANE
-                ) {
-                  Object.assign(this.feature.data1.features[i].attributes,
-                    this.feature.data2.features[j].attributes
-                  );
-                  this.feature.data2.features.splice(j, 1);
-                  match = true;
-                }
-              }
-              if (!match) {
-                this.feature.data1.features.splice(i, 1);
-                i--;
-              }
-            };
-            console.log(this.feature.data1);
-            //CREAR FEATURE COLECTION
-            this.feature.featureCollection = {
-              layerDefinition: {
-                geometryType: this.feature.data1.geometryType,
-                spatialReference: this.feature.spatialReference,
-                objectIdField: 'COD_DANE',
-                fields: this.feature.data1.fields,
-                drawingInfo: {
-                  renderer: {
-                    type: "simple",
-                    symbol: this.feature.sfs
-                  }
-                },
-                name: this.name
-              },
-              featureSet: {
-                features: this.feature.data1.features,
-                geometryType: this.feature.data1.geometryType,
-                spatialReference: this.feature.spatialReference
-              }
-            };
-            console.log('Feature collection construido');
-            console.log(this.feature.featureCollection);
-            this.layer = new FeatureLayer(this.feature.featureCollection, {
-              id: '' + this.infoCapa.id
-
-            });
-            //console.log(this.infoCapa);
-            //RANGO DE COLORES
-            rangeParams = {
-              where: "ID_DATO=" + this.infoCapa.IDDATO,
-              outFields: "*",
-              returnGeometry: false,
-              orderByFields: "orden",
-              f: "json"
-            };
-            url = this.feature.dataSS.url;
-            url += "/" + this.feature.dataSS.rangos + "/query/";
-            Script.get(url, {
-              jsonp: 'callback',
-              query: rangeParams
-            }).then(lang.hitch(this, function(response) {
-              console.log('Capurado los Rangos');
-              console.log(response);
-
-              symbol = new SimpleFillSymbol();
-              symbol.setColor(new Color([150, 150, 150, 0]));
-              this.feature.renderer = new ClassBreaksRenderer(
-                symbol, "VALOR");
-              this.rangos = response.features;
-              for (var i = 0; i < this.rangos.length; i++) {
-                console.log(this.rangos[i]);
-                this.feature.renderer.addBreak(this.rangos[
-                    i].attributes.VALOR_MINIMO,
-                  this.rangos[i].attributes.VALOR_MAXIMO,
-                  new SimpleFillSymbol().setColor(new Color(
-                    [this.rangos[i].attributes.COLOR_RED,
-                                        this.rangos[i].attributes.COLOR_GREEN,
-                                        this.rangos[i].attributes.COLOR_BLUE,
-                                        0.8
-                                    ]))
-                );
-              }
-              //ULTIMO RANGO
-              /* j = this.rangos.length-1;
-              this.feature.renderer.addBreak(this.rangos[j].attributes.VALOR_MINIMO,
-                  Infinity,
-                  new SimpleFillSymbol().setColor(new Color([
-                      this.rangos[j].attributes.COLOR_RED,
-                      this.rangos[j].attributes.COLOR_GREEN,
-                      this.rangos[j].attributes.COLOR_BLUE,
-                      0.8
-                  ]))
-              ); */
-              this.layer.setRenderer(this.feature.renderer);
-              //this.map.addLayers([this.layer]);
-              this.poblarAtributos(this.layer.fields,
-                true);
-              this.map.addLayer(this.layer);
-              //this.layer.on("load",lang.hitch(this,function(event){
-              this.checkSimbologia();
-              //}));
-            }));
-
-
-          }));
-          /* })); */
           break;
         case 'C': //ARCHIVO EXTERNO EXTERNAS
           domClass.add(dom.byId(this.id), 'capaExterna');
@@ -1054,7 +694,8 @@ define([
         obj = dijit.byId(this.id.substring(6));
         obj.set("checked", false);
         //VERIFICAR SI NO HAY TEMATICAS REPETIDAS EN AREA DE TRABAJO
-        contenedorCapasWidget = registry.byId('ContenerCapas_1');
+        //contenedorCapasWidget = registry.byId('ContenerCapas_1');
+        contenedorCapasWidget = registry.byNode(query('.layerexplorer')[0]);
         listaCapas = contenedorCapasWidget.listarCapas();
         contadorTematicas = 0;
         for (var i = 0; i < listaCapas.length; i++) {

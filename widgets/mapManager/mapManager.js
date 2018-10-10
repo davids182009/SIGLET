@@ -13,10 +13,24 @@ define([
     'esri/dijit/HomeButton',
     "esri/dijit/Scalebar",
     "esri/dijit/OverviewMap",
+    "esri/geometry/Extent",
+    "esri/SpatialReference",
     'xstyle/css!./style.css'
-], function(declare, _WidgetBase, _TemplatedMixin,
-  Map, Topic, lang, esriConfig, template, HomeButton, Scalebar,
-  OverviewMap) {
+], function(
+    declare,
+    _WidgetBase,
+    _TemplatedMixin,
+    Map,
+    Topic,
+    lang,
+    esriConfig,
+    template,
+    HomeButton,
+    Scalebar,
+    OverviewMap,
+    Extent,
+    SpatialReference
+  ){
 
   return declare([_WidgetBase, _TemplatedMixin], {
 
@@ -42,6 +56,10 @@ define([
       esriConfig.defaults.map.zoomRate = 1; // default zoomRate: 25
 
       this.config = e;
+      //Definicion de extent y sistema de coordenadas
+      //customExtentAndSR = new Extent(-84.77,-4.23,-66.87,15.51,new SpatialReference({"wkid":4686}));
+      //customExtentAndSR = new Extent({"xmin":-3805207,"ymin":-3763687,"xmax":3692296,"ymax":1775125,"spatialReference":{"wkid":102003}});
+      //this.config.extent = customExtentAndSR;
       this.map = new Map(this.mapNode, this.config);
 
       this.map.on("load", lang.hitch(this, function(m) {
@@ -49,7 +67,7 @@ define([
         // this.masExt = m.map.extent;
       }));
 
-      this.map.on("extent-change", lang.hitch(this, function(ext) {
+      /* this.map.on("extent-change", lang.hitch(this, function(ext) {
         if (maxExtent != null) {
           if ((ext.extent.xmin < maxExtent.xmin) ||
             (ext.extent.ymin < maxExtent.ymin) ||
@@ -58,7 +76,7 @@ define([
             this.map.setExtent(maxExtent);
           }
         }
-      }));
+      })); */
       esriConfig.defaults.io.proxyUrl =
         "http://172.28.9.212:8090/proxy/proxy.jsp"
       esriConfig.defaults.io.alwaysUseProxy = false;
@@ -75,6 +93,7 @@ define([
         attachTo: "bottom-right"
       });
       this.overviewMapDijit.startup();
+      //mapa = this.map;
     }
   });
 });

@@ -108,10 +108,12 @@ define([
 
       } else {
         console.log('El Widget ya fue creado' + this.id);
-        if(!MenuWidget.visibilidadContent){
+        MenuWidget.openContent();
+        MenuWidget.changeWidget(configWidget_Btn);
+        /* if(!MenuWidget.visibilidadContent){
           MenuWidget.visibilidadContent=true;
           domClass.remove(MenuWidget.box_content_widget,'hide_left');
-        }
+        } */
       }
 
 
