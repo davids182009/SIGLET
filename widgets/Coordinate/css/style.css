@@ -90,9 +90,80 @@
     }
 
     .content_escala >li:nth-child(1){
+      flex: 0 0 60px;
+      -webkit-flex: 0 0 60px;
+      -moz-flex: 0 0 60px;
+      -ms-flex: 0 0 60px;   
+      line-height: 34px;
+      font-size: 15px;
+      font-weight: 550;
+    }
+    .content_escala >li:nth-child(2){
+      flex:auto;
+      -webkit-flex:auto;
+      -moz-flex:auto;
+      -ms-flex:auto;
+    }
+      .select_coordinate select{
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        outline: 0;
+        box-shadow: none;
+        border: 0 !important;
+        background: #3090AC;
+        background-image: none;
+        color: #fff;
+        cursor: pointer;    
+        height: 100%;
+        width: 100%;    
+      }
+      .select_coordinate{
+        width: 96%;
+        height: 28px;
+        position: relative;
+        display: block;
+        line-height:30px;
+        background: #3090AC;
+        overflow: hidden;
+        border-radius: 4px;
+        margin-top: 4px;
+      }
+      .select_coordinate select::-ms-expand {
+        display: none;
+      }
+      .select_coordinate::after{
+        content: '\25BC';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        padding: 0 4px;
+        margin:3px 3px;
+        border: solid 1px #FFFFFF;
+        background: #3090AC;
+        border-radius: 50%;
+        pointer-events: none;
+        -webkit-transition: .25s all ease;
+        -o-transition: .25s all ease;
+        transition: .25s all ease;
+        line-height: 24px;
+      }
+      .select_coordinate:hover::after{
+        color: #00636B;
+        border-color: #00636B;
+      }
+
+    .content_escala >li:nth-child(3){
+      flex: 0 0 60px;
+      -webkit-flex: 0 0 60px;
+      -moz-flex: 0 0 60px;
+      -ms-flex: 0 0 60px;
     }
       .content_escala >li:nth-child(3) div{
-        height: 50%;     
+        height: 48%;     
+        margin-top: 2%
       }
   .content_coordenada{
     margin-top: 3px;

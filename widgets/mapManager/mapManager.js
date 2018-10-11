@@ -93,7 +93,7 @@ define([
         attachTo: "bottom-right"
       });
       this.overviewMapDijit.startup();
-      //mapa = this.map;
+      mapa = this.map;
     }
   });
 });
