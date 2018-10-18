@@ -566,7 +566,7 @@ define([
             console.log(job);
             this.idExternos++;
             job['TIPO']='N/A';
-            var cp={
+            let cp={
                 id:'panel_capa_'+this.idExternos,
                 name:job.baseFileName,               
                 map:this.map,

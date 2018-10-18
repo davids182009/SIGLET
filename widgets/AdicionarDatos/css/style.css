@@ -1,0 +1,81 @@
+.AdicionarDatos{
+    width: 100%;
+    height: 100%;
+}
+
+.AdicionarDatos .box.is-dragover {
+    background-color:rgba(255, 255, 255, 0.5);
+    border-color: #00636B;
+}
+
+    .AdicionarDatos form{
+        width: calc(100% - 22px);
+        height: calc(100% - 22px);
+        margin: 10px;
+        border: 2px dashed #3090AC;
+        position: relative;
+        text-align: center;
+        border-radius: 3px;
+    }
+        .AdicionarDatos .box__input{
+            position: absolute;
+            top: 50%;
+            left: 0px;
+            transform: translateY(-100px);
+            width: 100%;
+            height: 0px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .AdicionarDatos .box__input i{
+            font-size: 9rem;            
+        }
+        .box__file{
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+    
+        .box__file + label {
+            height: 25px;
+            width: 100px;
+            border-radius: 2px;
+            background-color:#3090AC;
+            display:block;
+            line-height: 25px;
+            color: #FFFFFF;
+            cursor: pointer;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .box__file + label:hover {
+            background-color: #00636B;
+        }
+
+.box.is-dragover
+{
+        
+}
+
+
+.AdicionarDatos .box__dragndrop,
+.AdicionarDatos .box__uploading,
+.AdicionarDatos .box__success,
+.AdicionarDatos .box__error {
+  display: none;
+}
+
+    
+
+    
+
+.AdicionarDatos .box.has-advanced-upload {
+   
+}
+.AdicionarDatos .box.has-advanced-upload .box__dragndrop {
+    display: inline;
+}
+

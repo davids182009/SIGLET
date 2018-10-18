@@ -1,0 +1,13 @@
+<div>        
+    <form id="uploadForm" class="box" method="post" action="" enctype="multipart/form-data" data-dojo-attach-point="formulario">
+        <div class="box__input">
+            <i class="icon ion-archive"></i><br>
+            Arrastrar archivos aquí o<br>
+			<input type="file" name="file" id="inFile" class="box__file" data-dojo-attach-point="formularioInput">
+			<label for="file" data-dojo-attach-event="onclick:openFileWindow">Examinar</label>
+		</div>        
+        <div class="box__uploading">Uploading&hellip;</div>
+        <div class="box__success">Done!</div>
+        <div class="box__error">Error! <span></span>.</div>
+    </form>           
+</div>

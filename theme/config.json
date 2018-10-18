@@ -31,14 +31,14 @@
     }
   ],
   "widgetGroup": [{
-      "name": "Test Grupo A",
-      "icon": "A.png",
+      "name": "Importar",
+      "icon": "importar.png",
       "widgets": [{
           "id": 5,
-          "name": "Test GA-2",
+          "name": "Adicionar Información Geografica",
           "version": "1.0",
-          "uri": "widgets/test",
-          "icon": "consultas.png"
+          "uri": "widgets/AdicionarDatos",
+          "icon": "icon.png"
         },
         {
           "id": 6,
