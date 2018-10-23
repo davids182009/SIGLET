@@ -18,7 +18,7 @@
             <ul class="boxMenu_content_dock" data-dojo-attach-point="dock_widgets">
 
             </ul>
-            <div class="boxMenu_content_inner hide_left" data-dojo-attach-point="box_content_menu">
+            <div class="boxMenu_content_inner hide_left box_content_options" data-dojo-attach-point="box_content_menu">
                 <div class="boxMenu_content_inner_canvas">
                     <div class="BC_head BGcolorB">
                         <div class="BC_head_left">            
@@ -66,7 +66,8 @@
                                 
                         </div>
                         <div class="boxMenu_content_right">
-                            <span id="boxMenu_content_right_close" data-dojo-attach-event="onclick:closeContent"><i class="icon ion-android-close"></i></span>
+                            <div class="boxMenu_content_right_btn" data-dojo-attach-point="closeIconWidget" data-dojo-attach-event="onclick:closeContent"><i class="icon ion-android-close"></i></div>
+                            <div class="boxMenu_content_right_btn" data-dojo-attach-event="onclick:closeContent"><i class="icon ion-ios-arrow-back"></i></div>
                         </div>
                     </div>
                 </div>                

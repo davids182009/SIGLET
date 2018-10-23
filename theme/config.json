@@ -4,60 +4,56 @@
       "name": "Explorador de Capas",
       "version": "1.0",
       "uri": "widgets/LayerExplorer",
-      "icon": "icon.png"
+      "icon": "icon.png",
+      "closable":false,
+      "openOnLoad" :true
     },
     {
       "id": 2,
-      "name": "Test B",
+      "name": "Acto Administrativo limite",
       "version": "1.0",
-      "uri": "widgets/test",
-      "icon": "consultas.png"
-    },
-    {
-      "id": 3,
-      "name": "Test C",
-      "version": "1.0",
-      "uri": "widgets/test",
-      "icon": "consultas.png"
-    },
-    {
-      "id": 4,
-      "name": "Dibujar",
-      "version": "1.0",
-      "uri": "widgets/Dibujo",
-      "icon": "compass.svg",
-      "top": "30px",
-      "left": "500px"
-    }
+      "uri": "widgets/AnalisisLimites",
+      "icon": "acto-admin.png"
+    }        
   ],
   "widgetGroup": [{
-      "name": "Importar",
-      "icon": "importar.png",
-      "widgets": [{
-          "id": 5,
-          "name": "Adicionar Información Geografica",
-          "version": "1.0",
-          "uri": "widgets/AdicionarDatos",
-          "icon": "icon.png"
-        },
+      "name": "Consultas",
+      "icon": "consultas.png",
+      "widgets": [
         {
           "id": 6,
           "name": "Test GA-3",
           "version": "1.0",
           "uri": "widgets/test",
           "icon": "consultas.png"
-        }
+        },
+        {
+          "id": 10,
+          "name": "Test GC-2",
+          "version": "1.0",
+          "uri": "widgets/test",
+          "icon": "consultas.png"
+        }        
       ]
     },
     {
-      "name": "Test Grupo B",
-      "icon": "D.png",
+      "name": "Procesos",
+      "icon": "procesos.png",
       "widgets": [{
           "id": 7,
           "name": "Test GB-1",
           "version": "1.0",
           "uri": "widgets/test",
           "icon": "consultas.png"
+        },
+        {
+          "id": 4,
+          "name": "Dibujar",
+          "version": "1.0",
+          "uri": "widgets/Dibujo",
+          "icon": "dibujar.png",
+          "top": "30px",
+          "left": "500px"
         },
         {
           "id": 8,
@@ -69,8 +65,35 @@
       ]
     },
     {
-      "name": "Test Grupo C",
-      "icon": "C.png",
+      "name": "Importar",
+      "icon": "importar.png",
+      "widgets": [
+        {
+          "id": 5,
+          "name": "Adicionar Información Geografica",
+          "version": "1.0",
+          "uri": "widgets/AdicionarDatos",
+          "icon": "icon.png"
+        },
+        {
+          "id": 9,
+          "name": "Test GC-1",
+          "version": "1.0",
+          "uri": "widgets/test",
+          "icon": "consultas.png"
+        },
+        {
+          "id": 10,
+          "name": "Test GC-2",
+          "version": "1.0",
+          "uri": "widgets/test",
+          "icon": "consultas.png"
+        }
+      ]
+    },
+    {
+      "name": "Exportar",
+      "icon": "exportar.png",
       "widgets": [{
           "id": 9,
           "name": "Test GC-1",

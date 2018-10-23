@@ -103,8 +103,7 @@ define([
           let widthBox=41;
           widthBox = widthBox*(1+listaWidgetSingle.length+ listaWidgetGroup.length);
           domStyle.set(this.box_btns,'width',widthBox+'px');
-          //RECORRIDO DE WIDGETS INDIVIDUALES
-          
+          //RECORRIDO DE WIDGETS INDIVIDUALES          
           let listaWidgets = [];
           array.forEach(listaWidgetSingle, function(item) {
             new MenuWidget__Btn({
@@ -137,7 +136,11 @@ define([
           //CONSTRUCCION DE STORE CON INFORMACIÓN DE LOS WIDGETS DISPONIBLES
           this.storeWidgets = new Memory({
             data: listaWidgets
-          }); 
+          });
+          //ABRIR WIDGETS POR DEFECTO
+          array.forEach(this.storeWidgets.query({openOnLoad:true}),function(item){
+            this._openWidget(item.id);
+          },this); 
         }));
     },
     /**
@@ -211,7 +214,50 @@ define([
         }, 400,this.btn_menu);
         }        
     },
+    _openWidget: function(id) {
+      console.log('Abrir Widget');
+ /*      let nodo = domConstruct.create("div", {
+        id: 'Mipanel'
+      }, window.body(), 'last'); */
+      let MenuWidget = this;
+      let configWidget_Btn = this.storeWidgets.get(id);
+      if (!configWidget_Btn.opened) {
+        configWidget_Btn.opened = true;
+        if(!MenuWidget.visibilidadContent)
+          MenuWidget.openContent();
+          
+        require([
+                    configWidget_Btn.uri + '/widget',
+                    'xstyle/css!./' + configWidget_Btn.uri + '/css/style.css'
+                ], function(customWidget){
+          console.log(configWidget_Btn);
+          //CREAR NODO EN DOM QUE CONTIENE WIDGET          
+          let nodeCustomWidget = domConstruct.toDom('<div id="widget_box_'+configWidget_Btn.id+'" class="widget_content"></div>');
+          domConstruct.place(nodeCustomWidget,MenuWidget.widget_deploy,'last');
+          //CREAR WIDGET E INSERTAR A NODO CONTENEDOR
+          let cw = new customWidget({
+            id:'customWidget_'+configWidget_Btn.id
+          });
+          cw.placeAt(nodeCustomWidget,'last');
+          cw.startup();
+          //CREAR ICONO LATERAL QUE INDICA QUE ESTA ABIERTO
+          MenuWidget.addIconWidget(configWidget_Btn);                   
+          console.log('widget ' + configWidget_Btn.id +' fue creado');
+        });
 
+
+      } else {
+        console.log('El Widget ya fue creado' + this.id);
+        MenuWidget.openContent();
+        MenuWidget.changeWidget(configWidget_Btn);
+        /* if(!MenuWidget.visibilidadContent){
+          MenuWidget.visibilidadContent=true;
+          domClass.remove(MenuWidget.box_content_widget,'hide_left');
+        } */
+      }
+
+
+    },
     closeContent:function(event){
       domClass.add(this.box_content_widget,'hide_left');
       this.visibilidadContent=false;
@@ -229,40 +275,48 @@ define([
       if(this.widgetTarget != 0){
         let targetActual = dom.byId('widget_icon_'+this.widgetTarget);
         domClass.remove(targetActual,'selected');
-      }else
-        this.widgetTarget = item.id;
+      }      
       let iconoLateral = domConstruct.toDom('<li class="selected" id="widget_icon_'+item.id+'" title="'+item.name+'" ><img src="'+ item.uri + '/images/' + item.icon +'"></li>');          
       domConstruct.place(iconoLateral,this.dock_widgets,'last');
       this.openedWidgets.push(item.id);
       on(iconoLateral,'click',lang.hitch(this,this.handleChangeWidget(item)));
       this.changeWidget(item);
     },
-
     handleChangeWidget:function(item){
       return function(event){
         this.openContent();
         this.changeWidget(item);            
       }
     },
-
     changeWidget: function(item){
-      let id = item.id;
+      let id = item.id;      
+      let focusWidget=null;
       if(id != this.widgetTarget){
+        if(this.widgetTarget == 0) //FIRST TIME
+          this.widgetTarget = id;
         let pos = -1;
         for(let i=0;i<this.openedWidgets.length;i++){
           if(this.openedWidgets[i] == id){
             pos = i;
             break;
           }
-        }          
+        }    
+        focusWidget = this.storeWidgets.get(id);
+        if(focusWidget.closable != undefined && !focusWidget.closable)
+          domStyle.set(this.closeIconWidget,'display','none');
+        else
+          domStyle.set(this.closeIconWidget,'display','block');
+
         let targetActual = dom.byId('widget_icon_'+this.widgetTarget);
         domClass.remove(targetActual,'selected');
-        pos=-100*pos;
-        domStyle.set(this.widget_louver,'margin-top',pos+'vh');
+        let height = domStyle.get(widget_deploy,'height');
+        pos=-height*pos;
+        domStyle.set(this.widget_louver,'margin-top',''+pos+'px');
         this.widgetTarget = id;          
         let targetNuevo = dom.byId('widget_icon_'+id);
         domClass.add(targetNuevo,'selected');
-        this.widget_title.innerHTML = item.name;        
+        this.widget_title.innerHTML = item.name;   
+        this.widget_title.title =  item.name;    
       }
     }
 

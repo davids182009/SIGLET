@@ -27,6 +27,25 @@
             margin-left: auto;
             margin-right: auto;
         }
+
+        .AdicionarDatos .box__input.inProcess{
+            animation: upDown 0.8s ease-in 0s infinite normal none;
+        }
+        .AdicionarDatos .box__input.inProcess label,
+        .AdicionarDatos .box__input.inProcess span{
+            display: none;
+        }
+        @keyframes upDown{
+            0% {
+                top:50%;
+            }
+            50% {
+                top: 46%;
+            }
+            100%{
+                top: 50%;
+            }
+        }
         .AdicionarDatos .box__input i{
             font-size: 9rem;            
         }
@@ -54,6 +73,11 @@
         .box__file + label:hover {
             background-color: #00636B;
         }
+        .type-icon{
+            width: 45px;
+            height: auto;
+            display: none;
+        }
 
 .box.is-dragover
 {
@@ -68,9 +92,7 @@
   display: none;
 }
 
-    
 
-    
 
 .AdicionarDatos .box.has-advanced-upload {
    

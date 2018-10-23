@@ -61,7 +61,6 @@
                 position: absolute;
                 top: 0px;
                 left: 0px;
-                border-right: 1px solid red;
                 transition:  all .3s ease-in;
             }
             .hide_top{
@@ -113,7 +112,7 @@
                 width: 0px;                
                 margin: 0px;
                 padding: 0px;
-                z-index: 2;
+                z-index: 3;
             }
             .boxMenu_content_dock > li{
                 padding: 0px;
@@ -151,10 +150,18 @@
                 width: 350px;
                 height: 100%;                                
                 box-shadow: 0 5px 5px 1px black;
-                transition: all .3s ease-in; 
-                z-index: 1;
+                transition: all .3s ease-in;                 
               
-            }                          
+            }   
+            
+            .box_content_widget{
+                z-index: 1;
+            }
+
+            .box_content_options{
+                z-index: 2;
+            }
+            
                 .boxMenu_content_inner_canvas{
                     display: flex;
                     display: -webkit-flex;
@@ -221,11 +228,12 @@
                     color: #FFFFFF;
                     font-weight: bold;
                     overflow: hidden;
-                    
+                    height: 20px;
+                    line-height: 20px;
                 }
                 .BC_head_center_widget{
                     background-image: url(images/cabezote-fondo-herramientas2.png);
-                    background-size: cover;
+                    background-size: cover;                
                 }
                 .BC_head_right{
                     flex: 1;
@@ -257,6 +265,7 @@
                 -ms-flex-direction: row ;
                 -webkit-flex-direction: row ;
                 -moz-flex-direction: row ;
+                max-height: calc(100% - 20px);
             }
                 .boxMenu_content_left_blank{
                     flex: 0 0 50px;
@@ -275,6 +284,7 @@
                     background: url('images/Patron-fondo-ventanas.png');
                     background-repeat:repeat;
                     background-size: 46px 27px;
+                    max-height: calc(100% - 20px);
                 }   
                     .boxMenu_options_btn--list{
                         width: 100%;      
@@ -309,7 +319,7 @@
                     }
                     .widget_content{
                         width: 100%;
-                        height: 100vh;
+                        height: calc(100vh - 80px);
                         overflow: hidden;
                     }  
 
@@ -323,11 +333,11 @@
                     color: #3090AC;
 
                 }
-                    #boxMenu_content_right_close{
+                    .boxMenu_content_right_btn{
                         cursor: pointer;     
                         font-size: 16px;
                         font-weight: bold;                   
                     }
-                    #boxMenu_content_right_close:hover{
+                    .boxMenu_content_right_btn:hover{
                         text-shadow: 1px 1px 1px black;
                     }

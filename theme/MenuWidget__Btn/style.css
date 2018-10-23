@@ -3,6 +3,10 @@
     height: 40px;
     cursor: pointer;
     float: left;    
+    transition: opacity .3s ease-in;
+}
+.boxMenu_options_btn:hover{
+    opacity: 0.7;
 }
     .boxMenu_options_btn img{
         width: 100%;
