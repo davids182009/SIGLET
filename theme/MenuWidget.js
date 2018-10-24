@@ -1,17 +1,39 @@
 /**
+ * MenuWidget
+ * 
  * Dojo AMD (Asynchronous Module Definition )
- * Widget que representa la estructura de contenedores principales
+ * Widget que  gestiona la creacion de un menu mediante el que se 
+ * crea, organiza y destruye otros widget que proporcionan funcionalidad
+ * por demanda.
+ * El listado de widgets disponibles se carga del archivo config.json
+ * 
  * @version 1.0
  * @author Juan Carlos Valderrama Gonzalez<dyehuty@gmail.com>
- * History
- *
+ * @module theme/MenuWidget
+ * @augments dojo/_base/declare
+ * @augments dijit/_WidgetBase
+ * @augments dijit/_TemplatedMixin
+ * @augments dijit/_WidgetsInTemplateMixin
+ * @augments dojo/request
+ * @augments dojo/_base/lang
+ * @augments dojo/dom-construct
+ * @augments dojo/_base/array
+ * @augments dojo/dom-class
+ * @augments dojo/dom
+ * @augments dojo/topic
+ * @augments ./MenuWidget__Btn/MenuWidget__Btn
+ * @augments dojo/text!./template.html
+ * @augments dojox/layout/Dock
+ * @augments dojo/_base/window
+ * @augments dojo/store/Memory
+ * @augments dijit/registry
+ * @augments dojo/dom-style
+ * @augments dojo/on
+ * @augments xstyle/css!./style.css
+ * 
  */
 
-/**
- * Modulo que representa el menu de acceso a funcionalidades (Widgets) disponibles.
- * Las funcionalidades disponibles se obtiene de JSON de configuración.
- * @module MenuWidget
- */
+    
 
 define([
     'dojo/_base/declare',
@@ -40,54 +62,75 @@ define([
   domConstruct, array, domClass, dom, Topic,
   MenuWidget__Btn, template, Dock, win,
   Memory, registry,domStyle,on) {
-  /**
-   * Crea un nuevo MenuWidget (Constructor)
-   * @class
-   * @alias module:MenuWidget
-   *
-   */
+  
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
-
+    /**
+     * @property {string} baseClass - Valor del atributo class que se aplicara al nodo principal en el template
+     * @instance
+     */
     baseClass: 'MenuWidget',
+    /**
+     * @property {string} template - Cadena de texto que representa un template HTML cargado del archivo template.html
+     * @instance
+     */
     templateString: template,
+    /**
+     * @property {string} id - Identificador del widget
+     * @instance
+     */
     id: 'MenuWidgetOficina205',
+    /**
+     * @property {Object} config - Almacena el json del archivo "config.json"
+     * @instance
+     */
     config: null,
-    dock: null,
+    /**
+     * @property {Object} storeWidgets - Objeto tipo dojo/store/Memory que almacena el listado de widgets disponibles para abrir 
+     * @instance
+     */
     storeWidgets: null,
+    /**
+     * @property {boolean} visibilidadBtn - Bandera que indica si el menu de botones esta visible (desplegado) 
+     * @instance
+     */
     visibilidadBtn:false,
+    /**
+     * @property {boolean} visibilidadContent - Bandera que indica si el contenedor de widgets desplegados esta visible (desplegado) 
+     * @instance
+     */
     visibilidadContent:false,
+    /**
+     * @property {boolean} visibilidadListWidget - Bandera que indica si el contenedor agrupador de widgets esta visible
+     * @instance
+     */
     visibilidadListWidget:false,
+    /**
+     * @property {Number} widgetTarget - Identificador el widget que esta desplegado y visible en el contenedor de Widgets (Uno a la vez)
+     * @instance
+     */
     widgetTarget:0,
+    /**
+     * @property {array} openedWidgets - Lista de widgets que han sido abiertos
+     * @instance
+     */
     openedWidgets:[],
     /**
      * Funcion del ciclo de vida del Widget en Dojo, se dispara cuando
      * todas las propiedades del widget son definidas y el fragmento
      * HTML es creado, pero este no ha sido incorporado en el DOM.
-     *
-     * @function
+     * @memberof module:theme/MenuWidget#
      *
      */
     postCreate: function() {
       this.inherited(arguments);
-      console.log('**** Widget MenuWidget');
-      console.log(this);
       //SE CARGA JSON DE CONFIGURACIÓN Y CONSTRUYE MENU
       this._loadWidgetInventory();
-      //SE CONSTRUYE DOCK PARA ALOJAR WIDGETS TIPO FLOATING
-      /* let nodo = domConstruct.create("div", {
-        id: 'dockWidgets'
-      }, win.body(), 'last'); */
-      /* this.dock = new Dock({
-        style: 'position:absolute;bottom:0px,left:0px;background: #E74C3C;height: 40px;width: 100%;'
-      }, nodo); */
-
     },
     /**
-     * Funcion que cargar archivo config.json, que posteriormente interpreta para
-     * crear los botones grupales o individuales definidos en el archivo de
-     * configuración.
-     *
-     * @function
+     * Función que carga archivo config.json del cual se extrae el
+     * listado de widgets para renderizar, construir el menu y 
+     * comportamiento reactive
+     * @memberof module:theme/MenuWidget#
      *
      */
     _loadWidgetInventory: function() {
@@ -144,36 +187,32 @@ define([
         }));
     },
     /**
-     * Funcion que cierra visualmente la lista de widget de un grupo.
-     * data-dojo-attach-event en HTML template
-     *
-     * @callback
-     * @param {Object} - Objeto de evento click
-     *
+     * Cierra contenedor que agrupa widgets
+     * @memberof module:theme/MenuWidget#
+     * @param {object} event - Objeto evento click
      */
     CloseListWidget: function(event) {      
       domClass.add(this.box_content_menu,'hide_left');
       this.visibilidadListWidget = false;
     },
+    /**
+     * Abre contenedor que agrupa widgets
+     * @memberof module:theme/MenuWidget#
+     *
+     */
     openListWidget: function(){
       domClass.remove(this.box_content_menu,'hide_left');
       this.visibilidadListWidget = true;
       if(this.visibilidadContent)
-        this.closeContent(null);
+        this.hideContent(null);
     },
     /**
-     * Construye lista de widgets de un boton agrupador
-     *
-     * @function
-     * @param {array} list -Arreglo de objetos con información de widgets
-     *
-     */
-    poblarListWidget: function(list,name) {
-      console.log('Poblando lista');
-      //nodoChildrenWidget = dom.byId('listWidget');
-      //domClass.add(nodoChildrenWidget, 'listWidgetDeploy');
-      //Destruir Widgets previos
-      //Menu_deploy es un attach point en el HTML template
+     * Construye lista de widgets de una arupación
+     * @memberof module:theme/MenuWidget#
+     * @param {array} list - Listado de objetos con parametros de widgets
+     * @param {String} namne - Nombre del grupo
+     */    
+    poblarListWidget: function(list,name){
       let widgetPrevios = registry.findWidgets(this.Menu_deploy);
       for (let i = 0; i < widgetPrevios.length; i++) {
         widgetPrevios[i].destroy();
@@ -196,7 +235,11 @@ define([
         }).placeAt(this.Menu_deploy, 'last');
       }, this);
     },
-
+    /**
+     * Muestra o oculta menu
+     * @memberof module:theme/MenuWidget#
+     * @param {object} event - Objeto del evento click
+     */    
     cambiarVisibilidadBtn:function(event){        
         if(this.visibilidadBtn){ //LOS BOTONES SON VISIBLES
           this.visibilidadBtn = false;
@@ -214,11 +257,12 @@ define([
         }, 400,this.btn_menu);
         }        
     },
-    _openWidget: function(id) {
-      console.log('Abrir Widget');
- /*      let nodo = domConstruct.create("div", {
-        id: 'Mipanel'
-      }, window.body(), 'last'); */
+    /**
+     * Muestra o oculta menu
+     * @memberof module:theme/MenuWidget#
+     * @param {object} event - Objeto del evento click
+     */ 
+    _openWidget: function(id) {      
       let MenuWidget = this;
       let configWidget_Btn = this.storeWidgets.get(id);
       if (!configWidget_Btn.opened) {
@@ -242,27 +286,29 @@ define([
           cw.startup();
           //CREAR ICONO LATERAL QUE INDICA QUE ESTA ABIERTO
           MenuWidget.addIconWidget(configWidget_Btn);                   
-          console.log('widget ' + configWidget_Btn.id +' fue creado');
+          console.log('[CREATE] - widget ' + configWidget_Btn.id +' fue creado');
         });
 
 
       } else {
-        console.log('El Widget ya fue creado' + this.id);
+        console.warn('[WARN] - El Widget con id:'+this.id+' ya ha sido creado');
         MenuWidget.openContent();
-        MenuWidget.changeWidget(configWidget_Btn);
-        /* if(!MenuWidget.visibilidadContent){
-          MenuWidget.visibilidadContent=true;
-          domClass.remove(MenuWidget.box_content_widget,'hide_left');
-        } */
+        MenuWidget.changeWidget(configWidget_Btn);      
       }
-
-
     },
-    closeContent:function(event){
+    /**
+     * Oculta contenedor de widgets desplegados
+     * @memberof module:theme/MenuWidget#
+     * @param {object} event - Objeto del evento clic
+     */
+    hideContent:function(event){
       domClass.add(this.box_content_widget,'hide_left');
       this.visibilidadContent=false;
     },
-
+    /**
+     * Muestra contenedor de widgets desplegados
+     * @memberof module:theme/MenuWidget#
+     */
     openContent:function(){
       if(!this.visibilidadContent){
         domClass.remove(this.box_content_widget,'hide_left');
@@ -271,6 +317,40 @@ define([
           this.CloseListWidget(null);
       }
     },    
+    /**
+     * Destruye icono, contenedor y widget que este actualmente visible
+     * @memberof module:theme/MenuWidget#
+     * @param {object} event - Objeto del evento clic
+     */
+    closeWidget:function(event){
+      var iconWidget = dom.byId('widget_icon_'+this.widgetTarget);
+      var widget = registry.byId('customWidget_'+this.widgetTarget);
+      var idWidget = this.widgetTarget;
+      var indexOpenedWidgets = -1;
+      this.hideContent(null);
+      //Eliminar de variables de control global Widget
+      this.widgetTarget = 0;
+      indexOpenedWidgets = this.openedWidgets.indexOf(idWidget);
+      if(indexOpenedWidgets > -1)
+        this.openedWidgets.splice(indexOpenedWidgets,1);
+      this.storeWidgets.get(idWidget).opened = false;
+      //Animación y destruccion
+      on(iconWidget,'animationend', function(event){
+        console.log('widget Destruido');
+        widget.destroy();
+        domConstruct.destroy('widget_icon_'+idWidget);
+        domConstruct.destroy('widget_box_'+idWidget);
+      });
+      domClass.add(iconWidget,'destroying');
+      //on('animationend ')
+      //this.widgetTarget;
+    },
+    /**
+     * Crea un icono en dock lateral que indica que el widget ha sido desplegado
+     * mediante este se puede acceder al widget en caso que este oculto
+     * @memberof module:theme/MenuWidget#
+     * @param {object} item - Objeto con parametros de un widget
+     */
     addIconWidget:function(item){
       if(this.widgetTarget != 0){
         let targetActual = dom.byId('widget_icon_'+this.widgetTarget);
@@ -282,12 +362,22 @@ define([
       on(iconoLateral,'click',lang.hitch(this,this.handleChangeWidget(item)));
       this.changeWidget(item);
     },
+    /**
+     * Maneja el evento click del dock lateral para visualizar un widget desplegado
+     * @memberof module:theme/MenuWidget#
+     * @param {object} item - Objeto con parametros de un widget
+     */
     handleChangeWidget:function(item){
       return function(event){
         this.openContent();
         this.changeWidget(item);            
       }
     },
+    /**
+     * Hace visible el widget indicado en el objeto de entrada item
+     * @memberof module:theme/MenuWidget#
+     * @param {object} item - Objeto con parametros de un widget
+     */
     changeWidget: function(item){
       let id = item.id;      
       let focusWidget=null;
@@ -318,12 +408,6 @@ define([
         this.widget_title.innerHTML = item.name;   
         this.widget_title.title =  item.name;    
       }
-    }
-
-
-    
-    
+    }       
   });
-
-
 });
