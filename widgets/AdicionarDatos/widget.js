@@ -294,7 +294,7 @@ define([
                       console.log("Finished reading CSV data");
                       this.processCSVData(reader.result);
                     });
-                    reader.readAsText(file);
+                    reader.readAsText(file,'ISO-8859-1');
                   }            
             },
             processCSVData: function(data) {

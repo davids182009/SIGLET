@@ -1,12 +1,12 @@
 .logo{
-    z-index: 1000;
+    z-index: 2;
     position: absolute;
     right: 0px;    
     top: 0px;
 }
 
 .menu{
-    z-index: 1000;
+    z-index: 2;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -288,8 +288,7 @@
                     flex: auto;
                     -webkit-flex: auto;
                     -moz-flex: auto;
-                    -ms-flex: auto;
-                    height: 100vh;
+                    -ms-flex: auto;                    
                     margin-top: 20px;
                     box-sizing: border-box;
                     background: url('images/Patron-fondo-ventanas.png');

@@ -1,0 +1,21 @@
+.widget-identificar{
+    width: 100%;
+    height: 100%;    
+}
+.widget-identificar h3{
+    text-align: center;
+}
+
+
+.esriPopup.SIGLETtheme .titlePane, .dj_ie7 .esriPopup.SIGLETtheme .titlePane .title {
+    background: #3090AC;
+    background: linear-gradient(to right,#3090AC,#00636B);
+    background: -webkit-linear-gradient(to right,#3090AC,#00636B);
+    background: -moz-linear-gradient(to right,#3090AC,#00636B);
+    color:white;
+    font-weight:700;
+}
+
+
+
+  

@@ -22,10 +22,10 @@
       "widgets": [
         {
           "id": 6,
-          "name": "Test GA-3",
+          "name": "Identificar",
           "version": "1.0",
-          "uri": "widgets/test",
-          "icon": "consultas.png"
+          "uri": "widgets/Identificar",
+          "icon": "identificar.png"
         },
         {
           "id": 10,

@@ -399,7 +399,11 @@ define([
 
         let targetActual = dom.byId('widget_icon_'+this.widgetTarget);
         domClass.remove(targetActual,'selected');
+        console.log(widget_deploy);
         let height = domStyle.get(widget_deploy,'height');
+        console.log(height);
+        console.log(widget_deploy.clientHeight);
+        console.log(widget_deploy.offsetHeight);
         pos=-height*pos;
         domStyle.set(this.widget_louver,'margin-top',''+pos+'px');
         this.widgetTarget = id;          
