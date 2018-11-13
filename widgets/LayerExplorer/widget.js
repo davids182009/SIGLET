@@ -84,6 +84,7 @@ define([
         treeTabs:null,
         idExternos:99000,        
         ContentCapasDndTarget : {idTarget:'',overTarget:'',y:0,t:0},
+        iniCapasVisibles:[],
         /**
         * Funcion del ciclo de vida del Widget en Dojo, se dispara cuando 
         * todas las propiedades del widget son definidas y el fragmento

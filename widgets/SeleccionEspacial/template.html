@@ -1,0 +1,18 @@
+<div>
+    <h3 class="paso1">Capa a aplicar selección:</h3>
+    <p>        
+        <div data-dojo-attach-point="selectCapas" 
+            data-dojo-type="dijit/form/FilteringSelect"  
+            data-dojo-props='searchAttr:"name",required:true,intermediateChanges:true'   
+            style="display:block;width: 80%;margin:10px auto;"></div>
+    </p>     
+    <h3 class="paso2">Defina geometría para filtro:</h3>
+    <button data-dojo-attach-point="btnPolygon">Polígono</button>
+    <button data-dojo-attach-point="btnExtent">Rectángulo</button>
+    <div class="limpiarSeleccion" title="Limpiar Selección" data-dojo-attach-point="btnLimpiar">
+        <i class="icon ion-ios-trash"></i>        
+    </div>
+    <p class="boxMsn" data-dojo-attach-point="mensaje">
+
+    </p>   
+</div>

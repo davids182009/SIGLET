@@ -29,10 +29,10 @@
         },
         {
           "id": 10,
-          "name": "Test GC-2",
+          "name": "Seleccion Espacial",
           "version": "1.0",
-          "uri": "widgets/test",
-          "icon": "consultas.png"
+          "uri": "widgets/SeleccionEspacial",
+          "icon": "seleccionar.png"
         }        
       ]
     },
@@ -83,7 +83,7 @@
           "icon": "consultas.png"
         },
         {
-          "id": 10,
+          "id": 11,
           "name": "Test GC-2",
           "version": "1.0",
           "uri": "widgets/test",
@@ -102,7 +102,7 @@
           "icon": "consultas.png"
         },
         {
-          "id": 10,
+          "id": 100,
           "name": "Test GC-2",
           "version": "1.0",
           "uri": "widgets/test",

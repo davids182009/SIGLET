@@ -1,0 +1,116 @@
+.widget-SeleccionEspacial{
+    width: 100%;
+    height: 100%;    
+}
+    .widget-SeleccionEspacial h3{
+        text-align: left;
+        position: relative;
+        padding-left: 26px;
+        
+    }
+    .widget-SeleccionEspacial h3::after{
+        width: 25px;
+        height: 25px;
+        background-color: #3F4242;
+        display: block;
+        position: absolute;        
+        top: -3px;
+        left: 0px;
+        text-align: center;
+        line-height: 25px;
+        color: white;
+    }    
+    .widget-SeleccionEspacial h3.paso1::after{
+        content: '1';
+    }
+    .widget-SeleccionEspacial h3.paso2::after{
+        content: '2';
+    }
+    .widget-SeleccionEspacial .mensajes{
+        width: 100%;
+        text-align: center;
+
+    }
+    .widget-SeleccionEspacial button{
+        width: 44%;
+        border: 0px;
+        background-color: #3090AC;
+        padding: 5px;
+        margin: 2%;
+        border-radius: 2px;
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+        transition: all .3s ease-in-out;
+    }
+    .widget-SeleccionEspacial button:hover{
+        background-color: #00636B;
+    }
+
+    .widget-SeleccionEspacial button.drawing{
+        animation: btnJump 1.5s ease-in 0s infinite normal none;        
+        box-shadow: 2px 2px 3px rgba(0,0,0,0.8);
+        
+    }
+
+    .widget-SeleccionEspacial button.inactivo{
+        background-color: rgba(0,0,0,0);
+        border: 1px dashed #3F4242;
+        color: #3F4242;
+
+    }
+
+    @keyframes btnJump{
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.07);
+        }
+        100%{
+            transform: scale(1);
+        }
+    }
+    .limpiarSeleccion{
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        margin-left: auto;
+        margin-right: auto;
+        transition: all .3s ease-in-out;
+    }
+    .limpiarSeleccion:hover{
+        opacity: .5;
+    }
+    .limpiarSeleccion.limpiando{
+        animation: btnJump .8s ease-in 0s 1 normal none;
+    }
+        
+        .limpiarSeleccion i{
+            color: #000000;
+            font-size: 3em;            
+        }
+
+    .widget-SeleccionEspacial .boxMsn{
+        text-align: center;
+    }
+        .widget-SeleccionEspacial .boxMsn i{
+            font-size:2em;
+            color: #f1921b;
+        }
+
+
+.esriPopup.SIGLETtheme .titlePane, .dj_ie7 .esriPopup.SIGLETtheme .titlePane .title {
+    background: #3090AC;
+    background: linear-gradient(to right,#3090AC,#00636B);
+    background: -webkit-linear-gradient(to right,#3090AC,#00636B);
+    background: -moz-linear-gradient(to right,#3090AC,#00636B);
+    color:white;
+    font-weight:700;
+}
+
+
+
+
+
+  
