@@ -9,7 +9,7 @@
 
 /**
  * Descripción Widget
- * @module identificar 
+ * @module AnalisisLimites 
  */
 
 define([
@@ -18,45 +18,87 @@ define([
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",    
     "dojo/text!./template.html",
+    "dijit/layout/TabContainer",
+    "dijit/layout/ContentPane",
+    "dijit/form/Select",
+    "dijit/form/NumberTextBox",
     "dijit/form/FilteringSelect",
     "dojo/query",
-    "dojo/topic",
     "dijit/registry",
     "dojo/store/Memory",
+    "dojo/topic",
     "dojo/_base/lang",
+    "esri/layers/GraphicsLayer",
+    "esri/symbols/SimpleFillSymbol",
+    "esri/symbols/SimpleLineSymbol",
+    "esri/Color",
+    "esri/graphic",
     "esri/tasks/IdentifyTask",
     "esri/tasks/IdentifyParameters",
-    "esri/dijit/PopupTemplate",
-    "esri/geometry/Extent",
     "dojo/_base/array",
+    "./feature/WidgetFeature",  
     "esri/tasks/query",
     "esri/layers/FeatureLayer",
-    "esri/InfoTemplate",
+    "esri/geometry/Extent",
+    "esri/geometry/geometryEngine",
     "dojo/dom-class"
-],    
-    function (declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
-        template,FilteringSelect,query,topic,registry,Memory,lang,
-        IdentifyTask,IdentifyParameters,PopupTemplate,Extent,array,
-        Query,FeatureLayer,InfoTemplate,domClass) {
+],
+    function (declare,
+        _WidgetBase,
+        _TemplatedMixin,
+        _WidgetsInTemplateMixin,
+        template,
+        TabContainer,
+        ContentPane,
+        Select,
+        NumberTextBox,
+        FilteringSelect,
+        query,
+        registry,
+        Memory,
+        topic,
+        lang,
+        GraphicsLayer,
+        SimpleFillSymbol,
+        SimpleLineSymbol,
+        Color,
+        Graphic,
+        IdentifyTask,
+        IdentifyParameters,
+        array,
+        WidgetFeature,
+        Query,
+        FeatureLayer,
+        Extent,
+        geometryEngine,
+        domClass
+
+        ) {
 
         /**
-         * Crea un nuevo identificar (Constructor)
+         * Crea un nuevo AnalisisLimites (Constructor)
          * @class
-         * @alias module:identificar     
+         * @alias module:AnalisisLimites     
          * @property {String} templateString - Contenido del archivo template.html
          * @property {String} baseClass - valor del atributo class del nodo traido en el template
          * @property {String} id - identificador del widget
          * 
          */
-        return declare("identificar", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
+        return declare("AnalisisLimites", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
             templateString: template,
-            baseClass: "widget-identificar",
-            id: '',
-            listadoCapas:null,           
+            baseClass: "widget-AnalisisLimites",
+            id: '',    
+            map:null,       
             EventoIdentify:null,
-            map:null,
-            alias:{},
+            layer:null,
+            simbologiaPolygon:null,
+            countFeatures:0,
+            features:[],
+            limitFeatures:4,
+            ids:0,
+            WidgetFeatureTarget:'0',
+            estaEliminando:false,
             /**
              * Funcion del ciclo de vida del Widget en Dojo, se dispara cuando
              * todas las propiedades del widget son definidas y el fragmento
@@ -66,6 +108,7 @@ define([
              */
             postCreate: function () {
                 this.inherited(arguments);
+                //OBTENER CAPAS DE EXPLORADOR DE CAPAS
                 this.map = registry.byId('EsriMap').map;
                 let layerExplorer = registry.byNode(query('.layerexplorer')[0]);
                 let lista = new Array();
@@ -83,12 +126,16 @@ define([
                 });
                 this.selectCapas.set('store',this.listadoCapas);
                 topic.subscribe("identificarWidget",lang.hitch(this,this._actualizarListadoCapas));
+                topic.subscribe("identificarWidgetFeature",lang.hitch(this,this._setAttributes));
+                topic.subscribe("RemoveWidgetFeature",lang.hitch(this,this.removeFeature));
+                //CREAR EVENTO Y GRAPHIC LAYER EN EL MAPA
                 this.EventoIdentify=this.map.on("click",lang.hitch(this,this._identificar));
-                domClass.add(this.map.infoWindow.domNode, "SIGLETtheme");
-                
-
-
-
+                this.layer = new GraphicsLayer('widget_analisis_limites');
+                this.simbologiaPolygon = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                    new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
+                    new Color([0,99,107]), 2),new Color([0,198,255,0.25])
+                );
+                this.map.addLayer(this.layer);
             },
             /**
             * Funcion del ciclo de vida del Widget en Dojo,se dispara despues
@@ -96,7 +143,7 @@ define([
             * 
             * @function
             */
-            startup: function () {
+            startup: function(){
                 this.inherited(arguments);
             },
             /**
@@ -115,6 +162,26 @@ define([
                 this.listadoCapas.remove(e.idWidget);
             },
             /**
+             * Responde a la publicacion de informacion de 
+             * WidgetFeature - Atributos de la geometria
+             * 
+             * @function
+             */
+            _setAttributes:function(data){
+                
+                if(data.widgetFeatureId != this.WidgetFeatureTarget){
+                    if(this.WidgetFeatureTarget != '0'){
+                        let oldFeature = registry.byId(this.WidgetFeatureTarget);
+                        domClass.remove(oldFeature.domNode,'focus');                                                
+                    }
+                    this.WidgetFeatureTarget = data.widgetFeatureId;
+                    let newFeature = registry.byId(this.WidgetFeatureTarget);
+                    domClass.add(newFeature.domNode,'focus');
+                    this.indetifyCanvas.innerHTML = data.AttributesContent;    
+                    
+                }
+            },
+            /**
              * Responde para el evento click sobre el mapa, ejecuta la 
              * tarea de identificar.
              * 
@@ -126,6 +193,8 @@ define([
              */
             _identificar:function(event){
                 //console.log('Identificar trabajando..');
+                if(this.estaEliminando)
+                    return false;
                 let targetLayer = null;
                 let fields = [];
                 capaSelecionada=this.selectCapas.get('value');
@@ -170,101 +239,29 @@ define([
                                     identifyParams.height = this.map.height;
                                     identifyParams.geometry = event.mapPoint;
                                     identifyParams.mapExtent = this.map.extent;
-                                    this.consultaIdentify = identifyTask.execute(identifyParams).addCallback(lang.hitch(this,function(response){
-                                        console.log(response);
-                                        /* let featuresList= [];
-                                        for(let i=0 ; i< response.length; i++){
-                                        let feature = response[i].feature;
-                                        let layerName = response[i].layerName;
-                                        let plantilla = new PopupTemplate();
-                                        plantilla.title = 'Capa - ';
-                                        let titulos= Object.keys(feature.attributes);
-                                        let valores= Object.values(feature.attributes);
-                                        let contenido = '<div class="WidgetIdentifyLabel">'+layerName+'</div>'
-                                        contenido  += '<table class="tablePopupIdentificar">';
-                                        for(i=0;i<titulos.length;i++){
-                                            contenido += '<tr>';    
-                                            contenido += '<th>'+titulos[i]+':</th>';    
-                                            contenido += '<td>'+valores[i]+'</td>';    
-                                            contenido += '</tr>';    
-                                        }
-                                        contenido += '<table>'
-                                        plantilla.content=contenido;
-                                        feature.setInfoTemplate(plantilla);
-                                        featuresList.push(feature);
-                                        }
-                                        console.log(featuresList);
-                                        return featuresList; */
-                                        return array.map(response,function(result){
-                                            feature = result.feature;
-                                            layerName = result.layerName;
-
-                                            //feature.attributes.layerName = layerName;
-                                            //console.log(result);
-                                            plantilla = new PopupTemplate();
-                                            plantilla.title = 'Capa - ';
-                                            titulos= Object.keys(feature.attributes);
-                                            valores= Object.values(feature.attributes);
-                                            contenido = '<div class="WidgetIdentifyLabel">'+layerName+'</div>'
-                                            contenido  += '<table class="tablePopupIdentificar">';
-                                            for(i=0;i<titulos.length;i++){
-                                                contenido += '<tr>';    
-                                                contenido += '<th>'+titulos[i]+':</th>';    
-                                                contenido += '<td>'+valores[i]+'</td>';    
-                                                contenido += '</tr>';    
-                                            }
-                                            contenido += '</table>';
-                                            plantilla.content=contenido;
-                                            feature.setInfoTemplate(plantilla);
-                                            return feature;                                    
-                                        });                      
+                                    identifyTask.execute(identifyParams).addCallback(lang.hitch(this,function(response){
+                                        array.map(response,lang.hitch(this,function(result){
+                                            this.addFeature(result.feature);
+                                        }));                      
                                     }));
-                                    console.log(this.consultaIdentify);
-                                    //this.map.infoWindow.setFeatures([this.consultaIdentify]);
-                                    //console.log(event.mapPoint);                            
-                                    //this.map.infoWindow.show(event.mapPoint);
                                 break;
                                 }
                                 break;
                             case "B"://CAPA TEMATICA                
                             case "C"://CAPA ARCHIVO EXTERNO
                                 query = new Query();
-                                query.geometry = this.pointToExtent(this.map, event.mapPoint, 5);
+                                query.geometry = this.pointToExtent(this.map, event.mapPoint, 1);
+                                //query.geometry = event.mapPoint;
                                 query.outFields = [ "*" ];
                                 //this.consultaIdentify = targetCapaWidget.layer.selectFeatures(query,
                                 this.consultaIdentify = targetLayer.selectFeatures(query,
                                 FeatureLayer.SELECTION_NEW,lang.hitch(this,function(response) {
-                                    return array.map(response,lang.hitch(this,function(result){
-                                    feature = result;
-                                    layerName = this.selectCapas.item.name;      
-                                    //feature.attributes.layerName = layerName;
-                                    //plantilla = new PopupTemplate();                      
-                                    plantilla = new InfoTemplate();                      
-                                    plantilla.setTitle('Informacion elemento');
-                                    titulos= Object.keys(feature.attributes);
-                                    valores= Object.values(feature.attributes);
-                                    contenido = '<div class="WidgetIdentifyLabel">'+layerName+'</div>'
-                                    contenido  += '<table class="tablePopupIdentificar">';
-                                    for(i=0;i<titulos.length;i++){
-                                        contenido += '<tr>';    
-                                        contenido += '<th>'+this.alias[titulos[i]]+':</th>';    
-                                        contenido += '<td>'+valores[i]+'</td>';    
-                                        contenido += '</tr>';    
-                                    }
-                                    contenido += '<table>'
-                                    plantilla.setContent(contenido);
-                                    feature.setInfoTemplate(plantilla);
-                                    return feature;                                    
+                                    array.map(response,lang.hitch(this,function(result){
+                                        this.addFeature(result);
                                     }));
                                 }));
-                                //map.infoWindow.setFeatures([consulta]);
-                                //console.log(event.mapPoint);                            
-                                //map.infoWindow.show(event.mapPoint);
                                 break;               
-                    }
-                    this.map.infoWindow.setFeatures([this.consultaIdentify]);
-                    //console.log(event.mapPoint);                            
-                    this.map.infoWindow.show(event.mapPoint);
+                    }                  
                 }        
             },
             pointToExtent:function(map, point, toleranceInPixel) {
@@ -275,6 +272,61 @@ define([
                                   point.x + toleranceInMapCoords,
                                   point.y + toleranceInMapCoords,
                                   map.spatialReference);
-            }
+            },
+            addFeature:function(feature){
+                if(this.countFeatures == this.limitFeatures)
+                    return false;
+                if(typeof feature.symbol == 'undefined')
+                    feature = new Graphic(feature);
+                let features = registry.findWidgets(this.canvasList);
+                for(let j=0; j < features.length ; j ++){
+                    if(geometryEngine.equals(features[j].graphic.geometry,feature.geometry))
+                        return false;
+                }                        
+                
+                feature.setSymbol(this.simbologiaPolygon);
+                this.layer.add(feature);
+                this.ids++;
+                this.countFeatures++;
+                let element=new WidgetFeature({
+                    id:'Analisis_limite_elemento_'+this.ids,
+                    graphic:feature,
+                    position:this.countFeatures
+                });
+                element.placeAt(this.canvasList,"last");   
+                //this.features.push(element);                                                     
+            },
+            ActivateRemoveFeature:function(event){
+                let features = [];
+                features = query(".widget-WidgetFeature", this.canvasList);
+                if(this.estaEliminando){
+                    this.estaEliminando = false;
+                    domClass.remove(this.btnRemove,'active');
+                    for(let q=0; q < features.length ; q++){
+                        domClass.remove(features[q],'target');
+                    }
+                }else{
+                    this.estaEliminando = true;  
+                    domClass.add(this.btnRemove,'active');
+                    for(let q=0; q < features.length ; q++){
+                        domClass.add(features[q],'target');
+                    }
+                }
+            },
+            removeFeature:function(idFeature){
+                let feature2remove = registry.byId(idFeature);
+                this.layer.remove(feature2remove.graphic);
+                feature2remove.destroy();
+                let features = registry.findWidgets(this.canvasList);
+                let q=0;
+                for(q=0; q < features.length ; q++){
+                    features[q].position = q+1;   
+                    features[q].domNode.innerHTML = features[q].position;
+                }
+                this.countFeatures = q;
+                if(this.WidgetFeatureTarget == idFeature){
+                    this.WidgetFeatureTarget = '0';
+                }
+            }                   
         });
     });

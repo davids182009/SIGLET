@@ -1,0 +1,231 @@
+.widget-AnalisisLimites{
+    width: 100%;
+    height: 100%;  
+}
+
+    .widget-AnalisisLimites .sourceData{
+        width: 100%;
+        height: 500px;
+    }
+
+    .widget-AnalisisLimites .btn50{
+        width: 46px;
+        height: 46px;
+        margin: 2px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 3px rgba(0,0,0,.5);
+        background: #00636B;
+        background: linear-gradient(to right,#00636B,#3090AC);
+        background: -webkit-linear-gradient(to right,#00636B,#3090AC);
+        background: -moz-linear-gradient(to right,#00636B,#3090AC);
+        text-align: center;
+        cursor: pointer;
+        transition: all .1s ease-in;
+    }
+    .widget-AnalisisLimites .btn50.active{
+        box-shadow: inset 0px 0px 3px rgba(0,0,0,.5);        
+    }
+
+    .widget-AnalisisLimites .btn50:hover{
+        box-shadow: 2px 2px 5px rgba(0,0,0,.8);
+    }
+
+    .widget-AnalisisLimites .btn50 i{
+        color: white;
+        font-size: 45px;
+    }
+
+        .widget-AnalisisLimites .dijitTabContainerTop-tabs{
+            width: 100% !important;
+            padding: 0px !important;
+        }
+
+        .widget-AnalisisLimites .dijitTab{
+            margin-left: 0px ;
+            margin-right: 0px ;
+            margin-top: 10px ;
+            width: 50% ;
+            text-align: center ;
+            transition: all .3s ease-in-out;
+        }
+        .widget-AnalisisLimites .dijitTab.dijitTabChecked {
+            border-top: 4px solid rgb(0,99,107) ;
+            margin-top: 6px;
+        }
+        .widget-AnalisisLimites .SourceDataStep{
+            position: relative;
+            text-align: left;
+            padding-left: 26px;
+            margin-bottom: 5px;
+        
+        }
+        .widget-AnalisisLimites .SourceDataStep::after{
+            content: attr(step);
+            width: 25px;
+            height: 25px;
+            background-color: #3F4242;
+            display: block;
+            position: absolute;        
+            top: -3px;
+            left: 0px;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+        }
+
+
+        .widget-AnalisisLimites .form-Coordenadas{
+            width: 100%;
+            padding: 4px;
+            background-color: rgba(48,144,172,.4);
+
+        }
+            .widget-AnalisisLimites .form-Coordenadas > div{
+                padding: 4px 0px;
+            }
+
+            .widget-AnalisisLimites .form-Coordenadas .input{
+                width: 41px;    
+            }
+
+            .widget-AnalisisLimites .form-Coordenadas select{
+                width: 42px;    
+            }
+
+            .widget-AnalisisLimites .form-Coordenadas .form-Coordenadas_titulo{
+                width: 55px;
+                display: inline-block;
+            }
+        .SourceData_elements{
+            display: flex;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            flex-direction: row;
+            -webkit-flex-direction: row;
+            -moz-flex-direction: row;
+            -ms-flex-direction: row;
+            width: 100%;
+            height: 50px;
+            background-color: rgba(48,144,172,.4);
+        }
+        .SourceData_elements > div{
+            height: 100%;
+        }
+        .SourceData_elements > div:nth-child(1){
+            flex: auto;
+            -webkit-flex: auto;
+            -moz-flex: auto;
+            -ms-flex: auto;
+            
+        }
+        .SourceData_elements > div:nth-child(2){
+            flex: 0 0 50px;
+            -webkit-flex: 0 0 50px;
+            -moz-flex: 0 0 50px;
+            -ms-flex: 0 0 50px;
+            
+        }
+            .SourceData_elements .widget-WidgetFeature{
+                width: 40px;
+                height: 40px;
+                background-color: #00636B;
+                border-radius: 2px;
+                margin: 5px;
+                float: left;
+                text-align: center;
+                line-height: 40px;
+                color: white;
+                transition: all .2s ease-in;
+                cursor: pointer;
+                outline: 1px solid transparent;
+                -webkit-backface-visibility: hidden;
+                will-change: transform;
+                -webkit-perspective: 1000;
+                position: relative;
+            }            
+
+            .SourceData_elements .widget-WidgetFeature:hover{
+                box-shadow: 2px 5px 5px rgba(0,0,0,.8);
+            }
+
+            .SourceData_elements .widget-WidgetFeature.target{
+                animation: dance 1s ease-in 0s infinite normal none;
+            }
+
+            .SourceData_elements .widget-WidgetFeature.target::after{
+                content: 'x';
+                position: absolute;
+                display: block;
+                right: 0px;
+                top: 0px;
+                height: 10px;
+                width: 10px;
+                background-color: black;
+                color: white;
+                line-height: 8px; 
+                transform: translate(25%,-25%);
+                font-size: 12px;
+                text-align: center;
+            }
+
+            .SourceData_elements .widget-WidgetFeature.focus{
+                background-color: #3090AC;
+            }
+
+            @keyframes dance{
+                0%{
+                    transform: rotate(0deg)
+                }
+                25%{
+                    transform: rotate(15deg)
+                }
+                50%{
+                    transform: rotate(0deg)
+                }
+                75%{
+                    transform: rotate(-15deg)
+                }               
+                100%{
+                    transform: rotate(0deg)
+                }               
+            }
+            
+
+        .widget-AnalisisLimites .identifyArea{
+            width: 100%;
+            height: 200px;
+            overflow-y: scroll;
+        }
+            .widget-AnalisisLimites .identifyArea table{
+                width: 100%;
+            }
+            .widget-AnalisisLimites .identifyArea table caption{
+                text-align: center;
+                font-weight: 600;
+                font-size: 18px;
+                width: 100%;
+            }
+            .widget-AnalisisLimites .identifyArea table tr{
+
+            }
+            .widget-AnalisisLimites .identifyArea table th{
+                background-color: rgba(0,0,0,.2);
+            }
+
+
+    .widget-AnalisisLimites button{
+        width: 50%;
+        border: 0px;
+        background-color: #3090AC;
+        padding: 5px;
+        margin: 5px 25%;
+        border-radius: 2px;
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+        transition: all .3s ease-in-out;        
+    }
+    .widget-AnalisisLimites button:hover{
+        background-color: #00636B;
+    }
