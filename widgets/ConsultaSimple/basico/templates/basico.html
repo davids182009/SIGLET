@@ -1,0 +1,35 @@
+<div>
+	<table style="width: 100%;">
+		<tr>
+			<td field="fieldName">
+				<label>Seleccione una capa:</label>
+				</br>
+				<div id="divBasico"></div>
+			</td>
+		</tr>
+		<tr>
+			<td field="fieldName">
+				<label>Seleccione un Atributo:</label>
+				</br>
+				<select data-dojo-type="dijit/form/FilteringSelect" id="calAtributo" name="calAtributo" style="height: 33px; width: 100%;">
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td field="fieldName">
+				<label>Seleccione un valor:</label>
+				</br>
+				<select data-dojo-type="dijit/form/FilteringSelect" id="calValor" name="calValor" style="height: 33px; width: 100%;">
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 15px;text-align: center;" colspan="2">
+				<button class="buttonBasic" type="button" id="consultaSimple">Consultar</button>
+				<button class="buttonBasic" type="button" id="limpiarConsultaSimple">Limpiar</button>
+			</td>
+		</tr>
+	</table>
+	<button id="openTablaAtributos">Abrir tabla de atributos</button>
+	<button id="closeTablaAtributos">Cerrar Tabla de atriburtos</button>
+</div>

@@ -1,0 +1,33 @@
+<div>
+    <div data-dojo-attach-point="PopupNote"  class="PopupNote">
+        <div>
+            Haga clic en un elemento del listado para acercarlo en el mapa.
+        </div>
+        <div>
+            <i class="icon ion-android-close" data-dojo-attach-event="onclick:closePopupNote" ></i>
+        </div>
+    </div>
+    <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline'"  style="width:100%;height:100%;margin:0;">
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'" style="height:50px;margin-bottom:20px">
+            <div class="panelBottom">                                
+                <div class="btnTableIcon" id="generarGrafico" title="Mostrar Gráfico">
+                    <img src="widgets/TablaAtributos/images/grafico-02.png">
+                </div>                
+                <div class="btnTableIcon" id="LimpiarSelect" title="Limpiar Selección">
+                    <img src="widgets/TablaAtributos/images/seleccion-quitar-02.png">
+                </div>
+                <b class="tituloCapa" id="nombreCapa"></b>
+            </div>
+        </div>
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'" style="height:280px;">
+                <label for="lastField">Buscar:</label>
+                <input id="lastField" name="last" class="jimu-input" placeHolder="Digite una palabra">
+                <button class="jimu-btn btnTable" type="button" id="submit">Buscar</button>                
+                <button class="jimu-btn btnTable" type="button" id="reset">Limpiar</button>
+            <div id="grid" data-dojo-type="dijit/layout/ContentPane" style="height:auto; margin-top: 3%" data-dojo-props="region:'button'">
+                tabla aca
+            
+            </div>
+        </div>
+    </div>
+</div>

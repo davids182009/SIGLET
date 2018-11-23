@@ -33,6 +33,13 @@
           "version": "1.0",
           "uri": "widgets/SeleccionEspacial",
           "icon": "seleccionar.png"
+        },
+        {
+          "id": 12,
+          "name": "Consulta Simple",
+          "version": "2.0",
+          "uri": "widgets/ConsultaSimple",
+          "icon": "consulta-simple.png"
         }        
       ]
     },

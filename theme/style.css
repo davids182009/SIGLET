@@ -358,3 +358,31 @@ footer{
     top:100vh;
     transform: translateY(-100%);
 }
+
+
+.buttonBasic{
+    border: 0px;
+    background-color: #3090AC;
+    padding: 5px;
+    margin: 5px 25%;
+    border-radius: 2px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    transition: all .3s ease-in-out;
+}
+
+.buttonBasic:hover{
+    background-color: #00636B;
+}
+
+
+/*DIJIT DIALOG*/
+.dijitDialogTitleBar{
+    color: white !important;
+    background: #00636B !important ;
+    background: linear-gradient(to right,#00636B,#3090AC) !important;
+    background: -webkit-linear-gradient(to right,#00636B,#3090AC) !important;
+    background: -moz-linear-gradient(to right,#00636B,#3090AC) !important;
+}
+

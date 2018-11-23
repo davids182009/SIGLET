@@ -1,0 +1,114 @@
+.widget-TablaAtributos{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    
+}
+#FP_TablaAtributos {
+    border: 1px solid #ccc;
+}
+
+#FP_TablaAtributos .dojoxFloatingPaneTitle{
+    background: #00636B;
+	background: linear-gradient(to right,#00636B,#3090AC);
+	background: -webkit-linear-gradient(to right,#00636B,#3090AC);
+    background: -moz-linear-gradient(to right,#00636B,#3090AC);
+    color: white;
+    border: 0px;
+    cursor: move;
+}
+
+#FP_TablaAtributos .dojoxFloatingMinimizeIcon {
+    width:20px;
+    height:15px;
+    margin-right:6px;
+    padding-right:6px;
+    background: url('../../../lib/arcgis_3.24/dijit/themes/claro/images/dialogCloseIcon.png') no-repeat 0 0; 
+    cursor: pointer;
+}
+#FP_TablaAtributos .dojoxFloatingMinimizeIcon:hover {
+    background-position: -21px 50%;
+}
+#FP_TablaAtributos .dojoxFloatingMinimizeIcon:active {
+    background-position: -42px 50%;
+}
+
+    .widget-TablaAtributos .PopupNote{
+        position: absolute;
+        background: #00636B;
+        padding: 4px;
+        width: 230px;
+        display: flex;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        right: 0px;
+        top: 50px;
+        min-height: 50px;
+        border-radius: 3px;
+        color: #FFF;
+        box-shadow: 2px 2px 3px rgba(0,0,0,0.4);
+    }
+    .widget-TablaAtributos .PopupNote > div:nth-child(1){
+      flex:auto;
+      -webkit-flex:auto;
+      -moz-flex:auto;
+      -ms-flex:auto;
+    }
+    .widget-TablaAtributos .PopupNote > div:nth-child(2){
+      flex: 0 0 22px;
+      -webkit-flex: 0 0 22px;
+      -moz-flex: 0 0 22px;
+      -ms-flex: 0 0 22px;
+      text-align: center;
+      font-size: 15px;
+      position: relative;
+    }
+    .widget-TablaAtributos .PopupNote > div:nth-child(2)::after{
+      content: '';
+      position: absolute;
+      display: block;
+      width: 0; 
+      height: 0; 
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;      
+      border-top: 12px solid #00636B;
+      bottom: -15px;
+      right: 17px;
+    }
+    .widget-TablaAtributos .PopupNote i{
+      cursor: pointer;      
+      transition: all .2s ease-in;
+    }
+    .widget-TablaAtributos .PopupNote i:hover{
+      text-shadow:1px 1px  rgba(0,0,0,0.4); 
+      font-size: 17px;
+      font-weight: 550;    
+    }
+
+    .widget-TablaAtributos .btnTableIcon{
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+        background-image: none;
+        background: #00636B;
+	    background: linear-gradient(to right,#00636B,#3090AC);
+	    background: -webkit-linear-gradient(to right,#00636B,#3090AC);
+        background: -moz-linear-gradient(to right,#00636B,#3090AC);
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        -webkit-box-shadow: 0 1px 0.5px rgba(0,0,0,0.3), 0 2px 2px rgba(0,0,0,0.2);
+        box-shadow: 0 1px 0.5px rgba(0,0,0,0.3), 0 2px 2px rgba(0,0,0,0.2);
+        float: left;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+      
+      .widget-TablaAtributos .btnTableIcon img{
+        width: 100%;
+        height: auto;
+      }
+      
+      .widget-TablaAtributos .btnTableIcon:hover{
+        opacity: 0.8;
+      }
