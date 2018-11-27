@@ -4,6 +4,23 @@
     position: relative;
     
 }
+    .widget-TablaAtributos .buttonBasic{
+        margin: 0px;
+        width: 100px;
+    }
+    
+    .widget-TablaAtributos input{
+        height: 30px;
+        background: #fff;
+        border: 1px solid #ddd;
+        color: inherit;
+        padding: 5px 10px;
+        margin: 0;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        font-size: 14px;
+    }
+
 #FP_TablaAtributos {
     border: 1px solid #ccc;
 }
@@ -112,3 +129,35 @@
       .widget-TablaAtributos .btnTableIcon:hover{
         opacity: 0.8;
       }
+        .widget-TablaAtributos .TA_borderContainer{
+            display:-webkit-box;
+            display:-ms-flexbox;
+            display:flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            padding: 5px;
+        }
+            .widget-TablaAtributos .TA_borderContainer_iconos,
+            .widget-TablaAtributos .TA_borderContainer_formulario{
+                -webkit-box-flex:50px;
+                -ms-flex:0 0 50px;
+                flex:0 0 50px;
+            }
+
+            .widget-TablaAtributos .TA_borderContainer_tabla{
+                -webkit-box-flex:1;
+                -ms-flex:auto;
+                flex:auto;
+            }
+                .widget-TablaAtributos .TA_borderContainer_tabla .gridTablaAtributos{
+                    height: 100%;
+                }
+                
+                .widget-TablaAtributos .TA_borderContainer_tabla .dgrid-cell {
+                    width: 150px;
+                }
+

@@ -23,11 +23,12 @@ define([
     "dojox/layout/Dock",
     "dojo/dom-construct",
     "dojo/dom-style",
-    "dijit/layout/BorderContainer",
-    "dijit/layout/ContentPane",
-    
-
-    'xstyle/css!./css/style.css'
+    "dgrid/OnDemandGrid",
+    "dgrid/Keyboard",
+    "dgrid/Selection",
+    "dgrid/extensions/Pagination",
+    "dojo/store/Memory",
+    "xstyle/css!./css/style.css"
 ],
     function (declare,
         _WidgetBase,
@@ -39,9 +40,11 @@ define([
         Dock,
         domConstruct,
         domStyle,
-        BorderContainer,
-        ContentPane
-
+        OnDemandGrid,
+        Keyboard,
+        Selection,
+        Pagination,
+        Memory        
     ){
 
         /**
@@ -59,7 +62,11 @@ define([
             baseClass: "widget-TablaAtributos",
             id: 'Widget_TablaAtributos',
             dock:null,
-            floatingPane:null,     
+            floatingPane:null, 
+            columns:null,
+            dataStore:null,
+            grid:null,
+            CustomGrid:null,
             /**
              * Funcion del ciclo de vida del Widget en Dojo, se dispara cuando
              * todas las propiedades del widget son definidas y el fragmento
@@ -75,7 +82,7 @@ define([
                 }, domConstruct.create('div', null, win.body()));
                 this.floatingPane = new FloatingPane({
                     id: 'FP_TablaAtributos',
-                    title: 'Map Options',
+                    title: 'Tabla de Atributos',
                     minSize:300,
                     //href: 'html/options.html',
                     //preload: true, //if you want to load content on app load set preload to true
@@ -91,7 +98,40 @@ define([
                     //z-index is mainly irrelavant as the dijit will control its own z-index, but I always set it to 999 !important to avoid the occasional and mysterious problem of the title and content panes of the floating pane appearing at different z-indexes
                 }, domConstruct.create('div', null , win.body()));
                 this.floatingPane.startup();
-                
+                //CONSTRUCCION DE TABLA                
+                this.CustomGrid = declare([OnDemandGrid,Pagination,Keyboard,Selection]);                
+                let someData = [
+                    { first: 'Bob', last: 'Barker', age: 89 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Pat', last: 'Sajak', age: 65 }
+                ];
+                this.columns = {
+                    first: 'First Name',
+                    last: 'Last Name',
+                    age: 'Age'
+                };
+                this.dataStore = new Memory({data:someData});
+                this.grid = new this.CustomGrid({                    
+                    store: this.dataStore,
+                    columns: this.columns,
+                    selectionMode: 'single',
+                    cellNavigation: false,
+                    className:'gridTablaAtributos',
+                    rowsPerPage: 10,                    
+                },'dataGrid');              
             },
             /**
             * Funcion del ciclo de vida del Widget en Dojo,se dispara despues
@@ -99,8 +139,43 @@ define([
             * 
             * @function
             */
-            startup: function () {
+            startup: function(){
                 this.inherited(arguments);
+            },
+            setData:function(datos){ 
+                this.grid.destroy();   
+                domConstruct.create('div', {id:'dataGrid'} ,this.tablaNode );
+                switch(datos.tipo){
+                    case 'A':
+                        //TITULOS
+                        this.columns = {};
+                        datos.fields.forEach(field => {
+                            this.columns[field.name] = field.alias; 
+                        });
+                        //ATRIBUTOS                        
+                        let attributes = [];
+                        datos.features.forEach(feature => {
+                            attributes.push(feature.attributes);
+                        });
+                        this.dataStore = new Memory({data:attributes});                        
+                        break;
+                    default:
+                        break;
+                }
+                this.grid = new this.CustomGrid({                    
+                    store: this.dataStore,
+                    columns: this.columns,
+                    selectionMode: 'single',
+                    cellNavigation: false,
+                    className:'gridTablaAtributos',
+                    rowsPerPage: 10,                    
+                },'dataGrid'); 
+                this.grid.refresh();
+                this.floatingPane.show();
+                this.floatingPane.bringToTop();
+                console.log('Tabla de atributos');
+                console.log(datos);
+                
             },
              /**
              * Responde a evento

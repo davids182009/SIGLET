@@ -143,6 +143,7 @@ define([
                 //panel consulta simple
                 var cp1 = new ContentPane({
                 title: "Consulta Simple",
+                //content: template
                 content: template
                 }, "tabContainerQuerySimple");
                 // tc.addChild(cp1);
@@ -155,7 +156,7 @@ define([
                 // tc.addChild(cp2);
                 cp1.startup();
                 //configuracion botones y selects de la calculadora
-                this.botonesCalculadora();
+                this.configurarBotones();
                 topic.subscribe("identificarWidget", lang.hitch(this, this._actualizarListadoCapas));
                 on(dom.byId("openTablaAtributos"),'click',lang.hitch(this,this.abrirTablaAtributos));
                 on(dom.byId("closeTablaAtributos"),'click',lang.hitch(this,this.cerrarTablaAtributos));
@@ -240,34 +241,34 @@ define([
              * Funcion que activa los botones de las consultas al igual que los combobox
              * @memberof module:widgets/QueryByAtrr#
              */
-            botonesCalculadora: function () {
+            configurarBotones: function () {
                 var mapa = this.map;
                 var url = '';
                 var capaConten = '';
                 -
                 //on click buttom consulta simple                 
                 on(dom.byId("consultaSimple"), "click", dojo.hitch(this, function (evt) {
-                    console.log('Consulta simple');
-                    var capa = dijit.byId("calCapa").get('value');
-                    var atrributo = dijit.byId("calAtributo").get('value');
-                    var valor = dijit.byId("calValor").get('value');
-                    var especializada = '';
+                    console.log('Consulta simple - Action');
+                    let capa = dijit.byId("calCapa").get('value');
+                    let atrributo = dijit.byId("calAtributo").get('value');
+                    let valor = dijit.byId("calValor").get('value');
+                    let especializada = '';
         
                     var mensajeValidacion = " campos: ";
                     if (capa == '' || capa == undefined) {
-                    mensajeValidacion += " Seleccione una capa,";
+                        mensajeValidacion += " Seleccione una capa,";
                     }
                     if (atrributo == '' || atrributo == undefined) {
-                    mensajeValidacion += " Seleccione un atributo,";
+                        mensajeValidacion += " Seleccione un atributo,";
                     }
                     if (valor == '' || valor == undefined) {
-                    mensajeValidacion += " Seleccione un campo,";
+                        mensajeValidacion += " Seleccione un campo,";
                     }
                     if (mensajeValidacion == " campos: ") {
-                    this._consultaOpcion('simple', capa, atrributo, valor, especializada);
+                        this._consultaOpcion('simple', capa, atrributo, valor, especializada);
                     } else {
-                    var msg = "Verificar " + mensajeValidacion.slice(0, -1) + " por favor.";
-                    this.generarDialog(msg);
+                        var msg = "Verificar " + mensajeValidacion.slice(0, -1) + " por favor.";
+                        this.generarDialog(msg);
                     }
         
                 }));
@@ -293,6 +294,8 @@ define([
         
         
             },
+           
+
         
             /**
              * función que permite limpiar los combobox al gual que el textArea
@@ -387,9 +390,9 @@ define([
                 var tipoField;
                 var array = [];
                 for (var i = 0; i < this.dataFields.data.length; i++) {
-                if (e == this.dataFields.data[i].id) {
-                    tipoField = this.dataFields.data[i];
-                }
+                    if (e == this.dataFields.data[i].id) {
+                        tipoField = this.dataFields.data[i];
+                    }
                 }
         
                 var queryTask = new QueryTask(this.urlCapaSeleccionada);
@@ -473,8 +476,38 @@ define([
         
                 //listar las capas en el visor
                 //layerExplorer = registry.byId('ContenerCapas_1');
-                layerCapa = this.layerExplorer.listarCapas();
-        
+                let layerCapa=this.layerExplorer.getGraphicCapaWidget(capa);
+                switch(layerCapa.tipo){
+                    case 'A':
+                    case 'D':
+                    let queryTask = new QueryTask(this.urlCapaSeleccionada);
+                    let query = new Query();                   
+                    query.outFields = ['*'];     
+                    if(this.dataString == 1){       
+                        //Verificar apóstrofe (apostrophe)
+                        let posicionApostrofe = valor.substring(1,valor.length-1).indexOf('\'');                        
+                        if(posicionApostrofe >0){
+                            posicionApostrofe++;
+                            valor=valor.substring(0,posicionApostrofe)+'\''+valor.substring(posicionApostrofe);
+                        }
+                    }
+                    query.where = atrributo +" = "+ valor;
+                    query.returnGeometry = false;
+                    queryTask.execute(query,lang.hitch(this,function(resultado){
+                       resultado.tipo='A';
+                       this.tablaAtributos.setData(resultado);
+                    }),function(error){
+                        console.log(error);
+                    });
+
+                        break;
+                    default:
+
+                        break;
+
+                }
+                return false;
+
                 //variable local donde se almacena el Feature layer
                 var capaFeature = '';
                 var capaSalida = '';

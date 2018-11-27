@@ -480,6 +480,15 @@ define([
         listarCapas:function(){
             return registry.findWidgets(dom.byId('graphicLayer'));
         },
+        getGraphicCapaWidget:function(id){
+            let capaWidgets = this.listarCapas();           
+            let widget= null;
+            capaWidgets.forEach(capaWidget => {
+                if(capaWidget.id == id)
+                    widget = capaWidget;
+            });
+            return widget;
+        },
         /**
         * Filtra las capas visible en el arbol de capas, conforme
         * a los parametros colocados en el input[type=text]; si esta vacio
