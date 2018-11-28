@@ -28,6 +28,8 @@ define([
     "dgrid/Selection",
     "dgrid/extensions/Pagination",
     "dojo/store/Memory",
+    "dojo/_base/array",
+    'dojo/_base/lang',
     "xstyle/css!./css/style.css"
 ],
     function (declare,
@@ -44,7 +46,9 @@ define([
         Keyboard,
         Selection,
         Pagination,
-        Memory        
+        Memory,
+        dojoArray,
+        lang        
     ){
 
         /**
@@ -56,8 +60,7 @@ define([
          * @property {String} id - identificador del widget
          * 
          */
-        return declare("TablaAtributos", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
-
+        return declare("TablaAtributos",[_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin],{
             templateString: template,
             baseClass: "widget-TablaAtributos",
             id: 'Widget_TablaAtributos',
@@ -103,20 +106,20 @@ define([
                 let someData = [
                     { first: 'Bob', last: 'Barker', age: 89 },
                     { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Vanna', last: 'White', age: 55 },
-                    { first: 'Pat', last: 'Sajak', age: 65 }
+                    { first: 'Vanna', last: 'White', age: 56 },
+                    { first: 'Vanna', last: 'White', age: 57 },
+                    { first: 'Vanna', last: 'White', age: 58 },
+                    { first: 'Vanna', last: 'White', age: 59 },
+                    { first: 'Vanna', last: 'White', age: 60 },
+                    { first: 'Vanna', last: 'White', age: 61 },
+                    { first: 'Vanna', last: 'White', age: 62 },
+                    { first: 'Vanna', last: 'White', age: 63 },
+                    { first: 'Vanna', last: 'White', age: 64 },
+                    { first: 'Vanna', last: 'White', age: 65 },
+                    { first: 'Vanna', last: 'White', age: 66 },
+                    { first: 'Vanna', last: 'White', age: 67 },
+                    { first: 'Vanna', last: 'White', age: 68 },
+                    { first: 'Pat', last: 'Sajak', age: 69 }
                 ];
                 this.columns = {
                     first: 'First Name',
@@ -142,26 +145,23 @@ define([
             startup: function(){
                 this.inherited(arguments);
             },
-            setData:function(datos){ 
+            setDataFeatures:function(datos){ 
                 this.grid.destroy();   
-                domConstruct.create('div', {id:'dataGrid'} ,this.tablaNode );
-                switch(datos.tipo){
-                    case 'A':
-                        //TITULOS
-                        this.columns = {};
-                        datos.fields.forEach(field => {
-                            this.columns[field.name] = field.alias; 
-                        });
-                        //ATRIBUTOS                        
-                        let attributes = [];
-                        datos.features.forEach(feature => {
-                            attributes.push(feature.attributes);
-                        });
-                        this.dataStore = new Memory({data:attributes});                        
-                        break;
-                    default:
-                        break;
-                }
+                domConstruct.create('div', {id:'dataGrid'} ,this.tablaNode );                
+                //TITULOS
+                this.columns = {};
+                datos.fields.forEach(field => {
+                    if(typeof field.alias != undefined)
+                        this.columns[field.name] = field.name; 
+                    else
+                        this.columns[field.name] = field.alias;
+                });
+                //ATRIBUTOS                       
+                let attributes = [];
+                datos.features.forEach(feature => {
+                    attributes.push(feature.attributes);
+                });
+                this.dataStore = new Memory({data:attributes});                                            
                 this.grid = new this.CustomGrid({                    
                     store: this.dataStore,
                     columns: this.columns,
@@ -186,6 +186,29 @@ define([
              */
             closePopupNote:function(event){
                 domStyle.set(this.PopupNote,'display','none');
-            }                
+            },
+            buscar:function(event){
+                console.log('----BUSCAR');
+                this.filterEstore = [];
+                let keys=Object.keys(this.columns);
+                this.grid.set("query",lang.hitch(this,function(fila){
+                    console.log(fila);
+                    console.log(this.inputParametroBusqueda.value);
+                    console.log(keys);
+                    let resultadoComparacion=false;
+                    let expresionRegular = new RegExp(this.inputParametroBusqueda.value,'i');
+                    for(let j=0;j<keys.length; j++){
+                        if(expresionRegular.test(fila[keys[j]]))
+                            resultadoComparacion = true;
+                    }
+                    return resultadoComparacion;
+                }));
+            },
+            limpiar:function(event){
+                console.log('Limpiar');
+                this.inputParametroBusqueda.value = "";
+                this.filterEstore = [];
+                this.grid.set("query", {});
+            }
         });
     });

@@ -255,7 +255,6 @@ define([
                     let capa = registry.byId("calCapa").get('value');
                     let atrributo = registry.byId("calAtributo").get('value');
                     let valor = registry.byId("calValor").get('value');
-                    let especializada = '';
         
                     var mensajeValidacion = " campos: ";
                     if (capa == '' || capa == undefined) {
@@ -268,7 +267,7 @@ define([
                         mensajeValidacion += " Seleccione un campo,";
                     }
                     if (mensajeValidacion == " campos: ") {
-                        this._consultaOpcion('simple', capa, atrributo, valor, especializada);
+                        this._consultaOpcion(capa, atrributo, valor);
                     } else {
                         var msg = "Verificar " + mensajeValidacion.slice(0, -1) + " por favor.";
                         this.generarDialog(msg);
@@ -333,7 +332,7 @@ define([
                         switch(this.capaWidgetSelected.subTipo){
                             case 'KML':                                
                             case 'CSV':
-                            case 'KML':
+                            case 'shapefile':
                                 fields = this.capaWidgetSelected.layer[0].fields;
                                 this.dataFeatures = this.capaWidgetSelected.layer[0].graphics;
                                 break;
@@ -534,7 +533,7 @@ define([
             let nombreAtributo = registry.byId("calAtributo").get('value');
             let array=[];
             let ListaIndicadores=[];         
-            dojoArray.forEach(features, dojo.hitch(this, function (feature){                                                         
+            dojoArray.forEach(features, lang.hitch(this, function (feature){                                                         
                 if (feature.attributes[nombreAtributo] != undefined){
                     if(dojoArray.indexOf(ListaIndicadores, feature.attributes[nombreAtributo])  == -1){
                         let obj=null;
@@ -582,43 +581,50 @@ define([
          * @param {string} especializada- caracter que indica el texto para la consulta avanzada
          * 
          */
-            _consultaOpcion: function (consulta, capa, atrributo, valor, especializada) {
-        
-                //listar las capas en el visor
-                //layerExplorer = registry.byId('ContenerCapas_1');
-                let query = new Query();                   
-                query.outFields = ['*'];     
-                if(typeof valor === 'string'){       
-                    //Verificar apóstrofe (apostrophe)
-                    let posicionApostrofe = valor.substring(1,valor.length-1).indexOf('\'');
-                    if(posicionApostrofe >0){
-                        posicionApostrofe++;
-                        valor=valor.substring(0,posicionApostrofe)+'\''+valor.substring(posicionApostrofe);
+        _consultaOpcion: function (capa,atrributo,valor){    
+            //listar las capas en el visor
+            //layerExplorer = registry.byId('ContenerCapas_1');            
+            switch(this.capaWidgetSelected.tipo){
+                case 'A':
+                case 'D':
+                    let query = new Query();                   
+                    query.outFields = ['*'];     
+                    if(typeof valor === 'string'){       
+                        //Verificar apóstrofe (apostrophe)
+                        let posicionApostrofe = valor.substring(1,valor.length-1).indexOf('\'');
+                        if(posicionApostrofe >0){
+                            posicionApostrofe++;
+                            valor=valor.substring(0,posicionApostrofe)+'\''+valor.substring(posicionApostrofe);
+                        }
                     }
-                }
-                query.where = atrributo +" = "+ valor;
-                query.returnGeometry = false;
-                switch(this.capaWidgetSelected.tipo){
-                    case 'A':
-                    case 'D':
-                        let queryTask = new QueryTask(this.urlCapaSeleccionada);                    
-                        queryTask.execute(query,lang.hitch(this,function(resultado){
-                            resultado.tipo='A';
-                            this.tablaAtributos.setData(resultado);
-                            }),function(error){
-                                console.log(error);
-                        });
-                        break;
-                    default:
-                        this.capaWidgetSelected.layer[0].queryFeatures(query,lang.hitch(this,function(resultado){
-                            console.log(resultado);
+                    query.where = atrributo +" = "+ valor;
+                    query.returnGeometry = false;
+                    let queryTask = new QueryTask(this.urlCapaSeleccionada);                    
+                    queryTask.execute(query,lang.hitch(this,function(resultado){
+                        console.log(resultado);
+                        this.tablaAtributos.setDataFeatures(resultado);
                         }),function(error){
                             console.log(error);
-                        });
-                        break;
+                    });
+                    break;
+                default:
+                    let result = {};
+                    result.fields = this.capaWidgetSelected.layer[0].fields;
+                    result.features = [];
+                    dojoArray.forEach(this.dataFeatures,function(feature){ 
+                        if(typeof feature.attributes[atrributo] === 'string'){                       
+                            if("'"+feature.attributes[atrributo]+"'" == valor)
+                                result.features.push(feature);
+                        }else{
+                            if(feature.attributes[atrributo] == valor)
+                                result.features.push(feature);
+                        }
+                    });                    
+                    this.tablaAtributos.setDataFeatures(result);
+                    break;
 
-                }
-                return false;
+            }
+            return false;
 
                 //variable local donde se almacena el Feature layer
                 var capaFeature = '';

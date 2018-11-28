@@ -14,9 +14,9 @@
         <div class="TA_borderContainer_formulario">
             <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'" style="width: 100%;">
                 <label for="lastField">Buscar:</label>
-                <input id="lastField" name="last" class="jimu-input" placeHolder="Digite una palabra">
-                <button class="buttonBasic" type="button" id="submit">Buscar</button>                
-                <button class="buttonBasic" type="button" id="reset">Limpiar</button>                
+                <input id="lastField" name="last" class="jimu-input" placeHolder="Digite una palabra" data-dojo-attach-point="inputParametroBusqueda">
+                <button class="buttonBasic" type="button" id="submit" data-dojo-attach-event="onclick:buscar" >Buscar</button>                
+                <button class="buttonBasic" type="button" id="reset" data-dojo-attach-event="onclick:limpiar">Limpiar</button>                
             </div>
         </div>
         <div class="TA_borderContainer_tabla" data-dojo-attach-point="tablaNode">

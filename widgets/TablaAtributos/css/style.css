@@ -158,6 +158,6 @@
                 }
                 
                 .widget-TablaAtributos .TA_borderContainer_tabla .dgrid-cell {
-                    min-width: 150px;
+                    width: 150px;
                 }
 
