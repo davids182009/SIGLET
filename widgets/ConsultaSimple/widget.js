@@ -35,7 +35,8 @@ define([
     "dijit/form/FilteringSelect",
     "dijit/Dialog",
     "dojo/query",
-    "widgets/TablaAtributos/widget"
+    "widgets/TablaAtributos/widget",
+    "dojo/_base/array"
 ],
     function (declare,
          _WidgetBase, 
@@ -57,7 +58,8 @@ define([
          FilteringSelect,
          Dialog,
          query,
-         TablaAtributos
+         TablaAtributos,
+         dojoArray
          ) {
 
         /**
@@ -96,6 +98,7 @@ define([
             dataString: 0,
             urlCapaSeleccionada: '',      
             layerExplorer:null, 
+            capaWidgetSelected:null,
             /**
              * Funcion del ciclo de vida del Widget en Dojo, se dispara cuando
              * todas las propiedades del widget son definidas y el fragmento
@@ -175,9 +178,9 @@ define([
                 //console.log('onOpen');  
                 /*        this.limpiarValores();*/
                 this._ajustarPanel();
-                dijit.byId("calCapa").reset();
-                dijit.byId("calAtributo").reset();
-                dijit.byId("calValor").reset();
+                registry.byId("calCapa").reset();
+                registry.byId("calAtributo").reset();
+                registry.byId("calValor").reset();
                 //console.log(this.listadoCapas);
             },
         
@@ -204,10 +207,10 @@ define([
                 } else {
                     this.listadoCapas.remove(e.idWidget);
                 }
-                dijit.byId("calCapa").set("store", this.listadoCapas);
-                dijit.byId("calCapa").reset();
-                dijit.byId("calAtributo").reset();
-                dijit.byId("calValor").reset();
+                registry.byId("calCapa").set("store", this.listadoCapas);
+                registry.byId("calCapa").reset();
+                registry.byId("calAtributo").reset();
+                registry.byId("calValor").reset();
                 }
             },
         
@@ -249,9 +252,9 @@ define([
                 //on click buttom consulta simple                 
                 on(dom.byId("consultaSimple"), "click", dojo.hitch(this, function (evt) {
                     console.log('Consulta simple - Action');
-                    let capa = dijit.byId("calCapa").get('value');
-                    let atrributo = dijit.byId("calAtributo").get('value');
-                    let valor = dijit.byId("calValor").get('value');
+                    let capa = registry.byId("calCapa").get('value');
+                    let atrributo = registry.byId("calAtributo").get('value');
+                    let valor = registry.byId("calValor").get('value');
                     let especializada = '';
         
                     var mensajeValidacion = " campos: ";
@@ -274,23 +277,23 @@ define([
                 }));
                 //on click buttom limpiar consulta simple 
                 on(dom.byId("limpiarConsultaSimple"), "click", dojo.hitch(this, function (evt) {
-                dijit.byId("calCapa").reset();
-                dijit.byId("calAtributo").reset();
-                dijit.byId("calValor").reset();
+                    registry.byId("calCapa").reset();
+                    registry.byId("calAtributo").reset();
+                    registry.byId("calValor").reset();
                 }));
         
                 //crear select de capa en consulta simple
                 var calCapa = new FilteringSelect({
-                name: "select2",
-                id: "calCapa",
-                store: this.listadoCapas,
-                searchAttr: "name",
-                style: "height: 33px; width: 100%;",
-                onChange: dojo.hitch(this, this.traerCamposSimple),
+                    name: "select2",
+                    id: "calCapa",
+                    store: this.listadoCapas,
+                    searchAttr: "name",
+                    style: "height: 33px; width: 100%;",
+                    onChange: dojo.hitch(this, this.poblarAtributos),
                 }, "divBasico").startup();
         
         
-                dijit.byId("calAtributo").on("change", dojo.hitch(this, this.traerAtributosSimple));
+                registry.byId("calAtributo").on("change", dojo.hitch(this, this.poblarValores));
         
         
             },
@@ -312,14 +315,59 @@ define([
              * @param {Object} e - objecto que contiene la información de una determinada capa  
              *  
              */
-            traerCamposSimple: function (e) {
-        
+            poblarAtributos: function (e) {
+                
                 //layerExplorer = registry.byId('ContenerCapas_1');
-                layerCapa = this.layerExplorer.listarCapas();
+                //layerCapa = this.layerExplorer.listarCapas();
                 //console.log(layerCapa);
-        
-                dojo.forEach(layerCapa, dojo.hitch(this, function (x) {
-                if (x.id == e) {
+                let fields=null;
+                this.capaWidgetSelected = this.layerExplorer.getGraphicCapaWidget(e);
+                switch(this.capaWidgetSelected.tipo){
+                    case 'A':
+                    case 'D':
+                        fields = this.capaWidgetSelected.layer.fields;
+                        //this.dataFeatures = this.capaWidgetSelected.layer.graphics;
+                        this.urlCapaSeleccionada = this.capaWidgetSelected.infoCapa.URL + '/' + this.capaWidgetSelected.infoCapa.NOMBRECAPA;                    
+                        break;
+                    default:
+                        switch(this.capaWidgetSelected.subTipo){
+                            case 'KML':                                
+                            case 'CSV':
+                            case 'KML':
+                                fields = this.capaWidgetSelected.layer[0].fields;
+                                this.dataFeatures = this.capaWidgetSelected.layer[0].graphics;
+                                break;
+                        } 
+                        break;
+                }
+                let array = [];
+                dojoArray.forEach(fields, function(x){
+                    array.push({
+                        "id": x.name,
+                        "name": x.name,
+                        "type": x.type
+                    });
+                });
+                array.sort(function (a, b){
+                    if (a.name > b.name) {
+                        return 1;
+                    }
+                    if (a.name < b.name) {
+                        return -1;
+                    }
+                    // a must be equal to b
+                    return 0;
+                });
+                this.dataFields = new Memory({ data: array });
+                registry.byId("calAtributo").reset();
+                registry.byId("calValor").reset();
+                registry.byId("calAtributo").set('store', this.dataFields);
+                return false;
+
+
+
+                dojoArray.forEach(layerCapa, dojo.hitch(this,function(x){
+                if(x.id == e){
                     if (x.tipo == 'A' || x.tipo == 'B') {
                     fields = x.layer.fields;
                     this.dataFeatures = x.layer.graphics;
@@ -351,7 +399,7 @@ define([
                     //console.log(fields);                 
                     //console.log(this.dataFeatures);                 
                     var array = [];
-                    dojo.forEach(fields, function (x) {
+                    dojoArray.forEach(fields, function (x) {
                     array.push({
                         "id": x.name,
                         "name": x.name,
@@ -369,9 +417,9 @@ define([
                     return 0;
                     });
                     this.dataFields = new Memory({ data: array });
-                    dijit.byId("calAtributo").reset();
-                    dijit.byId("calValor").reset();
-                    dijit.byId("calAtributo").set('store', this.dataFields);
+                    registry.byId("calAtributo").reset();
+                    registry.byId("calValor").reset();
+                    registry.byId("calAtributo").set('store', this.dataFields);
                 }
                 }));
             },
@@ -384,23 +432,48 @@ define([
              * @param {string} e - nombre de la capa seleccionada  
              *  
              */
-            traerAtributosSimple: function (e) {
+            poblarValores: function (e) {
                 //console.log(e);
-                //console.log(this.dataFeatures);
-                var tipoField;
+                console.log(this.dataFeatures);
+                let tipoField;
                 var array = [];
-                for (var i = 0; i < this.dataFields.data.length; i++) {
+                var uniqueValuesArray=[];
+                for (let i = 0; i < this.dataFields.data.length; i++) {
                     if (e == this.dataFields.data[i].id) {
                         tipoField = this.dataFields.data[i];
                     }
                 }
-        
-                var queryTask = new QueryTask(this.urlCapaSeleccionada);
+                let query = new Query();
+                if (tipoField != undefined) 
+                    query.outFields = [tipoField.id];
+                query.where = "1=1";
+                query.returnGeometry = false;
+                switch(this.capaWidgetSelected.tipo){
+                    case 'A':
+                    case 'D': 
+                        let queryTask = new QueryTask(this.urlCapaSeleccionada);        
+                        queryTask.execute(query,lang.hitch(this,function(resultados){
+                            this.features2values(resultados.features);
+                        }));                                        
+                        break;
+                    case 'C':
+                    case 'E':
+                        this.features2values(this.dataFeatures);                    
+                    break;
+                }
+                return false;
+                
+                
+                
+                
+                
+                
+                /* var queryTask = new QueryTask(this.urlCapaSeleccionada);
                 var query = new Query();
                 if (tipoField != undefined) {
-                query.outFields = [tipoField.id];
+                    query.outFields = [tipoField.id];
         
-                query.where = "1=1";
+                    query.where = "1=1";
                 query.returnGeometry = false;
                 queryTask.execute(query, monstrarConsulta);
                 function monstrarConsulta(featureSet) {
@@ -408,29 +481,29 @@ define([
                     var SinDuplicados = [];
                     var SinDuplicados = valoresCompleto.filter(function (elem, pos) {
                     return valoresCompleto.indexOf(elem) == pos;
-                    });
-                    this.dataFeatures = SinDuplicados;
-                    dojo.forEach(this.dataFeatures, dojo.hitch(this, function (x) {
-                    //console.log(e); 
-                    /*          console.log(array.findIndex(item => item.id == x.attributes[e]));
-                                console.log(x.attributes[e]);*/
-                    var num = -1;
+                });
+                this.dataFeatures = SinDuplicados;
+                    dojoArray.forEach(this.dataFeatures, dojo.hitch(this, function (x) {
+                        //console.log(e); 
+                    //          console.log(array.findIndex(item => item.id == x.attributes[e]));
+                      //          console.log(x.attributes[e]);
+                      var num = -1;
                     if (x.attributes[e] != undefined) {
-        
+                        
                         for (var i = 0; i < array.length; i++) {
-                        if (x.attributes[e] == array[i].name) {
+                            if (x.attributes[e] == array[i].name) {
                             num = x.attributes[e];
                         }
-                        }
-        
+                    }
+                    
                         if (num === -1) {
-                        if (tipoField.type == "esriFieldTypeString") {
+                            if (tipoField.type == "esriFieldTypeString") {
                             this.dataString = 1;
                             array.push({
-                            "id": "'" + x.attributes[e] + "'",
-                            "name": x.attributes[e]
+                                "id": "'" + x.attributes[e] + "'",
+                                "name": x.attributes[e]
                             });
-        
+                            
                         } else {
                             array.push({
                             "id": x.attributes[e],
@@ -438,26 +511,63 @@ define([
                             });
                             this.dataString = 0;
                         }
-                        }
                     }
-                    }));
-                    array.sort(function (a, b) {
-                    if (a.name > b.name) {
-                        return 1;
-                    }
-                    if (a.name < b.name) {
+                }
+            }));
+            array.sort(function (a, b) {
+                if (a.name > b.name) {
+                    return 1;
+                }
+                if (a.name < b.name) {
                         return -1;
                     }
                     // a must be equal to b
                     return 0;
-                    });
-                    var arrayValores = new Memory({ data: array });
-                    dijit.byId("calValor").reset();
-                    dijit.byId("calValor").set('store', arrayValores);
+                });
+                var arrayValores = new Memory({ data: array });
+                    registry.byId("calValor").reset();
+                    registry.byId("calValor").set('store', arrayValores);
                 }
+            } */
+        },
+        features2values:function(features){
+            let nombreAtributo = registry.byId("calAtributo").get('value');
+            let array=[];
+            let ListaIndicadores=[];         
+            dojoArray.forEach(features, dojo.hitch(this, function (feature){                                                         
+                if (feature.attributes[nombreAtributo] != undefined){
+                    if(dojoArray.indexOf(ListaIndicadores, feature.attributes[nombreAtributo])  == -1){
+                        let obj=null;
+                        if(typeof feature.attributes[nombreAtributo] === 'string')
+                            obj = {                                    
+                                "id": "'" + feature.attributes[nombreAtributo] + "'",
+                                "name": feature.attributes[nombreAtributo]                                        
+                            }                            
+                        else
+                            obj = {                                    
+                                "id": feature.attributes[nombreAtributo],
+                                "name": feature.attributes[nombreAtributo]                                        
+                            }
+                        array.push(obj);
+                        ListaIndicadores.push(feature.attributes[nombreAtributo]);
+                    }
                 }
-            },
-        
+                                 
+            }));          
+            array.sort(function (a, b) {
+                if (a.name > b.name) {
+                    return 1;
+                }
+                if (a.name < b.name) {
+                    return -1;
+                }
+                // a must be equal to b
+                return 0;
+            });
+            let arrayValores = new Memory({ data: array });
+            registry.byId("calValor").reset();
+            registry.byId("calValor").set('store', arrayValores);                
+        },
         
         
             /**
@@ -476,33 +586,35 @@ define([
         
                 //listar las capas en el visor
                 //layerExplorer = registry.byId('ContenerCapas_1');
-                let layerCapa=this.layerExplorer.getGraphicCapaWidget(capa);
-                switch(layerCapa.tipo){
+                let query = new Query();                   
+                query.outFields = ['*'];     
+                if(typeof valor === 'string'){       
+                    //Verificar apóstrofe (apostrophe)
+                    let posicionApostrofe = valor.substring(1,valor.length-1).indexOf('\'');
+                    if(posicionApostrofe >0){
+                        posicionApostrofe++;
+                        valor=valor.substring(0,posicionApostrofe)+'\''+valor.substring(posicionApostrofe);
+                    }
+                }
+                query.where = atrributo +" = "+ valor;
+                query.returnGeometry = false;
+                switch(this.capaWidgetSelected.tipo){
                     case 'A':
                     case 'D':
-                    let queryTask = new QueryTask(this.urlCapaSeleccionada);
-                    let query = new Query();                   
-                    query.outFields = ['*'];     
-                    if(this.dataString == 1){       
-                        //Verificar apóstrofe (apostrophe)
-                        let posicionApostrofe = valor.substring(1,valor.length-1).indexOf('\'');                        
-                        if(posicionApostrofe >0){
-                            posicionApostrofe++;
-                            valor=valor.substring(0,posicionApostrofe)+'\''+valor.substring(posicionApostrofe);
-                        }
-                    }
-                    query.where = atrributo +" = "+ valor;
-                    query.returnGeometry = false;
-                    queryTask.execute(query,lang.hitch(this,function(resultado){
-                       resultado.tipo='A';
-                       this.tablaAtributos.setData(resultado);
-                    }),function(error){
-                        console.log(error);
-                    });
-
+                        let queryTask = new QueryTask(this.urlCapaSeleccionada);                    
+                        queryTask.execute(query,lang.hitch(this,function(resultado){
+                            resultado.tipo='A';
+                            this.tablaAtributos.setData(resultado);
+                            }),function(error){
+                                console.log(error);
+                        });
                         break;
                     default:
-
+                        this.capaWidgetSelected.layer[0].queryFeatures(query,lang.hitch(this,function(resultado){
+                            console.log(resultado);
+                        }),function(error){
+                            console.log(error);
+                        });
                         break;
 
                 }
@@ -512,7 +624,7 @@ define([
                 var capaFeature = '';
                 var capaSalida = '';
         
-                dojo.forEach(layerCapa, dojo.hitch(this, function (x) {
+                dojoArray.forEach(layerCapa, dojo.hitch(this, function (x) {
         
                 //validar la capa seleccionada
                 if (x.id == capa) {
@@ -653,6 +765,7 @@ define([
                 console.log('cerrar');
                 this.tablaAtributos.floatingPane.hide();
             }
+
                     
         });
     });
