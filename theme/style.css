@@ -376,6 +376,10 @@ footer{
     background-color: #00636B;
 }
 
+.loading_Widget{
+    margin-top:50px;
+    margin-left: calc(50% - 25px); 
+}
 
 /*DIJIT DIALOG*/
 .dijitDialogTitleBar{

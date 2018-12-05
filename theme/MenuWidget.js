@@ -267,25 +267,26 @@ define([
       let configWidget_Btn = this.storeWidgets.get(id);
       if (!configWidget_Btn.opened) {
         configWidget_Btn.opened = true;
+
         if(!MenuWidget.visibilidadContent)
           MenuWidget.openContent();
-          
+        //CREAR NODO EN DOM QUE CONTIENE WIDGET          
+        let nodeCustomWidget = domConstruct.toDom('<div id="widget_box_'+configWidget_Btn.id+'" class="widget_content"></div>');
+        nodeCustomWidget.innerHTML = '<img src="images/loading-1.gif" class="loading_Widget">'
+        domConstruct.place(nodeCustomWidget,MenuWidget.widget_deploy,'last');
+        //CREAR ICONO LATERAL QUE INDICA QUE ESTA ABIERTO
+        MenuWidget.addIconWidget(configWidget_Btn);          
         require([
                     configWidget_Btn.uri + '/widget',
                     'xstyle/css!./' + configWidget_Btn.uri + '/css/style.css'
                 ], function(customWidget){
-          console.log(configWidget_Btn);
-          //CREAR NODO EN DOM QUE CONTIENE WIDGET          
-          let nodeCustomWidget = domConstruct.toDom('<div id="widget_box_'+configWidget_Btn.id+'" class="widget_content"></div>');
-          domConstruct.place(nodeCustomWidget,MenuWidget.widget_deploy,'last');
           //CREAR WIDGET E INSERTAR A NODO CONTENEDOR
           let cw = new customWidget({
             id:'customWidget_'+configWidget_Btn.id
           });
+          nodeCustomWidget.innerHTML ='';
           cw.placeAt(nodeCustomWidget,'last');
-          cw.startup();
-          //CREAR ICONO LATERAL QUE INDICA QUE ESTA ABIERTO
-          MenuWidget.addIconWidget(configWidget_Btn);                   
+          cw.startup();                           
           console.log('[CREATE] - widget ' + configWidget_Btn.id +' fue creado');
         });
 
@@ -337,6 +338,8 @@ define([
       //Animación y destruccion
       on(iconWidget,'animationend', function(event){
         console.log('widget Destruido');
+        if(typeof widget.onDestroy === "function")
+          widget.onDestroy();
         widget.destroy();
         domConstruct.destroy('widget_icon_'+idWidget);
         domConstruct.destroy('widget_box_'+idWidget);
@@ -399,11 +402,7 @@ define([
 
         let targetActual = dom.byId('widget_icon_'+this.widgetTarget);
         domClass.remove(targetActual,'selected');
-        console.log(widget_deploy);
         let height = domStyle.get(widget_deploy,'height');
-        console.log(height);
-        console.log(widget_deploy.clientHeight);
-        console.log(widget_deploy.offsetHeight);
         pos=-height*pos;
         domStyle.set(this.widget_louver,'margin-top',''+pos+'px');
         this.widgetTarget = id;          

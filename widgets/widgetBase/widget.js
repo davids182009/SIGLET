@@ -52,6 +52,14 @@ define([
             */
             startup: function () {
                 this.inherited(arguments);
-            }                   
+            },
+            /**
+            * Codigo a ejecutar antes de destruir el widget  
+            * 
+            * @function
+            */
+            onDestroy:function(){
+                   
+            }                
         });
     });
