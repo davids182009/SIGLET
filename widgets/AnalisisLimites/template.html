@@ -1,22 +1,22 @@
 <div>
-    <div class="sourceData">            
+    <div class="sourceData">
         <div data-dojo-type="dijit/layout/TabContainer"
              style="width:100%; height: 100%;">
-            
-            <div data-dojo-type="dijit/layout/ContentPane" 
+
+            <div data-dojo-type="dijit/layout/ContentPane"
                 title="Coordenada" data-dojo-props="selected:true">
                 <h3 class="SourceDataStep" step="1">Ingrese Coordenadas (EPSG:4686)</h3>
                 <div class="form-Coordenadas">
                     <div>
                         <label class="form-Coordenadas_titulo" for="hemisferioLong">Longitud:</label>
-                        <select id="hemisferioLong" 
+                        <select id="hemisferioLong"
                             data-dojo-type="dijit/form/Select"
                             required="true"
                             data-dojo-props="style:'width:35px'">
                             <option value="E">E</option>
                             <option value="O" selected>O</option>
                         </select>
-                        <input id="longG" type="text" 
+                        <input id="longG" type="text"
                             data-dojo-type="dijit/form/NumberTextBox"
                             name="longitudGrados"
                             required="true"
@@ -24,9 +24,9 @@
                             class="input"
                             data-dojo-props="constraints:{min:-90,max:90,places:0},
                             invalidMessage:'Por favor ingrese un valor numerico.',
-                            rangeMessage:'Latitud debe ser entre -90° y 90°.'">                        
+                            rangeMessage:'Latitud debe ser entre -90° y 90°.'">
                         <label for="longG">°</label>
-                        <input id="longM" type="text" 
+                        <input id="longM" type="text"
                             data-dojo-type="dijit/form/NumberTextBox"
                             name="longitudMinutos"
                             required="true"
@@ -36,7 +36,7 @@
                             invalidMessage:'Por favor ingrese un valor numerico.',
                             rangeMessage:'Minutos debe ser entre 0 y 60.'">
                         <label for="longM">'</label>
-                        <input id="longS" type="text" 
+                        <input id="longS" type="text"
                             data-dojo-type="dijit/form/NumberTextBox"
                             name="longitudSegundos"
                             required="true"
@@ -49,14 +49,14 @@
                     </div>
                     <div>
                         <label class="form-Coordenadas_titulo">Latitud:</label>
-                        <select name="" 
-                            data-dojo-type="dijit/form/Select" 
+                        <select name=""
+                            data-dojo-type="dijit/form/Select"
                             required="true"
                             data-dojo-props="style:'width:35px'">
                             <option value="N" selected>N</option>
                             <option value="S">S</option>
                         </select>
-                        <input id="latG" type="text" 
+                        <input id="latG" type="text"
                             data-dojo-type="dijit/form/NumberTextBox"
                             name="latitudGrados"
                             required="true"
@@ -64,9 +64,9 @@
                             class="input"
                             data-dojo-props="constraints:{min:-90,max:90,places:0},
                             invalidMessage:'Por favor ingrese un valor numerico.',
-                            rangeMessage:'Latitud debe ser entre -90° y 90°.'">                        
+                            rangeMessage:'Latitud debe ser entre -90° y 90°.'">
                         <label for="latG">°</label>
-                        <input id="latM" type="text" 
+                        <input id="latM" type="text"
                             data-dojo-type="dijit/form/NumberTextBox"
                             name="latitudMinutos"
                             required="true"
@@ -76,7 +76,7 @@
                             invalidMessage:'Por favor ingrese un valor numerico.',
                             rangeMessage:'Minutos debe ser entre 0 y 60.'">
                         <label for="latM">'</label>
-                        <input id="latS" type="text" 
+                        <input id="latS" type="text"
                             data-dojo-type="dijit/form/NumberTextBox"
                             name="latitudSegundos"
                             required="true"
@@ -92,30 +92,31 @@
                     </p>
                 </div>
             </div>
-            <div data-dojo-type="dijit/layout/ContentPane" 
+            <div data-dojo-type="dijit/layout/ContentPane"
                 title="Features">
                 <h3 class="SourceDataStep" step="1">Seleccione una capa para analizar elementos</h3>
-                <p>        
-                    <div data-dojo-attach-point="selectCapas" 
-                        data-dojo-type="dijit/form/FilteringSelect"  
-                        data-dojo-props='searchAttr:"name",required:true,intermediateChanges:true'   
+                <p>
+                    <div data-dojo-attach-point="selectCapas"
+                        data-dojo-type="dijit/form/FilteringSelect"
+                        data-dojo-props='searchAttr:"name",required:true,intermediateChanges:true'
                         style="display:block;width: 80%;margin:10px auto;"></div>
                 </p>
-                <h3 class="SourceDataStep" step="2">Seleccione elementos de la capa en el mapa</h3>  
+                <h3 class="SourceDataStep" step="2">Seleccione elementos de la capa en el mapa</h3>
                 <div class="SourceData_elements">
-                    <div data-dojo-attach-point="canvasList">                        
+                    <div data-dojo-attach-point="canvasList">
                     </div>
                     <div>
                         <div class="btn50" data-dojo-attach-event="onclick:ActivateRemoveFeature" data-dojo-attach-point="btnRemove">
-                            <i class="icon ion-ios-trash"></i>  
+                            <i class="icon ion-ios-trash"></i>
                         </div>
                     </div>
                 </div>
                 <div class="identifyArea" data-dojo-attach-point="indetifyCanvas" >
 
                 </div>
-            </div>             
+            </div>
         </div>
     </div>
-    <button>Analizar</button>
+    <button data-dojo-attach-event="onclick:doAnalysisProcess" data-dojo-attach-point="btnAnalysis">Analizar</button>
+
 </div>

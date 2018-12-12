@@ -1,0 +1,23 @@
+<div>
+  <h3 class="SourceDataStep" step="1">Seleccione el tipo de papel para la imagen</h3>
+  </br>
+  <input id="tipoPapel" style="display:block;width: 80%;margin:10px auto;">
+  </br>
+  </br>
+
+  <h3 class="SourceDataStep" step="2">Seleccione el formato para la imagen</h3>
+  <input id="tipoFormato" style="display:block;width: 80%;margin:10px auto;">
+  </br>
+  </br>
+
+  <h3 class="SourceDataStep" step="3">Ingrese el nombre del archivo de salida</h3>
+  <input id="nombreFile" data-dojo-type="dijit/form/TextBox" style="display:block;width: 80%;margin:10px auto;">
+  </br>
+  </br>
+
+  <div id="btnSalidaGrafica" data-dojo-attach-point="btnExportMap" style="display:block;width: 80%;margin:10px auto;"></div>
+
+  <button data-dojo-attach-event="onclick:exportMap" data-dojo-attach-point="btnExport">Analizar</button>
+
+
+</div>

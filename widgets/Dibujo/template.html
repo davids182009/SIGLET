@@ -1,19 +1,29 @@
 <div>
-  <div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline'">
-    <div id="pnlHerramientasDibujo" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'">
-      <span>Draw:<br /></span>
-      <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="POINT">Point</button>
-      <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="MULTI_POINT">Multi Point</button>
-      <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="LINE">Line</button>
-      <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="POLYLINE">Polyline</button>
-      <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="POLYGON">Polygon</button>
-      <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="FREEHAND_POLYLINE">Freehand Polyline</button>
-      <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="FREEHAND_POLYGON">Freehand Polygon</button>
+  <div id="mainWindow">
+    <div id="pnlHerramientasDibujo">
+      <span><br /></span>
+      <center>
+        <button style="width:70px; background-color: #3090AC; color:white;" data-dojo-attach-event="onClick:_createToolbar" value="POINT">Punto </br> <i class="icon ion-android-radio-button-off" style="font-size: 20px;"></i></button>
+        <!-- <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="MULTI_POINT">Multi Point</button> -->
+        <!-- <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="LINE">Line</button> -->
+        <button style="width:70px; background-color: #3090AC; color:white;" data-dojo-attach-event="onClick:_createToolbar" value="POLYLINE">Línea </br> <i class="ion-android-remove" style="font-size: 20px;"></i></button>
+        <button style="width:70px; background-color: #3090AC; color:white;" data-dojo-attach-event="onClick:_createToolbar" value="POLYGON">Poligono </br> <i class="icon ion-qr-scanner" style="font-size: 20px;"></i></button>
 
-      <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="ARROW">Arrow</button>
-      <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="TRIANGLE">Triangle</button>
-      <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="CIRCLE">Circle</button>
-      <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="ELLIPSE">Ellipse</button>
+        <!-- <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="FREEHAND_POLYLINE">Freehand Polyline</button> -->
+        <!-- <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="FREEHAND_POLYGON">Freehand Polygon</button> -->
+
+        <!-- <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="ARROW">Arrow</button> -->
+        <!-- <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="TRIANGLE">Triangle</button> -->
+        <!-- <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="CIRCLE">Circle</button> -->
+        <!-- <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick:_createToolbar" value="ELLIPSE">Ellipse</button> -->
+        <br/>
+        <br/>
+        <button style="width:70px; background-color: #3090AC; color:white;" data-dojo-attach-event="onClick:deshacerDibujo">Deshacer </br> <i class="ion-android-arrow-back" style="font-size: 20px;"></i></button>
+        <button style="width:70px; background-color: #3090AC; color:white;"" data-dojo-attach-event="onClick:rehacerDibujo">Rehacer </br> <i class="ion-android-arrow-forward" style="font-size: 20px;"></i></button>
+        <br/>
+        <br/>
+        <button style="width:70px; background-color: #3090AC; color:white;" data-dojo-attach-event="onClick:limpiarCapas">Limpiar </br> <i class="icon ion-ios-trash" style="font-size: 20px;"></i></button>
+      </center>
 
     </div>
   </div>

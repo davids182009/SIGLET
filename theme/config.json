@@ -103,10 +103,10 @@
       "icon": "exportar.png",
       "widgets": [{
           "id": 9,
-          "name": "Test GC-1",
+          "name": "Salida Grafica",
           "version": "1.0",
-          "uri": "widgets/test",
-          "icon": "consultas.png"
+          "uri": "widgets/SalidaGrafica",
+          "icon": "exportar-salida.png"
         },
         {
           "id": 100,

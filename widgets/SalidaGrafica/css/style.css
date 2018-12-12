@@ -1,0 +1,22 @@
+.widget-SalidaGrafica > .dijitComboBox {
+    display:block;
+    width: 80%;
+    margin:10px auto;
+}
+
+.widget-SalidaGrafica button {
+    width: 50%;
+    border: 0px;
+    background-color: #3090AC;
+    padding: 5px;
+    margin: 5px 25%;
+    border-radius: 2px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    transition: all .3s ease-in-out;
+}
+
+.widget-SalidaGrafica button:hover {
+    background-color: #00636B;
+}

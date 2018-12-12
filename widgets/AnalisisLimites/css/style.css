@@ -1,6 +1,6 @@
 .widget-AnalisisLimites{
     width: 100%;
-    height: 100%;  
+    height: 100%;
 }
 
     .widget-AnalisisLimites .sourceData{
@@ -21,9 +21,10 @@
         text-align: center;
         cursor: pointer;
         transition: all .1s ease-in;
+        visibility: hidden;
     }
     .widget-AnalisisLimites .btn50.active{
-        box-shadow: inset 0px 0px 3px rgba(0,0,0,.5);        
+        box-shadow: inset 0px 0px 3px rgba(0,0,0,.5);
     }
 
     .widget-AnalisisLimites .btn50:hover{
@@ -57,7 +58,7 @@
             text-align: left;
             padding-left: 26px;
             margin-bottom: 5px;
-        
+
         }
         .widget-AnalisisLimites .SourceDataStep::after{
             content: attr(step);
@@ -65,7 +66,7 @@
             height: 25px;
             background-color: #3F4242;
             display: block;
-            position: absolute;        
+            position: absolute;
             top: -3px;
             left: 0px;
             text-align: center;
@@ -85,11 +86,11 @@
             }
 
             .widget-AnalisisLimites .form-Coordenadas .input{
-                width: 41px;    
+                width: 41px;
             }
 
             .widget-AnalisisLimites .form-Coordenadas select{
-                width: 42px;    
+                width: 42px;
             }
 
             .widget-AnalisisLimites .form-Coordenadas .form-Coordenadas_titulo{
@@ -117,14 +118,14 @@
             -webkit-flex: auto;
             -moz-flex: auto;
             -ms-flex: auto;
-            
+
         }
         .SourceData_elements > div:nth-child(2){
             flex: 0 0 50px;
             -webkit-flex: 0 0 50px;
             -moz-flex: 0 0 50px;
             -ms-flex: 0 0 50px;
-            
+
         }
             .SourceData_elements .widget-WidgetFeature{
                 width: 40px;
@@ -143,7 +144,7 @@
                 will-change: transform;
                 -webkit-perspective: 1000;
                 position: relative;
-            }            
+            }
 
             .SourceData_elements .widget-WidgetFeature:hover{
                 box-shadow: 2px 5px 5px rgba(0,0,0,.8);
@@ -163,7 +164,7 @@
                 width: 10px;
                 background-color: black;
                 color: white;
-                line-height: 8px; 
+                line-height: 8px;
                 transform: translate(25%,-25%);
                 font-size: 12px;
                 text-align: center;
@@ -185,12 +186,12 @@
                 }
                 75%{
                     transform: rotate(-15deg)
-                }               
+                }
                 100%{
                     transform: rotate(0deg)
-                }               
+                }
             }
-            
+
 
         .widget-AnalisisLimites .identifyArea{
             width: 100%;
@@ -224,7 +225,7 @@
         cursor: pointer;
         color: white;
         font-weight: bold;
-        transition: all .3s ease-in-out;        
+        transition: all .3s ease-in-out;
     }
     .widget-AnalisisLimites button:hover{
         background-color: #00636B;
